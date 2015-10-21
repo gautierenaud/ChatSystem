@@ -17,32 +17,28 @@ public class UDPSender {
 		}
 	}
 	
-	public void sendMsg(Message msg){
+	public void sendMsg(Message msg, InetAddress address){
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ObjectOutputStream oos;
 		try {
 			oos = new ObjectOutputStream(baos);
 			oos.writeObject(msg);
 			oos.flush();
+			oos.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		byte[] buf= baos.toByteArray();
 		DatagramPacket packet;
+		
 		try {
-			packet = new DatagramPacket(buf, buf.length, InetAddress.getByName("10.1.255.255"), 2042);
-			try {
-				senderSocket.send(packet);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} catch (UnknownHostException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			packet = new DatagramPacket(buf, buf.length, address, 2042);
+			senderSocket.send(packet);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		
 		System.out.println("Msg sent");
 	}
 	
@@ -54,7 +50,12 @@ public class UDPSender {
 		UDPSender sender = new UDPSender();
 		UDPReceiver receiver = new UDPReceiver();
 		Message msg = new Message(Message.MsgType.HELLO, "Hello les fillettes!");
-		sender.sendMsg(msg);
+		try {
+			sender.sendMsg(msg, InetAddress.getByName("10.1.255.255"));
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

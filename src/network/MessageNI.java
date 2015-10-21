@@ -16,13 +16,20 @@ public class MessageNI {
 	}
 	
 	private Stack<Message> messageStack;
-	
-	
-	
-	private DatagramSocket localSocket;
+	private UDPSender udpSender;
+	private UDPReceiver udpReceiver;
+	private TCPSender tcpSender;
+	private TCPReceiver tcpReceiver;
 	
 	public MessageNI(){
 		messageStack = new Stack<Message>();
+		
+		// initialising the sockets
+		udpSender = new UDPSender();
+		udpReceiver = new UDPReceiver();
+		udpReceiver.start();
+		tcpSender = new TCPSender();
+		tcpReceiver = new TCPReceiver();
 	}
 
 	public void addMsgBuff(Message msg){
