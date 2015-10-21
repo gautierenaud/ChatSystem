@@ -21,7 +21,7 @@ public class MessageNI {
 	private TCPSender tcpSender;
 	private TCPReceiver tcpReceiver;
 	
-	public MessageNI(){
+	private MessageNI(){
 		messageStack = new Stack<Message>();
 		
 		// initialising the sockets
