@@ -7,7 +7,7 @@ public class ChatGUI {
 	private ChatGUI() {
 	}
 
-	public static ChatGUI INSTANCE() {
+	public static ChatGUI getInstance() {
 		if (instance == null)
 			instance = new ChatGUI();
 		return instance;

@@ -6,7 +6,7 @@ public class ChatController {
 	private static ChatController instance;
 	private ChatController(){}
 
-	public static ChatController INSTANCE() {
+	public static ChatController getInstance() {
 		if (instance == null)
 			instance = new ChatController();
 		return instance;
