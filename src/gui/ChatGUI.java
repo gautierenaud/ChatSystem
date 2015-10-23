@@ -1,5 +1,6 @@
 package gui;
 
+// ceci est un chat gui
 public class ChatGUI {
 	
 	private static ChatGUI instance;
