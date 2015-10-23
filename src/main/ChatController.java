@@ -11,6 +11,4 @@ public class ChatController {
 			instance = new ChatController();
 		return instance;
 	}
-
-
 }
