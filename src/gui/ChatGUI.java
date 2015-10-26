@@ -15,8 +15,8 @@ public class ChatGUI {
 		return instance;
 	}
 	
-	public void ShowMessage(String msg){
-		System.out.println(msg);
+	public void ShowMessage(String msg, String usr){
+		System.out.println(msg + " from: " + usr);
 	}
 	
 }
