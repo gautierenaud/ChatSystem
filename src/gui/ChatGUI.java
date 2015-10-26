@@ -15,4 +15,8 @@ public class ChatGUI {
 		return instance;
 	}
 	
+	public void ShowMessage(String msg){
+		System.out.println(msg);
+	}
+	
 }
