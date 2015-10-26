@@ -1,16 +1,22 @@
 package main;
 
 import gui.*;
+import network.*;
 
 public class ChatMediator {
 
-	
 	private static ChatGUI gui;
-	private static ChatSystem system;
+	private static ChatController control;
+	private static NetworkInterface network;
 	
 	private static ChatMediator instance;
 
 	private ChatMediator() {
+		
+		gui = ChatGUI.getInstance();
+		control = ChatController.getInstance();
+		network = NetworkInterface.getInstance();
+		
 	}
 
 	public static ChatMediator getInstance() {
@@ -19,6 +25,8 @@ public class ChatMediator {
 		return instance;
 	}
 	
-	
-	
+	// methods to communicate between each class
+	public void DisplayMessage(String msg, String usr){
+		gui.ShowMessage(msg);
+	}
 }
