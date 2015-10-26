@@ -27,6 +27,6 @@ public class ChatMediator {
 	
 	// methods to communicate between each class
 	public void DisplayMessage(String msg, String usr){
-		gui.ShowMessage(msg);
+		gui.ShowMessage(msg, usr);
 	}
 }
