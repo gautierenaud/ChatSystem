@@ -5,4 +5,15 @@ package gui;
 
 public class GUIController {
 	
+	private static GUIController instance;
+
+	private GUIController() {
+	}
+
+	public static GUIController getInstance() {
+		if (instance == null)
+			instance = new GUIController();
+		return instance;
+	}
+	
 }
