@@ -19,7 +19,7 @@ public class ChatController {
 	// Instantiate all the different classes
 	public void initAll(){
 		mediator = ChatMediator.getInstance();
-		mediator.DisplayMessage("Hello World!", "Renaud");
+		mediator.Log();
 	}
 	
 }
