@@ -1,5 +1,7 @@
 package main;
 
+import java.io.IOException;
+
 public class ChatController {
 
 	// singleton pattern for ChatController
@@ -17,7 +19,11 @@ public class ChatController {
 	private String userName;
 	
 	// Instantiate all the different classes
-	public void initAll(){
+	public void initAll() throws IOException{
+
+	
+		mediator.DisplayMessage("Hello World!", "Renaud");
+
 		mediator = ChatMediator.getInstance();
 		mediator.Log();/*
 		mediator.Chatbox("renaud");
@@ -38,7 +44,6 @@ public class ChatController {
 	}
 	
 	public void SendMessage(String message){
-		
 	}
 	
 }
