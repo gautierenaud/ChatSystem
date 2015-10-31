@@ -13,13 +13,32 @@ public class ChatController {
 		return instance;
 	}
 	
-	
 	private static ChatMediator mediator;
+	private String userName;
 	
 	// Instantiate all the different classes
 	public void initAll(){
 		mediator = ChatMediator.getInstance();
-		mediator.Log();
+		mediator.Log();/*
+		mediator.Chatbox("renaud");
+		mediator.Chatbox("lalo");
+		mediator.Chatbox("lala");*/
+	}
+	
+	public void SetUserName(String name){
+		userName = name;
+	}
+	
+	public String GetUserName(){
+		return userName;
+	}
+	
+	public void ReceiveMessage(String source, String message){
+		
+	}
+	
+	public void SendMessage(String message){
+		
 	}
 	
 }

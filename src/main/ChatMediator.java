@@ -33,4 +33,16 @@ public class ChatMediator {
 	public void Log(){
 		gui.OpenLogin();
 	}
+	
+	public void Logged(String name){
+		control.SetUserName(name);
+	}
+	
+	public String GetUserName(){
+		return control.GetUserName();
+	}
+	
+	public void Chatbox(String name){
+		gui.OpenChatbox(name);
+	}
 }
