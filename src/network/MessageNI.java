@@ -26,7 +26,7 @@ public class MessageNI {
 		// initialising the sockets
 		udpSender = new UDPSender();
 		udpReceiver = new UDPReceiver();
-		udpReceiver.start();
+		//udpReceiver.start();
 		
 	}
 
