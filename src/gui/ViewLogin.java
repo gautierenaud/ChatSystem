@@ -5,19 +5,20 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ViewLogin extends ViewElement implements ActionListener{
+public class ViewLogin extends JFrame implements ActionListener{
 
 	private JLabel label;
 	private JTextField text;
 	private JButton button;
 	
 	public ViewLogin(){
+		initComponents();
 	}
 	
-	@Override
 	void initComponents() {
 		
 		// set the default behavior when closing
+		// will exit the application itself!!
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		// set the layout of the login windows

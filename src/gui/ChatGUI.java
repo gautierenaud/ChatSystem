@@ -1,5 +1,7 @@
 package gui;
 
+import main.ChatMediator;
+
 // ceci est un chat gui
 //non ceci est une tata
 public class ChatGUI {
@@ -16,13 +18,12 @@ public class ChatGUI {
 		return instance;
 	}
 	
-	
 	private GUIView view;
 	private GUIModel model;
 	
 	private void initGUI(){
 		view = new GUIView(this);
-		model = new GUIModel(this);
+		model = GUIModel.getInstance(this);
 	}
 	
 	public void ShowMessage(String msg, String usr){
@@ -33,9 +34,13 @@ public class ChatGUI {
 		view.OpenLoginWindow();
 	}
 	
+	public void OpenChatbox(String name){
+		view.OpenChatbox(name);
+	}
+	
 	public void UserLogged(String username){
 		// give the username to the controller
-		System.out.println(username);
+		ChatMediator.getInstance().Logged(username);
 	}
 	
 }
