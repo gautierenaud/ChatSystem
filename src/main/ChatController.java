@@ -19,7 +19,7 @@ public class ChatController {
 	private String userName;
 	
 	// Instantiate all the different classes
-	public void initAll() throws IOException{
+	public void initAll(){
 
 	
 		mediator.DisplayMessage("Hello World!", "Renaud");

@@ -10,12 +10,16 @@ public class NetworkInterface {
 	private MessageNI messNI; 
 	private FileNI fileNI; 
 
-	private NetworkInterface() throws IOException {
+	private NetworkInterface(){
 		this.messNI = MessageNI.getInstance();
-		this.fileNI = FileNI.getInstance(); 
+		try{
+			this.fileNI = FileNI.getInstance();
+		}catch (IOException e){
+			System.err.println(e);
+		} 
 	}
 
-	public static NetworkInterface getInstance() throws IOException {
+	public static NetworkInterface getInstance(){
 		if (instance == null)
 			instance = new NetworkInterface();
 		return instance;

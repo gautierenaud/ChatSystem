@@ -11,7 +11,7 @@ public class ChatSystem {
 	
 	private static ChatController controller;
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		
 		controller = ChatController.getInstance();
 		controller.initAll();

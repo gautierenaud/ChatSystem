@@ -1,7 +1,5 @@
 package main;
 
-import java.io.IOException;
-
 import gui.*;
 import network.*;
 
@@ -13,7 +11,7 @@ public class ChatMediator {
 	
 	private static ChatMediator instance;
 
-	private ChatMediator() throws IOException {
+	private ChatMediator(){
 		
 		gui = ChatGUI.getInstance();
 		control = ChatController.getInstance();
@@ -21,7 +19,7 @@ public class ChatMediator {
 		
 	}
 
-	public static ChatMediator getInstance() throws IOException {
+	public static ChatMediator getInstance(){
 		if (instance == null)
 			instance = new ChatMediator();
 		return instance;
