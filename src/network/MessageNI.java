@@ -18,8 +18,7 @@ public class MessageNI {
 	private Stack<Message> messageStack;
 	private UDPSender udpSender;
 	private UDPReceiver udpReceiver;
-	private TCPSender tcpSender;
-	private TCPReceiver tcpReceiver;
+
 	
 	private MessageNI(){
 		messageStack = new Stack<Message>();
@@ -28,8 +27,7 @@ public class MessageNI {
 		udpSender = new UDPSender();
 		udpReceiver = new UDPReceiver();
 		udpReceiver.start();
-		tcpSender = new TCPSender();
-		tcpReceiver = new TCPReceiver();
+		
 	}
 
 	public void addMsgBuff(Message msg){
