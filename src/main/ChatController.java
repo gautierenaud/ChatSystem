@@ -20,13 +20,13 @@ public class ChatController {
 	
 	// Instantiate all the different classes
 	public void initAll(){
-		try {
-			mediator = ChatMediator.getInstance();
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
+
+	
 		mediator.DisplayMessage("Hello World!", "Renaud");
+
+		mediator = ChatMediator.getInstance();
+		mediator.Log();
+
 	}
 	
 }

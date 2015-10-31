@@ -31,4 +31,8 @@ public class ChatMediator {
 	public void DisplayMessage(String msg, String usr){
 		gui.ShowMessage(msg, usr);
 	}
+	
+	public void Log(){
+		gui.OpenLogin();
+	}
 }
