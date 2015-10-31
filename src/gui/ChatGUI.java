@@ -10,6 +10,8 @@ public class ChatGUI {
 
 	private ChatGUI() {
 		initGUI();
+		
+		//OpenChatbox("rgautier");
 	}
 
 	public static ChatGUI getInstance() {
@@ -41,6 +43,10 @@ public class ChatGUI {
 	public void UserLogged(String username){
 		// give the username to the controller
 		ChatMediator.getInstance().Logged(username);
+	}
+	
+	public String GetUserName(){
+		return ChatMediator.getInstance().GetUserName();
 	}
 	
 }

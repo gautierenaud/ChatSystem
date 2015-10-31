@@ -20,15 +20,8 @@ public class ChatController {
 	
 	// Instantiate all the different classes
 	public void initAll(){
-
-	
-		mediator.DisplayMessage("Hello World!", "Renaud");
-
 		mediator = ChatMediator.getInstance();
-		mediator.Log();/*
-		mediator.Chatbox("renaud");
-		mediator.Chatbox("lalo");
-		mediator.Chatbox("lala");*/
+		mediator.Log();
 	}
 	
 	public void SetUserName(String name){
@@ -44,6 +37,5 @@ public class ChatController {
 	}
 	
 	public void SendMessage(String message){
-	}
-	
+	}	
 }

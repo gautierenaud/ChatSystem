@@ -13,6 +13,11 @@ public class GUIModel {
 	
 	private GUIModel(ChatGUI controller){
 		this.controller = controller;
+		/*
+		// add junk data for test
+		this.AddMessage("rgautier", new MessageStruct("rgautier", "HelloWorld"));
+		this.AddMessage("rgautier", new MessageStruct("autre", "Hello rgautier"));
+		*/
 	}
 
 	public static GUIModel getInstance() {
