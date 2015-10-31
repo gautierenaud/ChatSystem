@@ -1,5 +1,7 @@
 package main;
 
+import java.io.IOException;
+
 public class ChatController {
 
 	// singleton pattern for ChatController
@@ -18,7 +20,12 @@ public class ChatController {
 	
 	// Instantiate all the different classes
 	public void initAll(){
-		mediator = ChatMediator.getInstance();
+		try {
+			mediator = ChatMediator.getInstance();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 		mediator.DisplayMessage("Hello World!", "Renaud");
 	}
 	
