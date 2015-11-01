@@ -4,10 +4,17 @@ package gui;
 
 public class GUIView {
 
+	private static GUIView instance;
 	private ChatGUI controller;
-	
-	public GUIView(ChatGUI chatGUI){
+
+	private GUIView(ChatGUI chatGUI) {
 		controller = chatGUI;
+	}
+
+	public static GUIView getInstance(ChatGUI chatGUI) {
+		if (instance == null)
+			instance = new GUIView(chatGUI);
+		return instance;
 	}
 	
 	public void OpenLoginWindow(){
@@ -19,4 +26,7 @@ public class GUIView {
 		ViewChatbox chatbox = ViewChatbox.getInstance(name);
 	}
 	
+	public void OpenUserList(){
+		ViewUserList userList = ViewUserList.getInstance();
+	}
 }

@@ -35,7 +35,7 @@ public class ChatMediator {
 	}
 	
 	public void Logged(String name){
-		control.SetUserName(name);
+		control.Logged(name);
 	}
 	
 	public String GetUserName(){
@@ -44,5 +44,9 @@ public class ChatMediator {
 	
 	public void Chatbox(String name){
 		gui.OpenChatbox(name);
+	}
+	
+	public void OpenUserList(){
+		gui.OpenUserList();
 	}
 }

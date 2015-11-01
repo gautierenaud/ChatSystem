@@ -37,5 +37,11 @@ public class ChatController {
 	}
 	
 	public void SendMessage(String message){
-	}	
+	}
+	
+	public void Logged(String name){
+		SetUserName(name);
+		// send Hello from NI
+		mediator.OpenUserList();
+	}
 }

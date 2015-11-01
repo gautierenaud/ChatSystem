@@ -24,7 +24,7 @@ public class ChatGUI {
 	private GUIModel model;
 	
 	private void initGUI(){
-		view = new GUIView(this);
+		view = GUIView.getInstance(this);
 		model = GUIModel.getInstance(this);
 	}
 	
@@ -49,4 +49,7 @@ public class ChatGUI {
 		return ChatMediator.getInstance().GetUserName();
 	}
 	
+	public void OpenUserList(){
+		view.OpenUserList();
+	}
 }
