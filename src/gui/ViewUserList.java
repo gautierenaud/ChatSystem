@@ -35,7 +35,7 @@ public class ViewUserList extends JFrame {
 		return instance;
 	}
 	
-	
+	private JTextArea searchArea = new JTextArea();
 	private void initComponents(){
 		// close everything when closed
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -52,37 +52,42 @@ public class ViewUserList extends JFrame {
 		
 		this.setLayout(new GridBagLayout());
 		
-		// layout for the list
-		GridBagConstraints listConst = new GridBagConstraints();
-		listConst.fill = GridBagConstraints.BOTH;
-		listConst.gridx = 0;
-		listConst.gridy = 0;
-		listConst.weightx = 1.0;
-		listConst.weighty = 1.0;
-		
 		JPanel listPanel = new JPanel();
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
 		for (int i = 0; i < 20; i++) {
-			GridBagConstraints buttonConst = new GridBagConstraints();
-			//listConst.weightx = 0.9;
-			listConst.fill = GridBagConstraints.HORIZONTAL;
-			listConst.weightx = 1.0;
-			listConst.weighty = 1.0;
-			listPanel.add(new JButton("lala"), buttonConst);
+			JButton lala = new JButton("lala");
+			lala.setAlignmentX(CENTER_ALIGNMENT);
+			listPanel.add(lala);
 		}
+		
+		GridBagConstraints scrollConst = new GridBagConstraints();
+		scrollConst.fill = GridBagConstraints.BOTH;
+		scrollConst.weightx = 1.0;
+		scrollConst.weighty = 1.0;
 		JScrollPane scroll = new JScrollPane(listPanel);
+		this.add(scroll, scrollConst);
+		
+		/**** Search Box ****/
+		// layout
+		GridBagConstraints searchConst = new GridBagConstraints();
+		searchConst.fill = GridBagConstraints.HORIZONTAL;
+		searchConst.gridy = 1;
+		searchConst.weightx = 0.0;
+		searchConst.weighty = 0.0;
+		this.add(searchArea, searchConst);
 		
 		
-		this.add(listPanel, listConst);
-		
+		/**** Disconnect Button****/
+		// layout
 		GridBagConstraints buttonConst = new GridBagConstraints();
 		buttonConst.fill = GridBagConstraints.HORIZONTAL;
-		buttonConst.gridy = 1;
+		buttonConst.gridy = 2;
 		buttonConst.weightx = 0.0;
 		buttonConst.weighty = 0.0;
-
+		// button
 		JButton disconnectButton = new JButton("Disconnect");
 		this.add(disconnectButton, buttonConst);
+		
 		this.setTitle("UserList");
 		this.pack();
 		this.setResizable(false);
