@@ -1,6 +1,5 @@
 package main;
 
-import java.io.IOException;
 
 public class ChatController {
 
@@ -44,4 +43,7 @@ public class ChatController {
 		// send Hello from NI
 		mediator.OpenUserList();
 	}
+	
+	// manage the list of users
+	//private 
 }
