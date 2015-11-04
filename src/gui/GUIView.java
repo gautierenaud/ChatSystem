@@ -1,5 +1,7 @@
 package gui;
 
+import main.*;
+
 // generate an output presentation based on the model
 
 public class GUIView {
@@ -26,7 +28,19 @@ public class GUIView {
 		ViewChatbox chatbox = ViewChatbox.getInstance(name);
 	}
 	
+	ViewUserList userList;
 	public void OpenUserList(){
-		ViewUserList userList = ViewUserList.getInstance();
+		userList = ViewUserList.getInstance();
+	}
+	
+	public void CloseUserList(){
+		userList = null;
+	}
+	
+	public void UpdateUserList(){
+		// the userList window is opened
+		if (userList != null){
+			userList.Update(ChatUserList.getInstance().GetUserList());
+		}
 	}
 }

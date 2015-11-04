@@ -1,14 +1,13 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import main.*;
 
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 // class to display the userList to the user
 
@@ -36,6 +35,7 @@ public class ViewUserList extends JFrame {
 	}
 	
 	private JTextArea searchArea = new JTextArea();
+	JPanel listPanel = new JPanel();
 	private void initComponents(){
 		// close everything when closed
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -51,14 +51,8 @@ public class ViewUserList extends JFrame {
 		});
 		
 		this.setLayout(new GridBagLayout());
-		
-		JPanel listPanel = new JPanel();
-		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
-		for (int i = 0; i < 20; i++) {
-			JButton lala = new JButton("lala");
-			lala.setAlignmentX(CENTER_ALIGNMENT);
-			listPanel.add(lala);
-		}
+
+		Update(ChatUserList.getInstance().GetUserList());
 		
 		GridBagConstraints scrollConst = new GridBagConstraints();
 		scrollConst.fill = GridBagConstraints.BOTH;
@@ -74,6 +68,25 @@ public class ViewUserList extends JFrame {
 		searchConst.gridy = 1;
 		searchConst.weightx = 0.0;
 		searchConst.weighty = 0.0;
+		// document event listener
+		searchArea.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				Update(ChatUserList.getInstance().SearchUserList(searchArea.getText()));
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				Update(ChatUserList.getInstance().SearchUserList(searchArea.getText()));
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				Update(ChatUserList.getInstance().SearchUserList(searchArea.getText()));
+			}
+		});
+		
 		this.add(searchArea, searchConst);
 		
 		
@@ -92,7 +105,22 @@ public class ViewUserList extends JFrame {
 		this.pack();
 		this.setResizable(false);
 		this.setSize(200, 400);
-		this.setVisible(true);
+		this.setVisible(true);	
+	}
+	
+	// updates the content of the list panel
+	public void Update(Vector<ChatUserInfo> userList){
 		
+		// clear the panel before putting items inside
+		listPanel.removeAll();
+		
+		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
+		for (ChatUserInfo user : userList) {
+			JButton lala = new JButton(user.getUsername());
+			lala.setAlignmentX(CENTER_ALIGNMENT);
+			listPanel.add(lala);
+		}
+		listPanel.revalidate();
+		listPanel.repaint();
 	}
 }

@@ -49,4 +49,8 @@ public class ChatMediator {
 	public void OpenUserList(){
 		gui.OpenUserList();
 	}
+	
+	public void UserListUpdated(){
+		gui.UserListUpdated();
+	}
 }

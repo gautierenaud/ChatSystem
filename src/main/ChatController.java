@@ -1,5 +1,8 @@
 package main;
 
+import java.net.*;
+
+import common.*;
 
 public class ChatController {
 
@@ -21,6 +24,11 @@ public class ChatController {
 	public void initAll(){
 		mediator = ChatMediator.getInstance();
 		mediator.Log();
+		
+		// for test purpose
+		for (int i = 0; i < 20; i++){
+			ChatUserList.getInstance().AddInstance(i + "", InetAddress.getLoopbackAddress());
+		}
 	}
 	
 	public void SetUserName(String name){
@@ -31,8 +39,39 @@ public class ChatController {
 		return userName;
 	}
 	
-	public void ReceiveMessage(String source, String message){
+	public void ReceiveMessage(Message message, InetAddress address){
 		
+		String userID = message.getSender() + "@" + address.toString();
+		
+		// if the userID is not inside
+		if (!ChatUserList.getInstance().IsInside(userID)){
+			ChatUserList.getInstance().AddInstance(message.getSender(), address);
+			mediator.UserListUpdated();
+		}
+		
+		switch (message.getType()){
+		case BYE:
+			ChatUserList.getInstance().removeInstance(userID);
+			
+			break;
+		case FILE_ACCEPT:
+			break;
+		case FILE_REFUSE:
+			break;
+		case FILE_REQUEST:
+			break;
+		case HELLO:
+			// the send a HELLO_REPLY to this address
+			break;
+		case HELLO_REPLY:
+			
+			break;
+		case TEXT_MESSAGE:
+			// give the message to the GUIModel
+			break;
+		default:
+			break;
+		}
 	}
 	
 	public void SendMessage(String message){
@@ -43,7 +82,4 @@ public class ChatController {
 		// send Hello from NI
 		mediator.OpenUserList();
 	}
-	
-	// manage the list of users
-	//private 
 }

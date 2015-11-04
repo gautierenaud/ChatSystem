@@ -52,4 +52,8 @@ public class ChatGUI {
 	public void OpenUserList(){
 		view.OpenUserList();
 	}
+	
+	public void UserListUpdated(){
+		view.UpdateUserList();
+	}
 }
