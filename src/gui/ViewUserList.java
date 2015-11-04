@@ -115,10 +115,48 @@ public class ViewUserList extends JFrame {
 		listPanel.removeAll();
 		
 		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
-		for (ChatUserInfo user : userList) {
-			JButton lala = new JButton(user.getUsername());
-			lala.setAlignmentX(CENTER_ALIGNMENT);
-			listPanel.add(lala);
+		for (final ChatUserInfo user : userList) {
+			JPanel userPanel = new JPanel();
+			JTextArea nameArea = new JTextArea(user.getUsername());
+			nameArea.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// TODO Auto-generated method stub
+					ChatGUI.getInstance().OpenChatbox(user);
+				}
+			});
+			
+			userPanel.add(nameArea);
+			userPanel.add(new JButton("lala"));
+			JButton chat = new JButton(user.getUsername());
+			chat.setSize(new Dimension(1000, 10));
+			chat.setAlignmentX(CENTER_ALIGNMENT);
+			listPanel.add(userPanel);
 		}
 		listPanel.revalidate();
 		listPanel.repaint();

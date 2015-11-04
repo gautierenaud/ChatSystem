@@ -1,6 +1,6 @@
 package gui;
 
-import main.ChatMediator;
+import main.*;
 
 // ceci est un chat gui
 //non ceci est une tata
@@ -36,8 +36,8 @@ public class ChatGUI {
 		view.OpenLoginWindow();
 	}
 	
-	public void OpenChatbox(String name){
-		view.OpenChatbox(name);
+	public void OpenChatbox(ChatUserInfo info){
+		view.OpenChatbox(info);
 	}
 	
 	public void UserLogged(String username){

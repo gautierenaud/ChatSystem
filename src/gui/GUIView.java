@@ -24,8 +24,8 @@ public class GUIView {
 		ViewLogin login = new ViewLogin();
 	}
 	
-	public void OpenChatbox(String name){
-		ViewChatbox chatbox = ViewChatbox.getInstance(name);
+	public void OpenChatbox(ChatUserInfo info){
+		ViewChatbox chatbox = ViewChatbox.getInstance(info);
 	}
 	
 	ViewUserList userList;

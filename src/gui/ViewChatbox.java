@@ -1,28 +1,33 @@
 package gui;
 
 import javax.swing.*;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+import javax.swing.text.*;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import java.util.*;
+
+import main.*;
 
 public class ViewChatbox extends JFrame implements ActionListener{
 	
 	// multiton pattern
 	private static Map<String, ViewChatbox> chatboxList = new HashMap<String, ViewChatbox>();
 	
-	private ViewChatbox(String name){
-		initComponents(name);
+	private ViewChatbox(ChatUserInfo info){
+		initComponents(info);
 	}
 	
-	public static ViewChatbox getInstance(String name){
-		if (!chatboxList.containsKey(name)){
-			chatboxList.put(name, new ViewChatbox(name));
+	public static ViewChatbox getInstance(ChatUserInfo info){
+		if (!chatboxList.containsKey(info.getUserID())){
+			chatboxList.put(info.getUserID(), new ViewChatbox(info));
 		}
-		return chatboxList.get(name);
+		return chatboxList.get(info.getUserID());
+	}
+	
+	private void removeInstance(String id){
+		chatboxList.remove(id);
 	}
 	
 	// update the content of a chatbox when he/she received a message
@@ -33,9 +38,10 @@ public class ViewChatbox extends JFrame implements ActionListener{
 	}
 	
 	private void Update(){
-		GUIModel.getInstance().getMessages(opponentName);
+		GUIModel.getInstance().getMessages(opponentID);
 	}
 	
+	private String opponentID;
 	private String opponentName;
 	private JTextPane messageZone = new JTextPane();
 	private JScrollPane messageScroll;
@@ -43,19 +49,28 @@ public class ViewChatbox extends JFrame implements ActionListener{
 	private JTextField sendZone;
 	private Button sendButton;
 	
-	private void initComponents(String name){
+	private void initComponents(ChatUserInfo info){
 		// set the default behavior when closing
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
 		// set the layout of the login windows
 		this.setLayout(new GridLayout(2,1));
 		
-		opponentName = name;
+		// remove the instance when closing
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e){
+				removeInstance(opponentID);
+			}
+		});
+		
+		opponentID = info.getUserID();
+		opponentName = info.getUsername();
 		
 		// write the content of the conversation to the ChatBox
 		messageZone.setEditable(false);
 
-		Vector<MessageStruct> conversationList = GUIModel.getInstance().getMessages(opponentName);
+		Vector<MessageStruct> conversationList = GUIModel.getInstance().getMessages(opponentID);
 		if (conversationList != null){
 			for(MessageStruct message: conversationList){
 				AddMessage(message.getSource(), message);
@@ -76,7 +91,7 @@ public class ViewChatbox extends JFrame implements ActionListener{
 		this.add(bottomPanel);
 		// packs the fenetre: size is calculated
 		// regarding the added components
-		this.setTitle(name);
+		this.setTitle(opponentName);
 		this.pack();
 		this.setSize(400,70);
 		// the JFrame is visible now
@@ -119,8 +134,5 @@ public class ViewChatbox extends JFrame implements ActionListener{
 			sendZone.setText("");
 		}
 		
-	}
-
-	
-	
+	}	
 }
