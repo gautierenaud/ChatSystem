@@ -42,8 +42,8 @@ public class ChatMediator {
 		return control.GetUserName();
 	}
 	
-	public void Chatbox(String name){
-		gui.OpenChatbox(name);
+	public void Chatbox(ChatUserInfo info){
+		gui.OpenChatbox(info);
 	}
 	
 	public void OpenUserList(){
