@@ -25,8 +25,8 @@ public class ChatController {
 		mediator = ChatMediator.getInstance();
 		mediator.Log();
 		
-		// for test purpose
-		for (int i = 0; i < 20; i++){
+		// test user list
+		for (int i = 0; i < 100; i++){
 			ChatUserList.getInstance().AddInstance(i + "", InetAddress.getLoopbackAddress());
 		}
 	}
@@ -68,6 +68,7 @@ public class ChatController {
 			break;
 		case TEXT_MESSAGE:
 			// give the message to the GUIModel
+			//mediator.MessageReceived();
 			break;
 		default:
 			break;
@@ -81,5 +82,11 @@ public class ChatController {
 		SetUserName(name);
 		// send Hello from NI
 		mediator.OpenUserList();
+		
+		// test chatbox
+		/*
+		ChatUserList.getInstance().AddInstance("rgautier", InetAddress.getLoopbackAddress());
+		mediator.Chatbox(ChatUserList.getInstance().getInstance("rgautier@" + InetAddress.getLoopbackAddress().toString()));
+		*/
 	}
 }
