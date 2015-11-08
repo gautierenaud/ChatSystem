@@ -21,7 +21,7 @@ public class FileNI {
 			instance= new FileNI(); 
 		return instance; 
 	}
-	
+	  
 	private Stack<File> fileBuffer; 
 	private TCPSender tcpSender;
 	private TCPReceiver tcpReceiver;

@@ -8,7 +8,7 @@ import common.Message;
 public class UDPReceiver extends Thread{
 	
 	private DatagramSocket receiver; 
-	private byte[] buf = new byte[1500]; ; 
+	private byte[] buf = new byte[1500]; 
 	
 	
 	public UDPReceiver(){
@@ -24,20 +24,10 @@ public class UDPReceiver extends Thread{
 	
 	public void receive(){
 		DatagramPacket packet = new DatagramPacket(buf, buf.length);	
-		ObjectInputStream ois;
 		try {
 			this.receiver.receive(packet);
 			//System.out.println(packet.getAddress());
-			ByteArrayInputStream bais = new ByteArrayInputStream(buf);
-			ois = new ObjectInputStream(bais);
-			try {
-				Message msgRecu = (Message) ois.readObject();
-				System.out.println(msgRecu + packet.getAddress().toString());
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+			MessageNI.getInstance().addPacketBuff(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

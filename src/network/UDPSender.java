@@ -17,35 +17,18 @@ public class UDPSender {
 		}
 	}
 	
-	public void sendMsg(Message msg, InetAddress address){
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ObjectOutputStream oos;
+	public void send(DatagramPacket packet){
 		try {
-			oos = new ObjectOutputStream(baos);
-			oos.writeObject(msg);
-			oos.flush();
-			oos.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		byte[] buf= baos.toByteArray();
-		DatagramPacket packet;
-		
-		try {
-			packet = new DatagramPacket(buf, buf.length, address, 2042);
 			senderSocket.send(packet);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println("Msg sent");
 	}
 	
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		UDPSender sender = new UDPSender();
 		UDPReceiver receiver = new UDPReceiver();
@@ -56,6 +39,6 @@ public class UDPSender {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 }

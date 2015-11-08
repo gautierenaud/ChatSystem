@@ -1,7 +1,8 @@
 package network;
 
 import java.io.IOException;
-
+import java.net.InetAddress;
+import common.Message;
 // class that will control all the network-related operations
 
 public class NetworkInterface {
@@ -24,6 +25,14 @@ public class NetworkInterface {
 			instance = new NetworkInterface();
 		return instance;
 	}
-	
+	//methode qui ajoute au stack et envoie en suivant
+	public void sendMessage(Message mess, InetAddress address){//a optimiser car Stack ne sert a rien -->threads pour MessNI?
+		messNI.addMsgBuff(mess);
+		messNI.sendPacket(address);
+	}
+	//methode qui recupere un message arrivé
+	public Message getMessage(){
+		return messNI.turnPacketToMessage();
+	}
 }
  
