@@ -19,7 +19,7 @@ public class ChatUserList {
 	// HashMap for storing user's information
 	private HashMap<String, ChatUserInfo> userList = new HashMap<>();
 	
-	public ChatUserInfo getInstance(String userID){
+	public ChatUserInfo getUser(String userID){
 		return userList.get(userID);
 	}
 	
@@ -39,6 +39,13 @@ public class ChatUserList {
 	// remove an instance
 	public void removeInstance(String userID){
 		userList.remove(userID);
+	}
+	
+	public InetAddress GetAddress(String userID){
+		if (userList.containsKey(userID)){
+			return userList.get(userID).getAddress();
+		}
+		return null;
 	}
 	
 	// return a list of the users

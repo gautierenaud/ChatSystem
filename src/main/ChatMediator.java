@@ -6,7 +6,7 @@ import network.*;
 public class ChatMediator {
 
 	private static ChatGUI gui;
-	private static ChatController control;
+	private static ChatController controller;
 	private static NetworkInterface network;
 	
 	private static ChatMediator instance;
@@ -14,14 +14,16 @@ public class ChatMediator {
 	private ChatMediator(){
 		
 		gui = ChatGUI.getInstance();
-		control = ChatController.getInstance();
+		controller = ChatController.getInstance();
 		//network = NetworkInterface.getInstance();
 		
 	}
 
 	public static ChatMediator getInstance(){
-		if (instance == null)
+		if (instance == null){
 			instance = new ChatMediator();
+			gui.SetMediator(instance);
+		}
 		return instance;
 	}
 	
@@ -35,11 +37,18 @@ public class ChatMediator {
 	}
 	
 	public void Logged(String name){
-		control.Logged(name);
+		controller.Logged(name);
 	}
 	
+	public void LogOut(){
+		controller.LogOut();
+	}
+	
+	public void LoggedOut(){
+		gui.LoggedOut();
+	}
 	public String GetUserName(){
-		return control.GetUserName();
+		return controller.GetUserName();
 	}
 	
 	public void Chatbox(ChatUserInfo info){
@@ -52,5 +61,9 @@ public class ChatMediator {
 	
 	public void UserListUpdated(){
 		gui.UserListUpdated();
+	}
+	
+	public void SendMessage(String destinationID, MessageStruct message){
+		controller.SendMessage(destinationID, message);
 	}
 }

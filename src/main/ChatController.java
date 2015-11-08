@@ -1,8 +1,11 @@
 package main;
 
+import java.awt.TrayIcon.MessageType;
 import java.net.*;
 
 import common.*;
+import common.Message.MsgType;
+import gui.*;
 
 public class ChatController {
 
@@ -19,12 +22,14 @@ public class ChatController {
 	
 	private static ChatMediator mediator;
 	private String userName;
+	private ChatUserList userList;
 	
 	// Instantiate all the different classes
 	public void initAll(){
 		mediator = ChatMediator.getInstance();
 		mediator.Log();
-		
+
+		userList = ChatUserList.getInstance();
 		// test user list
 		for (int i = 0; i < 30; i++){
 			ChatUserList.getInstance().AddInstance(i + "", InetAddress.getLoopbackAddress());
@@ -44,15 +49,15 @@ public class ChatController {
 		String userID = message.getSender() + "@" + address.toString();
 		
 		// if the userID is not inside
-		if (!ChatUserList.getInstance().IsInside(userID)){
-			ChatUserList.getInstance().AddInstance(message.getSender(), address);
+		if (!userList.IsInside(userID)){
+			userList.AddInstance(message.getSender(), address);
 			mediator.UserListUpdated();
 		}
 		
 		switch (message.getType()){
 		case BYE:
-			ChatUserList.getInstance().removeInstance(userID);
-			
+			userList.removeInstance(userID);
+			// mediator.SendGoodBye();
 			break;
 		case FILE_ACCEPT:
 			break;
@@ -75,7 +80,11 @@ public class ChatController {
 		}
 	}
 	
-	public void SendMessage(String message){
+	// will create a message to send
+	public void SendMessage(String destinationID, MessageStruct message){
+		Message msg = new Message(MsgType.TEXT_MESSAGE , message.getMessage(), GetUserName());
+		// give it to the NetworkNI
+		// mediator.Send(msg, userList.GetAddress(destinationID));
 	}
 	
 	public void Logged(String name){
@@ -84,9 +93,14 @@ public class ChatController {
 		mediator.OpenUserList();
 		
 		// test chatbox
-		
+		/*
 		ChatUserList.getInstance().AddInstance("rgautier", InetAddress.getLoopbackAddress());
-		mediator.Chatbox(ChatUserList.getInstance().getInstance("rgautier@" + InetAddress.getLoopbackAddress().toString()));
-		
+		mediator.Chatbox(ChatUserList.getInstance().getUser("rgautier@" + InetAddress.getLoopbackAddress().toString()));
+		*/
+	}
+	
+	public void LogOut(){
+		// send Good bye
+		mediator.LoggedOut();
 	}
 }

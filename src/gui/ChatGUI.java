@@ -22,10 +22,15 @@ public class ChatGUI {
 	
 	private GUIView view;
 	private GUIModel model;
+	private ChatMediator mediator;
 	
 	private void initGUI(){
 		view = GUIView.getInstance(this);
 		model = GUIModel.getInstance(this);
+	}
+	
+	public void SetMediator(ChatMediator mediator){
+		this.mediator = mediator;
 	}
 	
 	public void ShowMessage(String msg, String usr){
@@ -42,11 +47,11 @@ public class ChatGUI {
 	
 	public void UserLogged(String username){
 		// give the username to the controller
-		ChatMediator.getInstance().Logged(username);
+		mediator.Logged(username);
 	}
 	
 	public String GetUserName(){
-		return ChatMediator.getInstance().GetUserName();
+		return mediator.GetUserName();
 	}
 	
 	public void OpenUserList(){
@@ -55,5 +60,21 @@ public class ChatGUI {
 	
 	public void UserListUpdated(){
 		view.UpdateUserList();
+	}
+	
+	public void LogOut(){
+		mediator.LogOut();
+	}
+	
+	public void LoggedOut(){
+		view.CloseUserList();
+		view.OpenLoginWindow();
+	}
+	
+	public void SendMessage(String msg, String opponentID){
+		String userName = mediator.GetUserName();
+		MessageStruct message = new MessageStruct(userName, msg);
+		model.AddMessage(opponentID, message);
+		mediator.SendMessage(opponentID, message);
 	}
 }

@@ -39,6 +39,7 @@ public class ViewLogin extends JFrame implements ActionListener{
 		// regarding the added components
 		this.pack();
 		this.setSize(400,70);
+		this.setResizable(false);
 		// the JFrame is visible now
 		this.setVisible(true);
 	}

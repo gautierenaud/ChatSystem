@@ -16,9 +16,10 @@ public class GUIModel {
 		this.controller = controller;
 		
 		// add junk data for test
+		/*
 		this.AddMessage("rgautier@" + InetAddress.getLoopbackAddress().toString(), new MessageStruct("rgautier", "HelloWorld"));
 		this.AddMessage("rgautier@" + InetAddress.getLoopbackAddress().toString(), new MessageStruct("autre", "Hello rgautier"));
-		
+		*/
 	}
 
 	public static GUIModel getInstance() {
@@ -64,6 +65,10 @@ public class GUIModel {
 		}
 		// append message at the end of the list
 		conversationList.get(opponentID).add(message);
+		if (GUIView.getInstance().IsChatOpen(opponentID)){
+			GUIView.getInstance().GetChatBox(opponentID).AppendMessage(message);
+		}
+			
 	}
 	
 	// observer pattern for the messages

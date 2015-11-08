@@ -19,7 +19,7 @@ import javax.swing.event.DocumentListener;
  * 
  */
 
-public class ViewUserList extends JFrame {
+public class ViewUserList extends JFrame implements ActionListener{
 	
 	//there should be only one instance of UserList window at any moment
 	private static ViewUserList instance;
@@ -36,6 +36,7 @@ public class ViewUserList extends JFrame {
 	
 	private JTextArea searchArea = new JTextArea();
 	JPanel listPanel = new JPanel();
+	JButton disconnectButton;
 	private void initComponents(){
 		// close everything when closed
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -49,25 +50,25 @@ public class ViewUserList extends JFrame {
 				e.getWindow().dispose();
 			}
 		});
-		
-		this.setLayout(new GridBagLayout());
 
 		Update(ChatUserList.getInstance().GetUserList());
-		
-		GridBagConstraints scrollConst = new GridBagConstraints();
-		scrollConst.fill = GridBagConstraints.BOTH;
-		scrollConst.weightx = 1.0;
-		scrollConst.weighty = 1.0;
+		GridBagLayout gridBagLayout = new GridBagLayout();
+		gridBagLayout.columnWidths = new int[]{10, 112, 10, 0};
+		gridBagLayout.rowHeights = new int[]{10, 21, 5, 29, 25, 10, 0};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		getContentPane().setLayout(gridBagLayout);
 		JScrollPane scroll = new JScrollPane(listPanel);
-		this.add(scroll, scrollConst);
+		GridBagConstraints gbc_scroll = new GridBagConstraints();
+		gbc_scroll.fill = GridBagConstraints.BOTH;
+		gbc_scroll.insets = new Insets(0, 0, 5, 5);
+		gbc_scroll.gridx = 1;
+		gbc_scroll.gridy = 1;
+		getContentPane().add(scroll, gbc_scroll);
 		
-		/**** Search Box ****/
-		// layout
-		GridBagConstraints searchConst = new GridBagConstraints();
-		searchConst.fill = GridBagConstraints.HORIZONTAL;
-		searchConst.gridy = 1;
-		searchConst.weightx = 0.0;
-		searchConst.weighty = 0.0;
+		//listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
+		//listPanel.setLayout(new FlowLayout());
+		listPanel.setLayout(new VerticalFlowLayout(VerticalFlowLayout.TOP));
 		// document event listener
 		searchArea.getDocument().addDocumentListener(new DocumentListener() {
 			
@@ -87,19 +88,21 @@ public class ViewUserList extends JFrame {
 			}
 		});
 		
-		this.add(searchArea, searchConst);
-		
-		
-		/**** Disconnect Button****/
-		// layout
-		GridBagConstraints buttonConst = new GridBagConstraints();
-		buttonConst.fill = GridBagConstraints.HORIZONTAL;
-		buttonConst.gridy = 2;
-		buttonConst.weightx = 0.0;
-		buttonConst.weighty = 0.0;
+		GridBagConstraints gbc_searchArea = new GridBagConstraints();
+		gbc_searchArea.fill = GridBagConstraints.HORIZONTAL;
+		gbc_searchArea.insets = new Insets(0, 0, 5, 5);
+		gbc_searchArea.gridx = 1;
+		gbc_searchArea.gridy = 3;
+		getContentPane().add(searchArea, gbc_searchArea);
 		// button
-		JButton disconnectButton = new JButton("Disconnect");
-		this.add(disconnectButton, buttonConst);
+		disconnectButton = new JButton("Disconnect");
+		disconnectButton.addActionListener(this);
+		GridBagConstraints gbc_disconnectButton = new GridBagConstraints();
+		gbc_disconnectButton.insets = new Insets(0, 0, 5, 5);
+		gbc_disconnectButton.fill = GridBagConstraints.HORIZONTAL;
+		gbc_disconnectButton.gridx = 1;
+		gbc_disconnectButton.gridy = 4;
+		getContentPane().add(disconnectButton, gbc_disconnectButton);
 		
 		this.setTitle("UserList");
 		this.pack();
@@ -113,8 +116,6 @@ public class ViewUserList extends JFrame {
 		
 		// clear the panel before putting items inside
 		listPanel.removeAll();
-		
-		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
 		//listPanel.setLayout(new FlowLayout());
 		//listPanel.setLayout(new GridBagLayout());
 		
@@ -156,10 +157,10 @@ public class ViewUserList extends JFrame {
 					ChatGUI.getInstance().OpenChatbox(user);
 				}
 			});
-						
-			nameArea.setBackground(new Color(15, 20, 120));
+			
+			nameArea.setMinimumSize(new Dimension(50,10));
 			userPanel.add(nameArea);
-			userPanel.add(new JButton("lala"));
+			userPanel.add(new JButton("File"));
 			
 			GridBagConstraints panelConst = new GridBagConstraints();
 			panelConst.weightx = 0.0;
@@ -172,5 +173,13 @@ public class ViewUserList extends JFrame {
 		}
 		listPanel.revalidate();
 		listPanel.repaint();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == disconnectButton){
+			ChatGUI.getInstance().LogOut();
+		}
+		
 	}
 }

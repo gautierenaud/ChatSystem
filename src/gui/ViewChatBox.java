@@ -9,33 +9,18 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class ViewChatBox {
+public class ViewChatBox implements ActionListener {
 
-	private JFrame frame;
-	private JTextField sendText;
+	private ChatGUI controller;
+	private GUIView view;
 	
-	/**
-	 * Create the application.
-	 * (multiton pattern)
-	 */
-	private static Map<String, ViewChatBox> chatboxList = new HashMap<String, ViewChatBox>();
-	
-	private ViewChatBox(ChatUserInfo info){
+	public ViewChatBox(ChatUserInfo info){
 		InitializeStyle();
 		Initialize(info);
+		view = GUIView.getInstance();
+		controller = ChatGUI.getInstance();
 	}
-	
-	public static ViewChatBox getInstance(ChatUserInfo info){
-		if (!chatboxList.containsKey(info.getUserID())){
-			chatboxList.put(info.getUserID(), new ViewChatBox(info));
-		}
-		return chatboxList.get(info.getUserID());
-	}
-	
-	private void removeInstance(String id){
-		chatboxList.remove(id);
-	}
-
+		
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -43,6 +28,9 @@ public class ViewChatBox {
 	private String id;
 	private String sourceName;
 	private JTextPane messageArea;
+	private JButton sendButton;
+	private JFrame frame;
+	private JTextField sendText;
 	
 	private void Initialize(ChatUserInfo info) {
 		
@@ -58,7 +46,7 @@ public class ViewChatBox {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e){
-				removeInstance(id);
+				view.CloseChatBox(id);
 			}
 		});
 		
@@ -84,7 +72,6 @@ public class ViewChatBox {
 		DisplayAllMessages();
 		
 		sendText = new JTextField();
-		sendText.setText("send message");
 		GridBagConstraints gbc_sendText = new GridBagConstraints();
 		gbc_sendText.insets = new Insets(0, 0, 5, 5);
 		gbc_sendText.fill = GridBagConstraints.HORIZONTAL;
@@ -93,12 +80,13 @@ public class ViewChatBox {
 		frame.getContentPane().add(sendText, gbc_sendText);
 		sendText.setColumns(10);
 		
-		JButton btnSend = new JButton("Send");
+		sendButton = new JButton("Send");
+		sendButton.addActionListener(this);
 		GridBagConstraints gbc_btnSend = new GridBagConstraints();
 		gbc_btnSend.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSend.gridx = 2;
 		gbc_btnSend.gridy = 2;
-		frame.getContentPane().add(btnSend, gbc_btnSend);
+		frame.getContentPane().add(sendButton, gbc_btnSend);
 		frame.setVisible(true);
 	}
 	
@@ -134,6 +122,15 @@ public class ViewChatBox {
 			for (MessageStruct msg : messages){
 				AppendMessage(msg);
 			}
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == sendButton){
+			// send Message
+			controller.SendMessage(sendText.getText(), id);
+			sendText.setText("");
 		}
 	}
 }
