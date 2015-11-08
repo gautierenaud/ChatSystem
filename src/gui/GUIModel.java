@@ -1,5 +1,6 @@
 package gui;
 
+import java.net.InetAddress;
 import java.util.*;
 
 // stores data from the controller
@@ -13,11 +14,11 @@ public class GUIModel {
 	
 	private GUIModel(ChatGUI controller){
 		this.controller = controller;
-		/*
+		
 		// add junk data for test
-		this.AddMessage("rgautier", new MessageStruct("rgautier", "HelloWorld"));
-		this.AddMessage("rgautier", new MessageStruct("autre", "Hello rgautier"));
-		*/
+		this.AddMessage("rgautier@" + InetAddress.getLoopbackAddress().toString(), new MessageStruct("rgautier", "HelloWorld"));
+		this.AddMessage("rgautier@" + InetAddress.getLoopbackAddress().toString(), new MessageStruct("autre", "Hello rgautier"));
+		
 	}
 
 	public static GUIModel getInstance() {
@@ -55,14 +56,14 @@ public class GUIModel {
 	
 	// add one new message to the list
 	// only one thread can use this method at a time
-	public synchronized void AddMessage(String opponent, MessageStruct message){
+	public synchronized void AddMessage(String opponentID, MessageStruct message){
 		// if the conversation does not exists, create a new one
-		if (!conversationList.containsKey(opponent)){
+		if (!conversationList.containsKey(opponentID)){
 			// create a new conversation list
-			conversationList.put(opponent, new Vector<MessageStruct>());
+			conversationList.put(opponentID, new Vector<MessageStruct>());
 		}
 		// append message at the end of the list
-		conversationList.get(opponent).add(message);
+		conversationList.get(opponentID).add(message);
 	}
 	
 	// observer pattern for the messages

@@ -26,7 +26,7 @@ public class ChatController {
 		mediator.Log();
 		
 		// test user list
-		for (int i = 0; i < 100; i++){
+		for (int i = 0; i < 30; i++){
 			ChatUserList.getInstance().AddInstance(i + "", InetAddress.getLoopbackAddress());
 		}
 	}
@@ -84,9 +84,9 @@ public class ChatController {
 		mediator.OpenUserList();
 		
 		// test chatbox
-		/*
+		
 		ChatUserList.getInstance().AddInstance("rgautier", InetAddress.getLoopbackAddress());
 		mediator.Chatbox(ChatUserList.getInstance().getInstance("rgautier@" + InetAddress.getLoopbackAddress().toString()));
-		*/
+		
 	}
 }

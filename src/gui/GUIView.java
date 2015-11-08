@@ -20,12 +20,11 @@ public class GUIView {
 	}
 	
 	public void OpenLoginWindow(){
-		//new Thread(new ViewLogin()).start();
 		ViewLogin login = new ViewLogin();
 	}
 	
 	public void OpenChatbox(ChatUserInfo info){
-		ViewChatbox chatbox = ViewChatbox.getInstance(info);
+		ViewChatBox chatbox = ViewChatBox.getInstance(info);
 	}
 	
 	ViewUserList userList;

@@ -114,9 +114,15 @@ public class ViewUserList extends JFrame {
 		// clear the panel before putting items inside
 		listPanel.removeAll();
 		
-		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.PAGE_AXIS));
+		listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
+		//listPanel.setLayout(new FlowLayout());
+		//listPanel.setLayout(new GridBagLayout());
+		
+		int position = 0;
 		for (final ChatUserInfo user : userList) {
 			JPanel userPanel = new JPanel();
+			// constraints for the panel
+			
 			JTextArea nameArea = new JTextArea(user.getUsername());
 			nameArea.addMouseListener(new MouseListener() {
 				
@@ -150,12 +156,18 @@ public class ViewUserList extends JFrame {
 					ChatGUI.getInstance().OpenChatbox(user);
 				}
 			});
-			
+						
+			nameArea.setBackground(new Color(15, 20, 120));
 			userPanel.add(nameArea);
 			userPanel.add(new JButton("lala"));
-			JButton chat = new JButton(user.getUsername());
-			chat.setSize(new Dimension(1000, 10));
-			chat.setAlignmentX(CENTER_ALIGNMENT);
+			
+			GridBagConstraints panelConst = new GridBagConstraints();
+			panelConst.weightx = 0.0;
+			panelConst.weighty = 1.0;
+			panelConst.gridx = 0;
+			panelConst.gridy = position;
+			position++;
+			
 			listPanel.add(userPanel);
 		}
 		listPanel.revalidate();
