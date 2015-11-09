@@ -30,7 +30,7 @@ public class NetworkInterface {
 		messNI.addMsgBuff(mess);
 		messNI.sendPacket(address);
 	}
-	//methode qui recupere un message arrivé
+	//methode qui recupere un message arrivï¿½
 	public Message getMessage(){
 		return messNI.turnPacketToMessage();
 	}

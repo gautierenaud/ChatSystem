@@ -6,8 +6,8 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import javax.swing.border.Border;
+import javax.swing.event.*;
 
 // class to display the userList to the user
 
@@ -107,7 +107,7 @@ public class ViewUserList extends JFrame implements ActionListener{
 		this.setTitle("UserList");
 		this.pack();
 		this.setResizable(false);
-		this.setSize(200, 400);
+		this.setSize(250, 500);
 		this.setVisible(true);	
 	}
 	
@@ -116,15 +116,13 @@ public class ViewUserList extends JFrame implements ActionListener{
 		
 		// clear the panel before putting items inside
 		listPanel.removeAll();
-		//listPanel.setLayout(new FlowLayout());
-		//listPanel.setLayout(new GridBagLayout());
 		
-		int position = 0;
 		for (final ChatUserInfo user : userList) {
 			JPanel userPanel = new JPanel();
-			// constraints for the panel
 			
 			JTextArea nameArea = new JTextArea(user.getUsername());
+			nameArea.setColumns(15);
+			nameArea.setEditable(false);
 			nameArea.addMouseListener(new MouseListener() {
 				
 				@Override
@@ -156,18 +154,8 @@ public class ViewUserList extends JFrame implements ActionListener{
 					// TODO Auto-generated method stub
 					ChatGUI.getInstance().OpenChatbox(user);
 				}
-			});
-			
-			nameArea.setMinimumSize(new Dimension(50,10));
+			});			
 			userPanel.add(nameArea);
-			userPanel.add(new JButton("File"));
-			
-			GridBagConstraints panelConst = new GridBagConstraints();
-			panelConst.weightx = 0.0;
-			panelConst.weighty = 1.0;
-			panelConst.gridx = 0;
-			panelConst.gridy = position;
-			position++;
 			
 			listPanel.add(userPanel);
 		}

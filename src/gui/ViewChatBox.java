@@ -29,6 +29,7 @@ public class ViewChatBox implements ActionListener {
 	private String sourceName;
 	private JTextPane messageArea;
 	private JButton sendButton;
+	private JButton fileButton;
 	private JFrame frame;
 	private JTextField sendText;
 	
@@ -51,16 +52,16 @@ public class ViewChatBox implements ActionListener {
 		});
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{10, 321, 0, 10, 0};
+		gridBagLayout.columnWidths = new int[]{10, 321, 0, 0, 10, 0};
 		gridBagLayout.rowHeights = new int[]{10, 218, 0, 10, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridwidth = 2;
+		gbc_scrollPane.gridwidth = 3;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 1;
@@ -87,6 +88,14 @@ public class ViewChatBox implements ActionListener {
 		gbc_btnSend.gridx = 2;
 		gbc_btnSend.gridy = 2;
 		frame.getContentPane().add(sendButton, gbc_btnSend);
+		
+		fileButton = new JButton("File");
+		fileButton.addActionListener(this);
+		GridBagConstraints gbc_fileButton = new GridBagConstraints();
+		gbc_fileButton.insets = new Insets(0, 0, 5, 5);
+		gbc_fileButton.gridx = 3;
+		gbc_fileButton.gridy = 2;
+		frame.getContentPane().add(fileButton, gbc_fileButton);
 		frame.setVisible(true);
 	}
 	
@@ -131,6 +140,13 @@ public class ViewChatBox implements ActionListener {
 			// send Message
 			controller.SendMessage(sendText.getText(), id);
 			sendText.setText("");
+		}else if (e.getSource() == fileButton){
+			JFileChooser fileChooser = new JFileChooser();
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+			int result = fileChooser.showOpenDialog(fileChooser);
+			if (result == JFileChooser.APPROVE_OPTION){
+				System.out.println(fileChooser.getSelectedFile().getName());
+			}
 		}
 	}
 }
