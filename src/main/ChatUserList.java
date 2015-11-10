@@ -24,12 +24,12 @@ public class ChatUserList {
 	}
 	
 	// look for the element
-	public boolean IsInside(String userID){
+	public boolean isInside(String userID){
 		return userList.containsKey(userID);
 	}
 	
 	// add an instance
-	public synchronized void AddInstance(String username, InetAddress address){
+	public synchronized void addInstance(String username, InetAddress address){
 		String tmpID = username + "@" + address.toString();		
 		if (!userList.containsKey(tmpID)){
 			userList.put(tmpID, new ChatUserInfo(username, address));
@@ -41,7 +41,7 @@ public class ChatUserList {
 		userList.remove(userID);
 	}
 	
-	public InetAddress GetAddress(String userID){
+	public InetAddress getAddress(String userID){
 		if (userList.containsKey(userID)){
 			return userList.get(userID).getAddress();
 		}
@@ -49,7 +49,7 @@ public class ChatUserList {
 	}
 	
 	// return a list of the users
-	public Vector<ChatUserInfo> GetUserList(){
+	public Vector<ChatUserInfo> getUserList(){
 		Vector<ChatUserInfo> result = new Vector<>();
 		for (ChatUserInfo user : userList.values() ){
 			result.addElement(user);
@@ -58,9 +58,9 @@ public class ChatUserList {
 	}
 	
 	// return a list of users, containing the input string
-	public Vector<ChatUserInfo> SearchUserList(String input){
+	public Vector<ChatUserInfo> searchUserList(String input){
 		if (input == "")
-			return GetUserList();
+			return getUserList();
 		else{
 			Vector<ChatUserInfo> result = new Vector<>();
 			for (ChatUserInfo user : userList.values() ){

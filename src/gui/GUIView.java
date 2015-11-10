@@ -29,47 +29,55 @@ public class GUIView {
 		return instance;
 	}
 	
-	public void OpenLoginWindow(){
-		ViewLogin login = new ViewLogin();
+	private ViewLogin login;
+	public void openLoginWindow(){
+		if (login == null)
+			login = new ViewLogin();
 	}
 	
-	public void OpenChatbox(ChatUserInfo info){
+	public void closeLoginWindow(){
+		login = null;
+	}
+	
+	public void openChatbox(ChatUserInfo info){
 		//multiton pattern
-		if (!IsChatOpen(info.getUserID())){
+		if (!isChatOpen(info.getUserID())){
 			chatBox.put(info.getUserID(), new ViewChatBox(info));
 		}
 	}
 	
-	public ViewChatBox GetChatBox(String id){
+	public ViewChatBox getChatBox(String id){
 		return chatBox.get(id);
 	}
 	
-	public boolean IsChatOpen(String id){
+	public boolean isChatOpen(String id){
 		return chatBox.containsKey(id);
 	}
 	
-	public void CloseChatBox(String id){
+	public void closeChatBox(String id){
 		chatBox.remove(id);
 	}
 	
 	private ViewUserList userList;
-	public void OpenUserList(){
-		userList = ViewUserList.getInstance();
+	public void openUserList(){
+		userList = new ViewUserList();
 	}
 	
-	public void CloseUserList(){
+	public void closeUserList(){
 		if (userList != null)
 			userList.dispose();
+		System.out.println("lala");
+		userList = null;
 	}
 	
-	public void UpdateUserList(){
+	public void updateUserList(){
 		// the userList window is opened
 		if (userList != null){
-			userList.Update(ChatUserList.getInstance().GetUserList());
+			userList.updateList(ChatUserList.getInstance().getUserList());
 		}
 	}
 	
-	public void SetMediator(ChatMediator mediator){
+	public void setMediator(ChatMediator mediator){
 		this.mediator = mediator;
 	}
 }

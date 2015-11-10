@@ -1,6 +1,5 @@
 package main;
 
-import java.awt.TrayIcon.MessageType;
 import java.net.*;
 
 import common.*;
@@ -27,31 +26,31 @@ public class ChatController {
 	// Instantiate all the different classes
 	public void initAll(){
 		mediator = ChatMediator.getInstance();
-		mediator.Log();
+		mediator.log();
 
 		userList = ChatUserList.getInstance();
 		// test user list
 		for (int i = 0; i < 30; i++){
-			ChatUserList.getInstance().AddInstance(i + "", InetAddress.getLoopbackAddress());
+			ChatUserList.getInstance().addInstance(i + "", InetAddress.getLoopbackAddress());
 		}
 	}
 	
-	public void SetUserName(String name){
+	public void setUserName(String name){
 		userName = name;
 	}
 	
-	public String GetUserName(){
+	public String getUserName(){
 		return userName;
 	}
 	
-	public void ReceiveMessage(Message message, InetAddress address){
+	public void receiveMessage(Message message, InetAddress address){
 		
 		String userID = message.getSender() + "@" + address.toString();
 		
 		// if the userID is not inside
-		if (!userList.IsInside(userID)){
-			userList.AddInstance(message.getSender(), address);
-			mediator.UserListUpdated();
+		if (!userList.isInside(userID)){
+			userList.addInstance(message.getSender(), address);
+			mediator.userListUpdated();
 		}
 		
 		switch (message.getType()){
@@ -81,16 +80,16 @@ public class ChatController {
 	}
 	
 	// will create a message to send
-	public void SendMessage(String destinationID, MessageStruct message){
-		Message msg = new Message(MsgType.TEXT_MESSAGE , message.getMessage(), GetUserName());
+	public void createMessage(String destinationID, MessageStruct message){
+		Message msg = new Message(MsgType.TEXT_MESSAGE , message.getMessage(), getUserName());
 		// give it to the NetworkNI
 		// mediator.Send(msg, userList.GetAddress(destinationID));
 	}
 	
-	public void Logged(String name){
-		SetUserName(name);
+	public void logged(String name){
+		setUserName(name);
 		// send Hello from NI
-		mediator.OpenUserList();
+		mediator.openUserList();
 		
 		// test chatbox
 		/*
@@ -99,8 +98,8 @@ public class ChatController {
 		*/
 	}
 	
-	public void LogOut(){
+	public void logOut(){
 		// send Good bye
-		mediator.LoggedOut();
+		mediator.loggedOut();
 	}
 }

@@ -6,7 +6,6 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.event.*;
 
 // class to display the userList to the user
@@ -21,17 +20,8 @@ import javax.swing.event.*;
 
 public class ViewUserList extends JFrame implements ActionListener{
 	
-	//there should be only one instance of UserList window at any moment
-	private static ViewUserList instance;
-
-	private ViewUserList() {
+	public ViewUserList() {
 		initComponents();
-	}
-
-	public static ViewUserList getInstance() {
-		if (instance == null)
-			instance = new ViewUserList();
-		return instance;
 	}
 	
 	private JTextArea searchArea = new JTextArea();
@@ -51,7 +41,7 @@ public class ViewUserList extends JFrame implements ActionListener{
 			}
 		});
 
-		Update(ChatUserList.getInstance().GetUserList());
+		updateList(ChatUserList.getInstance().getUserList());
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{10, 112, 10, 0};
 		gridBagLayout.rowHeights = new int[]{10, 21, 5, 29, 25, 10, 0};
@@ -74,17 +64,17 @@ public class ViewUserList extends JFrame implements ActionListener{
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				Update(ChatUserList.getInstance().SearchUserList(searchArea.getText()));
+				updateList(ChatUserList.getInstance().searchUserList(searchArea.getText()));
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				Update(ChatUserList.getInstance().SearchUserList(searchArea.getText()));
+				updateList(ChatUserList.getInstance().searchUserList(searchArea.getText()));
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				Update(ChatUserList.getInstance().SearchUserList(searchArea.getText()));
+				updateList(ChatUserList.getInstance().searchUserList(searchArea.getText()));
 			}
 		});
 		
@@ -112,7 +102,7 @@ public class ViewUserList extends JFrame implements ActionListener{
 	}
 	
 	// updates the content of the list panel
-	public void Update(Vector<ChatUserInfo> userList){
+	public void updateList(Vector<ChatUserInfo> userList){
 		
 		// clear the panel before putting items inside
 		listPanel.removeAll();
@@ -152,7 +142,7 @@ public class ViewUserList extends JFrame implements ActionListener{
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					// TODO Auto-generated method stub
-					ChatGUI.getInstance().OpenChatbox(user);
+					ChatGUI.getInstance().openChatbox(user);
 				}
 			});			
 			userPanel.add(nameArea);
@@ -166,7 +156,8 @@ public class ViewUserList extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == disconnectButton){
-			ChatGUI.getInstance().LogOut();
+			ChatGUI.getInstance().logOut();
+			GUIView.getInstance().closeUserList();
 		}
 		
 	}

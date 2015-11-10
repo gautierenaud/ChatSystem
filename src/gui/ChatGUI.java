@@ -10,8 +10,6 @@ public class ChatGUI {
 
 	private ChatGUI() {
 		initGUI();
-		
-		//OpenChatbox("rgautier");
 	}
 
 	public static ChatGUI getInstance() {
@@ -29,52 +27,57 @@ public class ChatGUI {
 		model = GUIModel.getInstance(this);
 	}
 	
-	public void SetMediator(ChatMediator mediator){
+	public void setMediator(ChatMediator mediator){
 		this.mediator = mediator;
 	}
 	
-	public void ShowMessage(String msg, String usr){
+	public void showMessage(String msg, String usr){
 		System.out.println(msg + " from: " + usr);
 	}
 	
-	public void OpenLogin(){
-		view.OpenLoginWindow();
+	public void openLogin(){
+		view.openLoginWindow();
 	}
 	
-	public void OpenChatbox(ChatUserInfo info){
-		view.OpenChatbox(info);
+	public void openChatbox(ChatUserInfo info){
+		view.openChatbox(info);
 	}
 	
-	public void UserLogged(String username){
+	public void userLogged(String username){
 		// give the username to the controller
-		mediator.Logged(username);
+		view.closeLoginWindow();
+		mediator.logged(username);
 	}
 	
-	public String GetUserName(){
-		return mediator.GetUserName();
+	public void openUserList(){
+		view.openUserList();
 	}
 	
-	public void OpenUserList(){
-		view.OpenUserList();
+	public void closeUserList(){
+		view.closeUserList();
 	}
 	
-	public void UserListUpdated(){
-		view.UpdateUserList();
+	public String getUserName(){
+		return mediator.getUserName();
 	}
 	
-	public void LogOut(){
-		mediator.LogOut();
+	public void userListUpdated(){
+		view.updateUserList();
 	}
 	
-	public void LoggedOut(){
-		view.CloseUserList();
-		view.OpenLoginWindow();
+	public void logOut(){
+		mediator.logOut();
 	}
 	
-	public void SendMessage(String msg, String opponentID){
-		String userName = mediator.GetUserName();
+	public void loggedOut(){
+		view.closeUserList();
+		view.openLoginWindow();
+	}
+	
+	public void sendMessage(String msg, String opponentID){
+		String userName = mediator.getUserName();
 		MessageStruct message = new MessageStruct(userName, msg);
-		model.AddMessage(opponentID, message);
-		mediator.SendMessage(opponentID, message);
+		model.addMessage(opponentID, message);
+		mediator.createMessage(opponentID, message);
 	}
 }

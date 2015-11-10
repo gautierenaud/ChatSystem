@@ -15,8 +15,8 @@ public class ViewChatBox implements ActionListener {
 	private GUIView view;
 	
 	public ViewChatBox(ChatUserInfo info){
-		InitializeStyle();
-		Initialize(info);
+		initializeStyle();
+		initialize(info);
 		view = GUIView.getInstance();
 		controller = ChatGUI.getInstance();
 	}
@@ -33,7 +33,7 @@ public class ViewChatBox implements ActionListener {
 	private JFrame frame;
 	private JTextField sendText;
 	
-	private void Initialize(ChatUserInfo info) {
+	private void initialize(ChatUserInfo info) {
 		
 		sourceName = info.getUsername();
 		id = info.getUserID();
@@ -47,7 +47,7 @@ public class ViewChatBox implements ActionListener {
 		frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e){
-				view.CloseChatBox(id);
+				view.closeChatBox(id);
 			}
 		});
 		
@@ -70,7 +70,7 @@ public class ViewChatBox implements ActionListener {
 		messageArea = new JTextPane();
 		messageArea.setEditable(false);
 		scrollPane.setViewportView(messageArea);
-		DisplayAllMessages();
+		displayAllMessages();
 		
 		sendText = new JTextField();
 		GridBagConstraints gbc_sendText = new GridBagConstraints();
@@ -101,12 +101,12 @@ public class ViewChatBox implements ActionListener {
 	
 	private SimpleAttributeSet right = new SimpleAttributeSet();
 	private SimpleAttributeSet left = new SimpleAttributeSet();
-	private void InitializeStyle(){
+	private void initializeStyle(){
 		StyleConstants.setAlignment(right, StyleConstants.ALIGN_RIGHT);
 		StyleConstants.setAlignment(left, StyleConstants.ALIGN_LEFT);
 	}
 	
-	public void AppendMessage(MessageStruct message){
+	public void appendMessage(MessageStruct message){
 		SimpleAttributeSet tmp = new SimpleAttributeSet();
 		
 		if (message.getSource() == sourceName)
@@ -125,11 +125,11 @@ public class ViewChatBox implements ActionListener {
 		catch(Exception e) { System.out.println(e);}
 	}
 	
-	private void DisplayAllMessages(){
+	private void displayAllMessages(){
 		Vector<MessageStruct> messages = GUIModel.getInstance().getMessages(id);
 		if (messages != null){
 			for (MessageStruct msg : messages){
-				AppendMessage(msg);
+				appendMessage(msg);
 			}
 		}
 	}
@@ -138,7 +138,7 @@ public class ViewChatBox implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == sendButton){
 			// send Message
-			controller.SendMessage(sendText.getText(), id);
+			controller.sendMessage(sendText.getText(), id);
 			sendText.setText("");
 		}else if (e.getSource() == fileButton){
 			JFileChooser fileChooser = new JFileChooser();

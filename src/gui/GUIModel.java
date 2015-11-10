@@ -1,6 +1,5 @@
 package gui;
 
-import java.net.InetAddress;
 import java.util.*;
 
 // stores data from the controller
@@ -57,7 +56,7 @@ public class GUIModel {
 	
 	// add one new message to the list
 	// only one thread can use this method at a time
-	public synchronized void AddMessage(String opponentID, MessageStruct message){
+	public synchronized void addMessage(String opponentID, MessageStruct message){
 		// if the conversation does not exists, create a new one
 		if (!conversationList.containsKey(opponentID)){
 			// create a new conversation list
@@ -65,12 +64,8 @@ public class GUIModel {
 		}
 		// append message at the end of the list
 		conversationList.get(opponentID).add(message);
-		if (GUIView.getInstance().IsChatOpen(opponentID)){
-			GUIView.getInstance().GetChatBox(opponentID).AppendMessage(message);
+		if (GUIView.getInstance().isChatOpen(opponentID)){
+			GUIView.getInstance().getChatBox(opponentID).appendMessage(message);
 		}
-			
 	}
-	
-	// observer pattern for the messages
-
 }

@@ -15,54 +15,55 @@ public class ChatMediator {
 		
 		gui = ChatGUI.getInstance();
 		controller = ChatController.getInstance();
-		network = NetworkInterface.getInstance();
+		//network = NetworkInterface.getInstance();
 	}
 
 	public static ChatMediator getInstance(){
 		if (instance == null){
 			instance = new ChatMediator();
-			gui.SetMediator(instance);
+			gui.setMediator(instance);
 		}
 		return instance;
 	}
 	
 	// methods to communicate between each class
-	public void DisplayMessage(String msg, String usr){
-		gui.ShowMessage(msg, usr);
+	public void displayMessage(String msg, String usr){
+		gui.showMessage(msg, usr);
 	}
 	
-	public void Log(){
-		gui.OpenLogin();
+	public void log(){
+		gui.openLogin();
 	}
 	
-	public void Logged(String name){
-		controller.Logged(name);
+	public void logged(String name){
+		controller.logged(name);
 	}
 	
-	public void LogOut(){
-		controller.LogOut();
+	public void logOut(){
+		controller.logOut();
 	}
 	
-	public void LoggedOut(){
-		gui.LoggedOut();
+	public void loggedOut(){
+		gui.loggedOut();
 	}
-	public String GetUserName(){
-		return controller.GetUserName();
-	}
-	
-	public void Chatbox(ChatUserInfo info){
-		gui.OpenChatbox(info);
+
+	public String getUserName() {
+		return controller.getUserName();
 	}
 	
-	public void OpenUserList(){
-		gui.OpenUserList();
+	public void openChatbox(ChatUserInfo info){
+		gui.openChatbox(info);
 	}
 	
-	public void UserListUpdated(){
-		gui.UserListUpdated();
+	public void openUserList(){
+		gui.openUserList();
 	}
 	
-	public void SendMessage(String destinationID, MessageStruct message){
-		controller.SendMessage(destinationID, message);
+	public void userListUpdated(){
+		gui.userListUpdated();
+	}
+	
+	public void createMessage(String destinationID, MessageStruct message){
+		controller.createMessage(destinationID, message);
 	}
 }

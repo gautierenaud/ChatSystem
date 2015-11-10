@@ -1,9 +1,6 @@
 package main;
 
 import java.net.*;
-import java.util.*;
-
-import com.sun.swing.internal.plaf.synth.resources.synth;
 
 public class ChatUserInfo {
 	

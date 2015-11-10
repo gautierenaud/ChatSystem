@@ -50,7 +50,7 @@ public class ViewLogin extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ((e.getSource() == button) && (text.getText().length() != 0)){
-			ChatGUI.getInstance().UserLogged(text.getText());
+			ChatGUI.getInstance().userLogged(text.getText());
 			// close the login windows
 			this.setVisible(false);
 			this.dispose();
