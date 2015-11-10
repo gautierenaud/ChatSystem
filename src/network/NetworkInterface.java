@@ -27,9 +27,14 @@ public class NetworkInterface {
 	}
 	//methode qui ajoute au stack et envoie en suivant
 	public void sendMessage(Message mess, InetAddress address){//a optimiser car Stack ne sert a rien -->threads pour MessNI?
-		messNI.addMsgBuff(mess);
+		messNI.addMsgBuff(mess); //Mettre l'adresse et le msg ensemble
 		messNI.sendPacket(address);
 	}
+	// TO DO
+	/*
+	 * Ajouter une fonction SendMessage(Message msg) pour broadcast
+	 */
+	
 	//methode qui recupere un message arriv�
 	public Message getMessage(){
 		return messNI.turnPacketToMessage();

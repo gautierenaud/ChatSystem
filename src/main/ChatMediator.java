@@ -15,7 +15,7 @@ public class ChatMediator {
 		
 		gui = ChatGUI.getInstance();
 		controller = ChatController.getInstance();
-		//network = NetworkInterface.getInstance();
+		network = NetworkInterface.getInstance();
 	}
 
 	public static ChatMediator getInstance(){
