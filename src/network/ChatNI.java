@@ -40,7 +40,7 @@ public class ChatNI {
 	 * Ajouter une fonction SendMessage(Message msg) pour broadcast
 	 */
 
-	public void sendHello(Message msg){// � modifer car broadcast en dur <!>
+	public void sendHello(Message msg){// � modifer car broadcast en dur <"!>
 		try {
 			this.sendMessage(msg , InetAddress.getByName("10.32.3.255"));
 		} catch (UnknownHostException e) {
