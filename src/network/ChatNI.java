@@ -2,6 +2,8 @@ package network;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import common.Message;
 import main.ChatMediator;
 // class that will control all the network-related operations
@@ -35,9 +37,16 @@ public class ChatNI {
 	/*
 	 * Ajouter une fonction SendMessage(Message msg) pour broadcast
 	 */
-	/*public void sendHello(Message msg){
-		InetAddress.getAllByName()
-	}*/
+	public void sendHello(Message msg){
+		try {
+			MessAddress msgaddr = new MessAddress( msg , InetAddress.getByName("10.32.3.255") );
+			this.sendMessage(msgaddr);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	//methode qui recupere un message arrivé
 	
 	public void messageReceived(Message msg , InetAddress addr){
