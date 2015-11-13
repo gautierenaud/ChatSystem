@@ -109,7 +109,9 @@ public class ViewChatBox implements ActionListener {
 	public void appendMessage(MessageStruct message){
 		SimpleAttributeSet tmp = new SimpleAttributeSet();
 		
-		if (message.getSource() == sourceName)
+		String userName = ChatGUI.getInstance().getUserName();
+		
+		if (message.getSource() != userName)
 			tmp = left;
 		else
 			tmp = right;

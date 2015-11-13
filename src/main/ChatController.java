@@ -2,6 +2,8 @@ package main;
 
 import java.net.*;
 
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
+
 import common.*;
 import common.Message.MsgType;
 import gui.*;
@@ -33,6 +35,10 @@ public class ChatController {
 		mediator.log();
 
 		userList = ChatUserList.getInstance();
+		
+		receiveMessage(new Message(MsgType.TEXT_MESSAGE, "test", "toto"), InetAddress.getLoopbackAddress());
+
+		receiveMessage(new Message(MsgType.TEXT_MESSAGE, "test2", "toto"), InetAddress.getLoopbackAddress());
 	}
 	
 	public void setUserName(String name){
