@@ -29,10 +29,6 @@ public class ChatController {
 		mediator.log();
 
 		userList = ChatUserList.getInstance();
-		// test user list
-		for (int i = 0; i < 30; i++){
-			ChatUserList.getInstance().addInstance(i + "", InetAddress.getLoopbackAddress());
-		}
 	}
 	
 	public void setUserName(String name){
@@ -65,7 +61,7 @@ public class ChatController {
 		case FILE_REQUEST:
 			break;
 		case HELLO:
-			// the send a HELLO_REPLY to this address
+			mediator.sendMessage(new Message(MsgType.HELLO_REPLY, userName, userName), userList.getAddress(userID));
 			break;
 		case HELLO_REPLY:
 			
