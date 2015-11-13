@@ -82,4 +82,8 @@ public class ChatMediator {
 	public void updateMessage(Message msg, String id){
 		gui.updateMessage(msg, id);
 	}
+	
+	public void sendMessage(Message msg, InetAddress addr){
+		network.sendMessage(msg, addr);
+	}
 }

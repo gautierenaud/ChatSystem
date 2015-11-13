@@ -83,7 +83,7 @@ public class ChatController {
 	public void createMessage(String destinationID, MessageStruct message){
 		Message msg = new Message(MsgType.TEXT_MESSAGE , message.getMessage(), getUserName());
 		// give it to the NetworkNI
-		// mediator.Send(msg, userList.GetAddress(destinationID));
+		mediator.sendMessage(msg, userList.getAddress(destinationID));
 	}
 	
 	public void logged(String name){

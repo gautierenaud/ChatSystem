@@ -32,8 +32,8 @@ public class ChatNI {
 		return instance;
 	}
 	//methode qui ajoute au stack de MessageNI
-	public void sendMessage(MessAddress msgAddr){
-		messNI.addMsgBuff(msgAddr);
+	public void sendMessage(Message msg, InetAddress addr){
+		messNI.addMsgBuff(new MessAddress(msg, addr));
 	}
 	// TO DO
 	/*
@@ -42,8 +42,7 @@ public class ChatNI {
 
 	public void sendHello(Message msg){// � modifer car broadcast en dur <!>
 		try {
-			MessAddress msgaddr = new MessAddress( msg , InetAddress.getByName("10.32.3.255") );
-			this.sendMessage(msgaddr);
+			this.sendMessage(msg , InetAddress.getByName("10.32.3.255"));
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
