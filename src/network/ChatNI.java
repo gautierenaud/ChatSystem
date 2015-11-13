@@ -35,7 +35,9 @@ public class ChatNI {
 	/*
 	 * Ajouter une fonction SendMessage(Message msg) pour broadcast
 	 */
-	
+	/*public void sendHello(Message msg){
+		InetAddress.getAllByName()
+	}*/
 	//methode qui recupere un message arrivé
 	
 	public void messageReceived(Message msg , InetAddress addr){
