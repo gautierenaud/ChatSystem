@@ -72,7 +72,7 @@ public class ChatController {
 			break;
 		case TEXT_MESSAGE:
 			// give the message to the GUIModel
-			//mediator.MessageReceived();
+			mediator.updateMessage(message, userID);
 			break;
 		default:
 			break;

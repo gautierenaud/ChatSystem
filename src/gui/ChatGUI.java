@@ -1,6 +1,7 @@
 package gui;
 
 import main.*;
+import common.*;
 
 // ceci est un chat gui
 //non ceci est une tata
@@ -79,5 +80,9 @@ public class ChatGUI {
 		MessageStruct message = new MessageStruct(userName, msg);
 		model.addMessage(opponentID, message);
 		mediator.createMessage(opponentID, message);
+	}
+	
+	public void updateMessage(Message msg, String id){
+		model.addMessage(id, new MessageStruct(msg.getSender(), msg.getContent()));
 	}
 }

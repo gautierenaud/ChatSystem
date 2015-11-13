@@ -74,7 +74,12 @@ public class ChatMediator {
 	public void createMessage(String destinationID, MessageStruct message){
 		controller.createMessage(destinationID, message);
 	}
+	
 	public void messageReceived(Message msg, InetAddress addr){
 		controller.receiveMessage(msg, addr);
+	}
+	
+	public void updateMessage(Message msg, String id){
+		gui.updateMessage(msg, id);
 	}
 }
