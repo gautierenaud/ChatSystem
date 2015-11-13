@@ -63,6 +63,7 @@ public class ChatController {
 		case BYE:
 			System.out.println("bye received!");
 			userList.removeInstance(userID);
+			mediator.userListUpdated();
 			break;
 		case FILE_ACCEPT:
 			break;
