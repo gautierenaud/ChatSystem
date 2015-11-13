@@ -62,18 +62,13 @@ public class ChatNI {
 	}
 
 	public void sendBroadCast(Message msg){// � modifer car broadcast en dur <"!>
-		
 		for(InterfaceAddress index : this.getInterfacesAddresses()){
-			this.sendMessage(msg , index.getBroadcast());
-			
+			if (index.getBroadcast() != null)
+				this.sendMessage(msg , index.getBroadcast());
 		}
-			
-		
-		
-		
 	}
-	//methode qui recupere un message arrive
 	
+	//methode qui recupere un message arrive
 	public void messageReceived(Message msg , InetAddress addr){
 		ChatMediator.getInstance().messageReceived(msg, addr); 
 	}
