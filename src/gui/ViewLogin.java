@@ -43,9 +43,6 @@ public class ViewLogin extends JFrame implements ActionListener{
 		// the JFrame is visible now
 		this.setVisible(true);
 	}
-	
-	public void run(){
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

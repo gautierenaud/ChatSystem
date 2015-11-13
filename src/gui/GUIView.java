@@ -66,7 +66,6 @@ public class GUIView {
 	public void closeUserList(){
 		if (userList != null)
 			userList.dispose();
-		System.out.println("lala");
 		userList = null;
 	}
 	

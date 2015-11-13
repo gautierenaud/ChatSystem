@@ -157,7 +157,6 @@ public class ViewUserList extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == disconnectButton){
 			ChatGUI.getInstance().logOut();
-			GUIView.getInstance().closeUserList();
 		}
 		
 	}
