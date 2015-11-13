@@ -2,8 +2,9 @@ package main;
 
 
 import java.net.InetAddress;
-import common.*;
+import java.util.ArrayList;
 
+import common.*;
 import gui.*;
 import network.*;
 
@@ -85,5 +86,9 @@ public class ChatMediator {
 	
 	public void sendMessage(Message msg, InetAddress addr){
 		network.sendMessage(msg, addr);
+	}
+	
+	public ArrayList<InetAddress> getLocalAddresses(){
+		return network.getLocalAddresses();
 	}
 }

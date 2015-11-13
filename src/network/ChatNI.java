@@ -53,11 +53,17 @@ public class ChatNI {
 	public void sendMessage(Message msg, InetAddress addr){
 		messNI.addMsgBuff(new MessAddress(msg, addr));
 	}
-	// TO DO
-	/*
-	 * addresse boadcast pas en dur
-	 * 
-	 */
+	public ArrayList<InetAddress> getLocalAddresses(){
+		ArrayList<InetAddress> result = new ArrayList() ; 
+		for(InterfaceAddress index : this.addressList){
+			if(index!= null){
+				result.add(index.getAddress());
+			}
+		}
+		return result; 
+	}
+	
+	
 	public ArrayList<InterfaceAddress> getInterfacesAddresses(){
 		ArrayList<InterfaceAddress> listaddr = new ArrayList<InterfaceAddress>(); 
 		while(networkInterfaces.hasMoreElements())

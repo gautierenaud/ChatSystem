@@ -54,7 +54,7 @@ public class ChatController {
 		String userID = message.getSender() + "@" + address.toString();
 		
 		// if the userID is not inside
-		if (!userList.isInside(userID)){
+		if (!userList.isInside(userID) && !mediator.getLocalAddresses().contains(address)){
 			userList.addInstance(message.getSender(), address);
 			mediator.userListUpdated();
 		}
@@ -74,7 +74,8 @@ public class ChatController {
 		case FILE_REQUEST:
 			break;
 		case HELLO:
-			mediator.sendMessage(new Message(MsgType.HELLO_REPLY, userName, userName), userList.getAddress(userID));
+			if (!mediator.getLocalAddresses().contains(address))
+				mediator.sendMessage(new Message(MsgType.HELLO_REPLY, userName, userName), userList.getAddress(userID));
 			break;
 		case HELLO_REPLY:
 			
