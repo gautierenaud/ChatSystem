@@ -51,8 +51,8 @@ public class ChatMediator {
 		gui.loggedOut();
 	}
 	
-	public void sendHello(Message msg){
-		network.sendHello(msg);
+	public void sendBroadCast(Message msg){
+		network.sendBroadCast(msg);
 	}
 
 	public String getUserName() {

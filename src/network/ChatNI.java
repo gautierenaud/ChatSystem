@@ -2,7 +2,13 @@ package network;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.NetworkInterface; 
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.net.InterfaceAddress; 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.List;
 
 import common.Message;
 import main.ChatMediator;
@@ -13,10 +19,17 @@ public class ChatNI {
 	private static ChatNI instance;
 	private MessageNI messNI; 
 	private FileNI fileNI; 
+	private Enumeration<NetworkInterface> networkInterfaces; 
 
 	private ChatNI(){
 		this.messNI = MessageNI.getInstance();
 		messNI.start();
+		try {
+			this.networkInterfaces = NetworkInterface.getNetworkInterfaces();
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		/*
 		try{
 			// for future implementation
@@ -40,8 +53,14 @@ public class ChatNI {
 	 * addresse boadcast pas en dur
 	 * 
 	 */
+	public ArrayList<ArrayList<InterfaceAddress>> getInterfacesAddresses(){
+		ArrayList<ArrayList<InterfaceAddress>> listaddr = new ArrayList<ArrayList<InterfaceAddress>>(); 
+		while(networkInterfaces.hasMoreElements())
+			listaddr.add((ArrayList<InterfaceAddress>) networkInterfaces.nextElement().getInterfaceAddresses());
+		return listaddr; 
+	}
 
-	public void sendHello(Message msg){// � modifer car broadcast en dur <"!>
+	public void sendBroadCast(Message msg){// � modifer car broadcast en dur <"!>
 		try {
 			this.sendMessage(msg , InetAddress.getByName("10.32.3.255"));
 		} catch (UnknownHostException e) {
@@ -50,7 +69,7 @@ public class ChatNI {
 		}
 		
 	}
-	//methode qui recupere un message arriv�
+	//methode qui recupere un message arrive
 	
 	public void messageReceived(Message msg , InetAddress addr){
 		ChatMediator.getInstance().messageReceived(msg, addr); 
