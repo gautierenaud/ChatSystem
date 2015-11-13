@@ -1,5 +1,8 @@
 package main;
 
+import java.net.InetAddress;
+
+import common.Message;
 import gui.*;
 import network.*;
 
@@ -7,7 +10,7 @@ public class ChatMediator {
 
 	private static ChatGUI gui;
 	private static ChatController controller;
-	private static NetworkInterface network;
+	private static ChatNI network;
 	
 	private static ChatMediator instance;
 
@@ -65,5 +68,8 @@ public class ChatMediator {
 	
 	public void createMessage(String destinationID, MessageStruct message){
 		controller.createMessage(destinationID, message);
+	}
+	public void messageReceived(Message msg, InetAddress addr){
+		controller.receiveMessage(msg, addr);
 	}
 }

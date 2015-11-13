@@ -6,7 +6,7 @@ import java.util.*;
 
 import common.Message;
 
-public class MessageNI {
+public class MessageNI extends Thread {
 	
 	private static MessageNI instance;
 	
@@ -16,15 +16,15 @@ public class MessageNI {
 		return instance;
 	}
 	
-	private Stack<Message> messageStack;
-	private Stack<DatagramPacket> packetStack; 
+	private Stack<MessAddress> sendMsgStack;
+	private Stack<DatagramPacket> receivePacketStack; 
 	private UDPSender udpSender;
 	private UDPReceiver udpReceiver;
 
 	
 	private MessageNI(){
-		messageStack = new Stack<Message>();
-		packetStack = new Stack<DatagramPacket>();
+		sendMsgStack = new Stack<MessAddress>();// messages à envoyer
+		receivePacketStack = new Stack<DatagramPacket>();// packet recus
 		
 		// initialising the sockets
 		udpSender = new UDPSender();
@@ -34,21 +34,22 @@ public class MessageNI {
 	}
 	
 	public void addPacketBuff(DatagramPacket packet){
-		packetStack.push(packet);
+		receivePacketStack.push(packet);
 	}
 
-	public void addMsgBuff(Message msg){
-		messageStack.push(msg);
+	public void addMsgBuff(MessAddress msg){
+		sendMsgStack.push(msg);
 	}
 	
-	public Message turnPacketToMessage(){
-		DatagramPacket packet = packetStack.pop();
-		Message mess= null; 
+	public MessAddress turnPacketToMessage(){
+		DatagramPacket packet = receivePacketStack.pop();
+		MessAddress msg= new MessAddress(); 
+		
 		ByteArrayInputStream bais = new ByteArrayInputStream(packet.getData());
 		try {
 			ObjectInputStream ois = new ObjectInputStream(bais);
-			mess = (Message)ois.readObject();
-			
+			msg.setMessage((Message)ois.readObject());
+			msg.setAdress(packet.getAddress());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,16 +57,30 @@ public class MessageNI {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return mess ; 
+		return msg ; 
 	}
 	
-	public DatagramPacket turnMesstoPacket(InetAddress address){
+	public void checkReceive(){
+		while(!receivePacketStack.isEmpty()){
+			MessAddress msgaddr = turnPacketToMessage(); 
+			ChatNI.getInstance().messageReceived(msgaddr.getMessage(), msgaddr.getAddress());
+		}
+	}
+	
+	public void checkSend(){
+		while(!sendMsgStack.isEmpty()){
+			MessAddress tmp = sendMsgStack.pop();
+			this.sendMessage(tmp);
+		}
+	}
+	
+	public DatagramPacket turnMesstoPacket(MessAddress msgAddr){
 		DatagramPacket packet; 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ObjectOutputStream oos;
 		try {
 			oos = new ObjectOutputStream(baos);
-			oos.writeObject(messageStack.pop());
+			oos.writeObject(msgAddr.getMessage());
 			oos.flush();
 			oos.close();
 		} catch (IOException e) {
@@ -73,12 +88,18 @@ public class MessageNI {
 		}
 		
 		byte[] buf= baos.toByteArray();
-		packet = new DatagramPacket(buf, buf.length, address, 2042);
+		packet = new DatagramPacket(buf, buf.length,msgAddr.getAddress(), 2042);
 		return packet;
 	}
 	
-	public void sendPacket(InetAddress address){
-		udpSender.send(turnMesstoPacket(address));
+	public void sendMessage(MessAddress msgAddr){
+		udpSender.send(turnMesstoPacket(msgAddr));
+	}
+	public void run(){
+		while (true){
+			this.checkReceive();
+			this.checkSend();
+		}
 	}
 	
 }
