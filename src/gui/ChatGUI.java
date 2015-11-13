@@ -3,7 +3,10 @@ package gui;
 import main.*;
 import common.*;
 
-// ceci est un chat gui
+/*
+ *  Enjoliver les interfaces graphique --> affichage message gauche droite 
+ */
+
 public class ChatGUI {
 	
 	private static ChatGUI instance;

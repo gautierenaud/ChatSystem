@@ -5,6 +5,10 @@ import java.net.*;
 import common.*;
 import common.Message.MsgType;
 import gui.*;
+/*
+ * Ajouter un filtre sur les hello, filtrer son propre nom 
+ * completer switch case
+ */
 
 public class ChatController {
 

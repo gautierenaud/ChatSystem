@@ -37,7 +37,8 @@ public class ChatNI {
 	}
 	// TO DO
 	/*
-	 * Ajouter une fonction SendMessage(Message msg) pour broadcast
+	 * addresse boadcast pas en dur
+	 * 
 	 */
 
 	public void sendHello(Message msg){// � modifer car broadcast en dur <"!>
