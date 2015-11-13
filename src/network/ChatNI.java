@@ -16,6 +16,7 @@ public class ChatNI {
 
 	private ChatNI(){
 		this.messNI = MessageNI.getInstance();
+		messNI.start();
 		/*
 		try{
 			// for future implementation
@@ -32,8 +33,7 @@ public class ChatNI {
 	}
 	//methode qui ajoute au stack de MessageNI
 	public void sendMessage(MessAddress msgAddr){
-		messNI.addMsgBuff(msgAddr); 
-		
+		messNI.addMsgBuff(msgAddr);
 	}
 	// TO DO
 	/*
