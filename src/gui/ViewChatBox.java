@@ -41,7 +41,7 @@ public class ViewChatBox implements ActionListener {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 471, 316);
 		frame.setTitle(sourceName);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		// add event listener: remove this one when closing
 		frame.addWindowListener(new WindowAdapter() {

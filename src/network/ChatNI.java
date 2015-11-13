@@ -14,11 +14,13 @@ public class ChatNI {
 
 	private ChatNI(){
 		this.messNI = MessageNI.getInstance();
+		/*
 		try{
+			// for future implementation
 			this.fileNI = FileNI.getInstance();
 		}catch (IOException e){
 			System.err.println(e);
-		} 
+		}*/
 	}
 
 	public static ChatNI getInstance(){
@@ -35,10 +37,10 @@ public class ChatNI {
 	/*
 	 * Ajouter une fonction SendMessage(Message msg) pour broadcast
 	 */
-	/*public void sendHello(Message msg){
-		InetAddress.getAllByName()
-	}*/
-	//methode qui recupere un message arrivé
+	public void sendHello(Message msg){
+		//InetAddress.getAllByName()
+	}
+	//methode qui recupere un message arrivï¿½
 	
 	public void messageReceived(Message msg , InetAddress addr){
 		ChatMediator.getInstance().messageReceived(msg, addr); 

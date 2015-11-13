@@ -2,7 +2,6 @@ package network;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
 import java.util.Stack;
 
 public class FileNI {
@@ -11,7 +10,7 @@ public class FileNI {
 	 
 	
 	private FileNI() throws IOException{
-		this.tcpReceiver = new TCPReceiver(2043);// port arbitraire à discuter ! 
+		this.tcpReceiver = new TCPReceiver(2043);// port arbitraire ï¿½ discuter ! 
 		this.tcpSender = new TCPSender( 2043); 
 		this.fileBuffer = new Stack<File>(); 
 	}

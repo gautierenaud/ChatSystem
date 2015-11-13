@@ -23,7 +23,7 @@ public class MessageNI extends Thread {
 
 	
 	private MessageNI(){
-		sendMsgStack = new Stack<MessAddress>();// messages à envoyer
+		sendMsgStack = new Stack<MessAddress>();// messages ï¿½ envoyer
 		receivePacketStack = new Stack<DatagramPacket>();// packet recus
 		
 		// initialising the sockets
@@ -95,6 +95,7 @@ public class MessageNI extends Thread {
 	public void sendMessage(MessAddress msgAddr){
 		udpSender.send(turnMesstoPacket(msgAddr));
 	}
+	@Override
 	public void run(){
 		while (true){
 			this.checkReceive();

@@ -34,6 +34,7 @@ public class Message implements Serializable {
 		return sender;
 	}	
 	
+	@Override
 	public String toString(){
 		return "Message with type: " + msgType + " from " + sender + " content: " + textContent;
 	}

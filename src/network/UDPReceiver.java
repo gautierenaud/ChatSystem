@@ -2,8 +2,6 @@ package network;
 import java.io.*;
 import java.net.*;
 
-import common.Message;
-
 
 public class UDPReceiver extends Thread{
 	
@@ -33,6 +31,7 @@ public class UDPReceiver extends Thread{
 		}
 	}
 	
+	@Override
 	public void run(){
 		while (true){
 			this.receive();
