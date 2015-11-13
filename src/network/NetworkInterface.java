@@ -1,7 +1,8 @@
 package network;
 
 import java.io.IOException;
-import java.net.InetAddress;
+import java.net.*;
+import java.util.*;
 import common.Message;
 // class that will control all the network-related operations
 
@@ -39,5 +40,22 @@ public class NetworkInterface {
 	public Message getMessage(){
 		return messNI.turnPacketToMessage();
 	}
+	
+	public void sendHello(Message msg){
+		// get all the different broadcast addresses
+	}
+	/*
+	public static String getBroadcast() throws SocketException {
+	    System.setProperty("java.net.preferIPv4Stack", "true");
+	    for (Enumeration<java.util.NetworkInterface> niEnum = NetworkInterface.getNetworkInterfaces(); niEnum.hasMoreElements();) {
+	        NetworkInterface ni = niEnum.nextElement();
+	        if (!ni.isLoopback()) {
+	            for (InterfaceAddress interfaceAddress : ni.getInterfaceAddresses()) {
+	                return interfaceAddress.getBroadcast().toString().substring(1);
+	            }
+	        }
+	    }
+	    return null;
+	}*/
 }
  
