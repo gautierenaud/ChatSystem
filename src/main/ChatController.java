@@ -89,6 +89,7 @@ public class ChatController {
 	public void logged(String name){
 		setUserName(name);
 		// send Hello from NI
+		mediator.sendHello(new Message(Message.MsgType.HELLO, "Hello Everyone!", name));
 		mediator.openUserList();
 		
 		// test chatbox

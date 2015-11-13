@@ -1,8 +1,9 @@
 package main;
 
-import java.net.InetAddress;
 
-import common.Message;
+import java.net.InetAddress;
+import common.*;
+
 import gui.*;
 import network.*;
 
@@ -48,6 +49,10 @@ public class ChatMediator {
 	
 	public void loggedOut(){
 		gui.loggedOut();
+	}
+	
+	public void sendHello(Message msg){
+		network.sendHello(msg);
 	}
 
 	public String getUserName() {
