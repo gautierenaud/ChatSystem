@@ -8,6 +8,7 @@ import java.net.UnknownHostException;
 import java.net.InterfaceAddress; 
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 
 import common.Message;
@@ -53,20 +54,22 @@ public class ChatNI {
 	 * addresse boadcast pas en dur
 	 * 
 	 */
-	public ArrayList<ArrayList<InterfaceAddress>> getInterfacesAddresses(){
-		ArrayList<ArrayList<InterfaceAddress>> listaddr = new ArrayList<ArrayList<InterfaceAddress>>(); 
+	public ArrayList<InterfaceAddress> getInterfacesAddresses(){
+		ArrayList<InterfaceAddress> listaddr = new ArrayList<InterfaceAddress>(); 
 		while(networkInterfaces.hasMoreElements())
-			listaddr.add((ArrayList<InterfaceAddress>) networkInterfaces.nextElement().getInterfaceAddresses());
+			listaddr.addAll((ArrayList<InterfaceAddress>) networkInterfaces.nextElement().getInterfaceAddresses());
 		return listaddr; 
 	}
 
 	public void sendBroadCast(Message msg){// � modifer car broadcast en dur <"!>
-		try {
-			this.sendMessage(msg , InetAddress.getByName("10.32.3.255"));
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		for(InterfaceAddress index : this.getInterfacesAddresses()){
+			this.sendMessage(msg , index.getBroadcast());
+			
 		}
+			
+		
+		
 		
 	}
 	//methode qui recupere un message arrive
