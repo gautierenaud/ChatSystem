@@ -70,7 +70,6 @@ public class MessageNI extends Thread {
 	public void checkSend(){
 		while(!sendMsgStack.isEmpty()){
 			MessAddress tmp = sendMsgStack.pop();
-			System.out.println(tmp.getMessage());
 			this.sendMessage(tmp);
 		}
 	}
