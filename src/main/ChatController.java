@@ -61,8 +61,8 @@ public class ChatController {
 		
 		switch (message.getType()){
 		case BYE:
+			System.out.println("bye received!");
 			userList.removeInstance(userID);
-			mediator.sendBroadCast(new Message(MsgType.BYE, "Salutations!", userName));
 			break;
 		case FILE_ACCEPT:
 			break;
@@ -107,6 +107,7 @@ public class ChatController {
 	
 	public void logOut(){
 		// send Good bye
+		mediator.sendBroadCast(new Message(MsgType.BYE, "Salutations!", userName));
 		mediator.loggedOut();
 	}
 }

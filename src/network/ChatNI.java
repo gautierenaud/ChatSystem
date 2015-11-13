@@ -20,7 +20,8 @@ public class ChatNI {
 	private static ChatNI instance;
 	private MessageNI messNI; 
 	private FileNI fileNI; 
-	private Enumeration<NetworkInterface> networkInterfaces; 
+	private Enumeration<NetworkInterface> networkInterfaces;
+	private ArrayList<InterfaceAddress> addressList;
 
 	private ChatNI(){
 		this.messNI = MessageNI.getInstance();
@@ -30,7 +31,10 @@ public class ChatNI {
 		} catch (SocketException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
+		
+		addressList = this.getInterfacesAddresses();
+		
 		/*
 		try{
 			// for future implementation
@@ -62,9 +66,11 @@ public class ChatNI {
 	}
 
 	public void sendBroadCast(Message msg){// � modifer car broadcast en dur <"!>
-		for(InterfaceAddress index : this.getInterfacesAddresses()){
-			if (index.getBroadcast() != null)
+		for(InterfaceAddress index : addressList){
+			if (index.getBroadcast() != null){
+				System.out.println(msg.getContent());
 				this.sendMessage(msg , index.getBroadcast());
+			}
 		}
 	}
 	
