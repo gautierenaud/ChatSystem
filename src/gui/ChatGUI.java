@@ -88,11 +88,11 @@ public class ChatGUI {
 		model.addMessage(id, new MessageStruct(msg.getSender(), msg.getContent()));
 	}
 	
-	public void fileRequestQuery(String title){
-		view.fileRequestQuery(title);
+	public void fileRequestQuery(String title, String destinationID){
+		view.fileRequestQuery(title, destinationID);
 	}
 	
-	public void fileRequestAnswer(boolean ans, String filePath){
-		mediator.fileRequestAnswer(ans, filePath);
+	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){
+		mediator.fileRequestAnswer(ans, filePath, destinationID);
 	}
 }

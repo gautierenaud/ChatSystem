@@ -82,15 +82,15 @@ public class GUIView {
 		this.mediator = mediator;
 	}
 	
-	public synchronized void fileRequestQuery(String title){
+	public synchronized void fileRequestQuery(String title, String destinationID){
 		// maybe test if an user windows is opened
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle(title);
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		int result = fileChooser.showOpenDialog(fileChooser);
 		if (result == JFileChooser.APPROVE_OPTION)
-			ChatGUI.getInstance().fileRequestAnswer(true, fileChooser.getSelectedFile().getPath());
+			ChatGUI.getInstance().fileRequestAnswer(true, fileChooser.getSelectedFile().getPath(), destinationID);
 		else
-			ChatGUI.getInstance().fileRequestAnswer(false, "");
+			ChatGUI.getInstance().fileRequestAnswer(false, "", destinationID);
 	}
 }

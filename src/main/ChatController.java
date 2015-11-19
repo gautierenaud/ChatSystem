@@ -68,9 +68,9 @@ public class ChatController {
 		case FILE_REFUSE:
 			break;
 		case FILE_REQUEST:
-			String title = "";
+			String title = message.getSender();
 			if (message.getContent() != ""){
-				title = message.getContent();
+				title += message.getContent();
 			}
 			mediator.fileRequestQuery(title, userID);
 			break;
@@ -116,10 +116,12 @@ public class ChatController {
 		mediator.loggedOut();
 	}
 	
-	public void fileRequestAnswer(boolean ans, String filePath){
+	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){
 		if (ans){
-			//mediator.sendMessage(new Message(MsgType.FILE_ACCEPT, content), addr)
-		}
+			mediator.sendMessage(new Message(MsgType.FILE_ACCEPT, "file accepted"), userList.getAddress(destinationID));
+			// open TCP port, should we put the port number in the content of the message?
+		}else
+			mediator.sendMessage(new Message(MsgType.FILE_REFUSE, "file refused"), userList.getAddress(destinationID));
 			
 	}
 }
