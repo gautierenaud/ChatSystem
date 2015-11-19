@@ -35,10 +35,6 @@ public class ChatController {
 		mediator.log();
 
 		userList = ChatUserList.getInstance();
-		
-		receiveMessage(new Message(MsgType.TEXT_MESSAGE, "test", "toto"), InetAddress.getLoopbackAddress());
-
-		receiveMessage(new Message(MsgType.TEXT_MESSAGE, "test2", "toto"), InetAddress.getLoopbackAddress());
 	}
 	
 	public void setUserName(String name){
@@ -72,6 +68,11 @@ public class ChatController {
 		case FILE_REFUSE:
 			break;
 		case FILE_REQUEST:
+			String title = "";
+			if (message.getContent() != ""){
+				title = message.getContent();
+			}
+			mediator.fileRequestQuery(title, userID);
 			break;
 		case HELLO:
 			if (!mediator.getLocalAddresses().contains(address))
@@ -113,5 +114,12 @@ public class ChatController {
 		// send Good bye
 		mediator.sendBroadCast(new Message(MsgType.BYE, "Salutations!", userName));
 		mediator.loggedOut();
+	}
+	
+	public void fileRequestAnswer(boolean ans, String filePath){
+		if (ans){
+			//mediator.sendMessage(new Message(MsgType.FILE_ACCEPT, content), addr)
+		}
+			
 	}
 }

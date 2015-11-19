@@ -87,4 +87,12 @@ public class ChatGUI {
 	public void updateMessage(Message msg, String id){
 		model.addMessage(id, new MessageStruct(msg.getSender(), msg.getContent()));
 	}
+	
+	public void fileRequestQuery(String title){
+		view.fileRequestQuery(title);
+	}
+	
+	public void fileRequestAnswer(boolean ans, String filePath){
+		mediator.fileRequestAnswer(ans, filePath);
+	}
 }

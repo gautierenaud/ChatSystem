@@ -3,6 +3,8 @@ package gui;
 import main.*;
 import java.util.*;
 
+import javax.swing.JFileChooser;
+
 // generate an output presentation based on the model
 
 public class GUIView {
@@ -78,5 +80,17 @@ public class GUIView {
 	
 	public void setMediator(ChatMediator mediator){
 		this.mediator = mediator;
+	}
+	
+	public synchronized void fileRequestQuery(String title){
+		// maybe test if an user windows is opened
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle(title);
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int result = fileChooser.showOpenDialog(fileChooser);
+		if (result == JFileChooser.APPROVE_OPTION)
+			ChatGUI.getInstance().fileRequestAnswer(true, fileChooser.getSelectedFile().getPath());
+		else
+			ChatGUI.getInstance().fileRequestAnswer(false, "");
 	}
 }

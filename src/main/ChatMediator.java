@@ -91,4 +91,12 @@ public class ChatMediator {
 	public ArrayList<InetAddress> getLocalAddresses(){
 		return network.getLocalAddresses();
 	}
+	
+	public void fileRequestQuery(String title, String sourceID){
+		gui.fileRequestQuery(title);
+	}
+	
+	public void fileRequestAnswer(boolean ans, String filePath){
+		controller.fileRequestAnswer(ans, filePath);
+	}
 }
