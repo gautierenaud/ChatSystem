@@ -49,17 +49,15 @@ public class ChatController {
 		
 		String userID = message.getSender() + "@" + address.toString();
 		
-		// if the userID is not inside
-		if (!userList.isInside(userID) && !mediator.getLocalAddresses().contains(address)){
+		// if this application is not the source
+		if (!mediator.getLocalAddresses().contains(address)){
 			userList.addInstance(message.getSender(), address);
 			mediator.userListUpdated();
 		}
 		
 		switch (message.getType()){
 		case BYE:
-
-			System.out.println("received bye");
-
+			System.out.println("bye");
 			userList.removeInstance(userID);
 			mediator.userListUpdated();
 			break;
@@ -112,10 +110,12 @@ public class ChatController {
 	
 	public void logOut(){
 		// erase the userList
-		userList = null;
 		// send Good bye
 		mediator.sendBroadCast(new Message(MsgType.BYE, "Salutations!", userName));
+
 		mediator.loggedOut();
+
+		userList = null;
 	}
 	
 	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){
