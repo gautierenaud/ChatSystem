@@ -41,8 +41,7 @@ public class MessageNI extends Thread {
 		sendMsgStack.push(msg);
 	}
 	
-	public MessAddress turnPacketToMessage(){
-		DatagramPacket packet = receivePacketStack.pop();
+	public MessAddress turnPacketToMessage(DatagramPacket packet){
 		MessAddress msg= new MessAddress(); 
 		
 		ByteArrayInputStream bais = new ByteArrayInputStream(packet.getData());
@@ -62,8 +61,9 @@ public class MessageNI extends Thread {
 	
 	public void checkReceive(){
 		while(!receivePacketStack.isEmpty()){
-			MessAddress msgaddr = turnPacketToMessage();
-			System.out.println(msgaddr.getMessage().toString());
+			DatagramPacket packet = receivePacketStack.pop();
+			MessAddress msgaddr = turnPacketToMessage(packet);
+			System.out.println("received: " + msgaddr.getMessage().toString());
 			ChatNI.getInstance().messageReceived(msgaddr.getMessage(), msgaddr.getAddress());
 		}
 	}
@@ -72,7 +72,7 @@ public class MessageNI extends Thread {
 		while(!sendMsgStack.isEmpty()){
 			MessAddress tmp = sendMsgStack.pop();
 			this.sendMessage(tmp);
-			System.out.println(tmp.getMessage().toString());
+			System.out.println("sent: " + tmp.getMessage().toString());
 		}
 	}
 	
