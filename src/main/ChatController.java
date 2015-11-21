@@ -111,11 +111,10 @@ public class ChatController {
 	}
 	
 	public void logOut(){
-		// erase the userList
-		userList = null;
 		// send Good bye
 		mediator.sendBroadCast(new Message(MsgType.BYE, "Salutations!", userName));
 		mediator.loggedOut();
+		userList.eraseUserList();
 	}
 	
 	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){

@@ -70,4 +70,8 @@ public class ChatUserList {
 			return result;
 		}
 	}
+	
+	public void eraseUserList(){
+		userList = null;
+	}
 }
