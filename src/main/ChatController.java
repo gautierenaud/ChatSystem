@@ -32,6 +32,8 @@ public class ChatController {
 		userList = ChatUserList.getInstance();
 		
 		mediator = ChatMediator.getInstance();
+
+		userList.init();
 		mediator.log();
 	}
 	
@@ -94,7 +96,6 @@ public class ChatController {
 	
 	public void logged(String name){
 		setUserName(name);
-		userList.init();
 		// send Hello from NI
 		mediator.sendBroadCast(new Message(Message.MsgType.HELLO, "Hello Everyone!", name));
 		mediator.openUserList();
@@ -104,6 +105,8 @@ public class ChatController {
 		// send Good bye
 		exit();
 		mediator.loggedOut();
+
+		userList.init();
 		mediator.log();
 		userList.eraseUserList();
 	}
