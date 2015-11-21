@@ -56,34 +56,34 @@ public class ChatController {
 		}
 		
 		switch (message.getType()){
-		case BYE:
-			userList.removeInstance(userID);
-			mediator.userListUpdated();
-			break;
-		case FILE_ACCEPT:
-			break;
-		case FILE_REFUSE:
-			break;
-		case FILE_REQUEST:
-			String title = message.getSender();
-			if (message.getContent() != ""){
-				title += message.getContent();
-			}
-			mediator.fileRequestQuery(title, userID);
-			break;
-		case HELLO:
-			if (!mediator.getLocalAddresses().contains(address) && (userName != null))
-				mediator.sendMessage(new Message(MsgType.HELLO_REPLY, userName, userName), userList.getAddress(userID));
-			break;
-		case HELLO_REPLY:
-			
-			break;
-		case TEXT_MESSAGE:
-			// give the message to the GUIModel
-			mediator.updateMessage(message, userID);
-			break;
-		default:
-			break;
+			case BYE:
+				userList.removeInstance(userID);
+				mediator.userListUpdated();
+				break;
+			case FILE_ACCEPT:
+				break;
+			case FILE_REFUSE:
+				break;
+			case FILE_REQUEST:
+				String title = message.getSender();
+				if (message.getContent() != ""){
+					title += message.getContent();
+				}
+				mediator.fileRequestQuery(title, userID);
+				break;
+			case HELLO:
+				if (!mediator.getLocalAddresses().contains(address) && (userName != null))
+					mediator.sendMessage(new Message(MsgType.HELLO_REPLY, userName, userName), userList.getAddress(userID));
+				break;
+			case HELLO_REPLY:
+				
+				break;
+			case TEXT_MESSAGE:
+				// give the message to the GUIModel
+				mediator.updateMessage(message, userID);
+				break;
+			default:
+				break;
 		}
 	}
 	
