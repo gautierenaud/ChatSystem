@@ -72,7 +72,7 @@ public class ChatController {
 			mediator.fileRequestQuery(title, userID);
 			break;
 		case HELLO:
-			if (!mediator.getLocalAddresses().contains(address))
+			if (!mediator.getLocalAddresses().contains(address) && (userName != null))
 				mediator.sendMessage(new Message(MsgType.HELLO_REPLY, userName, userName), userList.getAddress(userID));
 			break;
 		case HELLO_REPLY:
@@ -113,6 +113,7 @@ public class ChatController {
 	
 	public void exit(){
 		mediator.sendBroadCast(new Message(MsgType.BYE, "Salutations!", userName));
+		userName = "";
 	}
 	
 	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){

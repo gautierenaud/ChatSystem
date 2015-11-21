@@ -62,8 +62,8 @@ public class MessageNI extends Thread {
 	
 	public void checkReceive(){
 		while(!receivePacketStack.isEmpty()){
-			System.out.println("message received!");
 			MessAddress msgaddr = turnPacketToMessage();
+			System.out.println(msgaddr.getMessage().toString());
 			ChatNI.getInstance().messageReceived(msgaddr.getMessage(), msgaddr.getAddress());
 		}
 	}
@@ -72,7 +72,7 @@ public class MessageNI extends Thread {
 		while(!sendMsgStack.isEmpty()){
 			MessAddress tmp = sendMsgStack.pop();
 			this.sendMessage(tmp);
-			System.out.println("message sent");
+			System.out.println(tmp.getMessage().toString());
 		}
 	}
 	

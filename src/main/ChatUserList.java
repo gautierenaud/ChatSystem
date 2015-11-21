@@ -44,44 +44,55 @@ public class ChatUserList {
 	
 	// add an instance
 	public synchronized void addInstance(String username, InetAddress address){
-		String tmpID = username + "@" + address.toString();
-		if (!userList.containsKey(tmpID)){
-			userList.put(tmpID, new ChatUserInfo(username, address));
+		if (userList != null){
+			String tmpID = username + "@" + address.toString();
+			if (!userList.containsKey(tmpID)){
+				userList.put(tmpID, new ChatUserInfo(username, address));
+			}
 		}
 	}
 	
 	// remove an instance
 	public void removeInstance(String userID){
-		userList.remove(userID);
+		if (userList != null)
+			userList.remove(userID);
 	}
 	
 	public InetAddress getAddress(String userID){
-		if (userList.containsKey(userID)){
-			return userList.get(userID).getAddress();
+		if (userList != null){
+			if (userList.containsKey(userID)){
+				return userList.get(userID).getAddress();
+			}
 		}
 		return null;
 	}
 	
 	// return a list of the users
 	public Vector<ChatUserInfo> getUserList(){
-		Vector<ChatUserInfo> result = new Vector<>();
-		for (ChatUserInfo user : userList.values() ){
-			result.addElement(user);
-		}
-		return result;
+		if (userList != null){
+			Vector<ChatUserInfo> result = new Vector<>();
+			for (ChatUserInfo user : userList.values() ){
+				result.addElement(user);
+			}
+			return result;
+		}else
+			return null;
 	}
 	
 	// return a list of users, containing the input string
 	public Vector<ChatUserInfo> searchUserList(String input){
-		if (input == "")
-			return getUserList();
-		else{
-			Vector<ChatUserInfo> result = new Vector<>();
-			for (ChatUserInfo user : userList.values() ){
-				if (user.getUsername().contains(input))
-					result.addElement(user);
+		if (userList != null){
+			if (input == "")
+				return getUserList();
+			else{
+				Vector<ChatUserInfo> result = new Vector<>();
+				for (ChatUserInfo user : userList.values() ){
+					if (user.getUsername().contains(input))
+						result.addElement(user);
+				}
+				return result;
 			}
-			return result;
-		}
+		}else
+			return null;
 	}
 }
