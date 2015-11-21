@@ -74,7 +74,10 @@ public class ChatGUI {
 	
 	public void loggedOut(){
 		view.closeUserList();
-		view.openLoginWindow();
+	}
+	
+	public void exit(){
+		mediator.exit();
 	}
 	
 	public void sendMessage(String msg, String opponentID){

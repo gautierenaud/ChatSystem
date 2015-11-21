@@ -29,10 +29,10 @@ public class ChatController {
 	
 	// Instantiate all the different classes
 	public void initAll(){
+		userList = ChatUserList.getInstance();
+		
 		mediator = ChatMediator.getInstance();
 		mediator.log();
-
-		userList = ChatUserList.getInstance();
 	}
 	
 	public void setUserName(String name){
@@ -55,7 +55,6 @@ public class ChatController {
 		
 		switch (message.getType()){
 		case BYE:
-			System.out.println("bye");
 			userList.removeInstance(userID);
 			mediator.userListUpdated();
 			break;
@@ -95,24 +94,22 @@ public class ChatController {
 	
 	public void logged(String name){
 		setUserName(name);
+		userList.init();
 		// send Hello from NI
 		mediator.sendBroadCast(new Message(Message.MsgType.HELLO, "Hello Everyone!", name));
 		mediator.openUserList();
-		
-		// test chatbox
-		/*
-		ChatUserList.getInstance().AddInstance("rgautier", InetAddress.getLoopbackAddress());
-		mediator.Chatbox(ChatUserList.getInstance().getUser("rgautier@" + InetAddress.getLoopbackAddress().toString()));
-		*/
 	}
 	
 	public void logOut(){
 		// send Good bye
-		mediator.sendBroadCast(new Message(MsgType.BYE, "Salutations!", userName));
-
+		exit();
 		mediator.loggedOut();
-
+		mediator.log();
 		userList.eraseUserList();
+	}
+	
+	public void exit(){
+		mediator.sendBroadCast(new Message(MsgType.BYE, "Salutations!", userName));
 	}
 	
 	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){
@@ -121,6 +118,5 @@ public class ChatController {
 			// open TCP port, should we put the port number in the content of the message?
 		}else
 			mediator.sendMessage(new Message(MsgType.FILE_REFUSE, "file refused"), userList.getAddress(destinationID));
-			
 	}
 }

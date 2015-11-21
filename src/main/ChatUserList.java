@@ -17,20 +17,34 @@ public class ChatUserList {
 	}
 	
 	// HashMap for storing user's information
-	private HashMap<String, ChatUserInfo> userList = new HashMap<>();
+	private HashMap<String, ChatUserInfo> userList;
+
+	public void init(){
+		userList = new HashMap<>();
+	}
+	
+	public void eraseUserList(){
+		userList = null;
+	}
 	
 	public ChatUserInfo getUser(String userID){
-		return userList.get(userID);
+		if (userList != null)
+			return userList.get(userID);
+		else
+			return null;
 	}
 	
 	// look for the element
 	public boolean isInside(String userID){
-		return userList.containsKey(userID);
+		if (userList != null)
+			return userList.containsKey(userID);
+		else
+			return false;
 	}
 	
 	// add an instance
 	public synchronized void addInstance(String username, InetAddress address){
-		String tmpID = username + "@" + address.toString();		
+		String tmpID = username + "@" + address.toString();
 		if (!userList.containsKey(tmpID)){
 			userList.put(tmpID, new ChatUserInfo(username, address));
 		}
@@ -69,9 +83,5 @@ public class ChatUserList {
 			}
 			return result;
 		}
-	}
-	
-	public void eraseUserList(){
-		userList = null;
 	}
 }

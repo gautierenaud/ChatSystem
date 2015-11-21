@@ -11,7 +11,6 @@ public class GUIView {
 
 	private static GUIView instance;
 	private ChatGUI controller;
-	private ChatMediator mediator;
 	private HashMap<String, ViewChatBox> chatBox;
 	
 	private GUIView(ChatGUI chatGUI) {
@@ -74,12 +73,8 @@ public class GUIView {
 	public void updateUserList(){
 		// the userList window is opened
 		if (userList != null){
-			userList.updateList(ChatUserList.getInstance().getUserList());
+			userList.updateList();
 		}
-	}
-	
-	public void setMediator(ChatMediator mediator){
-		this.mediator = mediator;
 	}
 	
 	public synchronized void fileRequestQuery(String title, String destinationID){

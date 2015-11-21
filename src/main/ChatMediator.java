@@ -52,6 +52,10 @@ public class ChatMediator {
 		gui.loggedOut();
 	}
 	
+	public void exit(){
+		controller.exit();
+	}
+	
 	public void sendBroadCast(Message msg){
 		network.sendBroadCast(msg);
 	}

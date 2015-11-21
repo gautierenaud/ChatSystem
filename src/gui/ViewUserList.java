@@ -36,12 +36,12 @@ public class ViewUserList extends JFrame implements ActionListener{
 			@Override
 			public void windowClosing(WindowEvent e){
 				// do action on disconnect (send bye)
-				ChatGUI.getInstance().logOut();
+				ChatGUI.getInstance().exit();
 				e.getWindow().dispose();
 			}
 		});
 
-		updateList(ChatUserList.getInstance().getUserList());
+		updateList();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{10, 112, 10, 0};
 		gridBagLayout.rowHeights = new int[]{10, 21, 5, 29, 25, 10, 0};
@@ -64,17 +64,17 @@ public class ViewUserList extends JFrame implements ActionListener{
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				updateList(ChatUserList.getInstance().searchUserList(searchArea.getText()));
+				updateList();
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				updateList(ChatUserList.getInstance().searchUserList(searchArea.getText()));
+				updateList();
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				updateList(ChatUserList.getInstance().searchUserList(searchArea.getText()));
+				updateList();
 			}
 		});
 		
@@ -102,7 +102,10 @@ public class ViewUserList extends JFrame implements ActionListener{
 	}
 	
 	// updates the content of the list panel
-	public void updateList(Vector<ChatUserInfo> userList){
+	public void updateList(){
+		
+		Vector<ChatUserInfo> userList = new Vector<>(); 
+		userList = ChatUserList.getInstance().searchUserList(searchArea.getText());
 		
 		// clear the panel before putting items inside
 		listPanel.removeAll();
