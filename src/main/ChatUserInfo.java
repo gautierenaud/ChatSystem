@@ -11,10 +11,13 @@ public class ChatUserInfo {
 	// unique key, made from the username and the ip address
 	private String userID;
 
+	private int unreadCount;
+	
 	public ChatUserInfo(String name, InetAddress ip){
 		this.username = name;
 		this.address = ip;
 		this.userID = name + "@" + ip.toString();
+		this.unreadCount = 0;
 	}	
 	
 	// getters
@@ -29,5 +32,18 @@ public class ChatUserInfo {
 	
 	public String getUserID() {
 		return userID;
-	}	
+	}
+	
+	public int getUnreadCount(){
+		return unreadCount;
+	}
+	
+	// modify unreadCount
+	public void incrementUnreadCount(){
+		unreadCount++;
+	}
+	
+	public void resetUnreadCount(){
+		unreadCount = 0;
+	}
 }

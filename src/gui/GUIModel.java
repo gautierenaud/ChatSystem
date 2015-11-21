@@ -64,6 +64,7 @@ public class GUIModel {
 		}
 		// append message at the end of the list
 		conversationList.get(opponentID).add(message);
+
 		if (GUIView.getInstance().isChatOpen(opponentID)){
 			GUIView.getInstance().getChatBox(opponentID).appendMessage(message);
 		}

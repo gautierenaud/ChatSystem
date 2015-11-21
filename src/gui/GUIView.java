@@ -77,6 +77,18 @@ public class GUIView {
 		}
 	}
 	
+	public void messageReceivedNotification(String id){
+		// test if the chatbox window is opened
+		if (userList != null){
+			if (!isChatOpen(id)){
+				ChatUserList.getInstance().getUser(id).incrementUnreadCount();
+				userList.updateList();
+			}
+		}
+			
+		// if not, add count to unread message and update UserList
+	}
+	
 	public synchronized void fileRequestQuery(String title, String destinationID){
 		// maybe test if an user windows is opened
 		JFileChooser fileChooser = new JFileChooser();

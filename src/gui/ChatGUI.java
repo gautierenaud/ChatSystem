@@ -44,6 +44,8 @@ public class ChatGUI {
 	
 	public void openChatbox(ChatUserInfo info){
 		view.openChatbox(info);
+		ChatUserList.getInstance().getUser(info.getUserID()).resetUnreadCount();
+		view.updateUserList();
 	}
 	
 	public void userLogged(String username){
@@ -88,7 +90,9 @@ public class ChatGUI {
 	}
 	
 	public void updateMessage(Message msg, String id){
-		model.addMessage(id, new MessageStruct(msg.getSender(), msg.getContent()));
+		MessageStruct tmpMessage = new MessageStruct(msg.getSender(), msg.getContent());
+		model.addMessage(id, tmpMessage);
+		view.messageReceivedNotification(id);
 	}
 	
 	public void fileRequestQuery(String title, String destinationID){
