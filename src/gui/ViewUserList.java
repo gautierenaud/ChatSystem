@@ -36,7 +36,7 @@ public class ViewUserList extends JFrame implements ActionListener{
 			@Override
 			public void windowClosing(WindowEvent e){
 				// do action on disconnect (send bye)
-				System.out.println("good bye");
+				ChatGUI.getInstance().logOut();
 				e.getWindow().dispose();
 			}
 		});

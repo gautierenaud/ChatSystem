@@ -63,7 +63,6 @@ public class MessageNI extends Thread {
 	public void checkReceive(){
 		while(!receivePacketStack.isEmpty()){
 			MessAddress msgaddr = turnPacketToMessage();
-			System.out.println("un messag est arrivé");
 			ChatNI.getInstance().messageReceived(msgaddr.getMessage(), msgaddr.getAddress());
 		}
 	}
