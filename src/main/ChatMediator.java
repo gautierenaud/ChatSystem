@@ -93,7 +93,7 @@ public class ChatMediator {
 	}
 	
 	public void fileRequestQuery(String title, String sourceID){
-		gui.fileRequestQuery(title sourceID);
+		gui.fileRequestQuery(title, sourceID);
 	}
 	
 	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){
