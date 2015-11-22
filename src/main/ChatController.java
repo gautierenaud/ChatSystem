@@ -1,6 +1,7 @@
 package main;
 
 import java.net.*;
+import java.io.File;
 
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
@@ -47,6 +48,10 @@ public class ChatController {
 	
 	public String getUserName(){
 		return userName;
+	}
+	//TODO : à completer, avec Renaud pour gestion creation de folder ect...
+	public void receiveFile(File recFile){
+		
 	}
 	
 	public void receiveMessage(Message message, InetAddress address){

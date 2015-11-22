@@ -1,6 +1,7 @@
 package network;
 
 import java.io.IOException;
+import java.io.File;
 import java.net.InetAddress;
 import java.net.NetworkInterface; 
 import java.net.SocketException;
@@ -49,10 +50,21 @@ public class ChatNI {
 			instance = new ChatNI();
 		return instance;
 	}
-	//methode qui ajoute au stack de MessageNI
+	//*********************************SENDING METHODS**************************************************************
+	
+	//this method pack a Message and an IP into a bigger object, and push it into the sending buffer of MessageNI
 	public void sendMessage(Message msg, InetAddress addr){
 		messNI.addMsgBuff(new MessAddress(msg, addr));
 	}
+	
+	public void sendFile(File file , InetAddress addr){
+		fileNI.sendFile(new FileAddr(file,addr));
+	}
+	
+	public void fileReceived(File recFile){
+		ChatMediator.getInstance().fileReceived(recFile);
+	}
+	
 	public ArrayList<InetAddress> getLocalAddresses(){
 		ArrayList<InetAddress> result = new ArrayList() ; 
 		for(InterfaceAddress index : this.addressList){

@@ -3,6 +3,7 @@ package main;
 
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.io.File; 
 
 import common.*;
 import gui.*;
@@ -90,5 +91,9 @@ public class ChatMediator {
 	
 	public ArrayList<InetAddress> getLocalAddresses(){
 		return network.getLocalAddresses();
+	}
+	
+	public void fileReceived(File recFile){
+		controller.receiveFile(recFile);
 	}
 }
