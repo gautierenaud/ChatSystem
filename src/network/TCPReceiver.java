@@ -3,25 +3,49 @@ package network;
 import java.io.*;
 import java.net.*;
 
-public class TCPReceiver {
+public class TCPReceiver extends Thread{
 	
 	private ServerSocket listeningServer; 
 	private Socket connectedSocket;
-	private BufferedReader Sreader; 
-	private BufferedWriter Swriter;
+	private BufferedInputStream Sreader; 
+	private BufferedOutputStream Swriter;
 
 	public TCPReceiver(int port) throws IOException{
 		this.listeningServer = new ServerSocket(port); 
 		this.connectedSocket = this.listeningServer.accept();
-		this.Sreader=new BufferedReader(new InputStreamReader(this.connectedSocket.getInputStream()));
-		this.Swriter=new BufferedWriter(new OutputStreamWriter(this.connectedSocket.getOutputStream()));
+		this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
+		this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
 	}
 	
-	public BufferedReader getReader(){
+	public BufferedInputStream getReader(){
 		return this.Sreader; 
 	}
 	
-	public BufferedWriter getWriter(){
+	public BufferedOutputStream getWriter(){
 		return this.Swriter; 
 	}
+	
+	public void receivedFile(){
+		
+		File recFile = new File("tmp");
+		
+		try {
+			FileOutputStream fos = new FileOutputStream(recFile);
+			while(Sreader.available()!= 0 )
+				fos.write(Sreader.read());
+			fos.close();
+			FileNI.getInstance().addReceivedBuffer(recFile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	 public void run(){
+		 while(true){
+			 receivedFile();
+		 }
+	 }
 }
