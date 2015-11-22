@@ -35,14 +35,6 @@ public class ChatNI {
 		}
 		
 		addressList = this.getInterfacesAddresses();
-		
-		/*
-		try{
-			// for future implementation
-			this.fileNI = FileNI.getInstance();
-		}catch (IOException e){
-			System.err.println(e);
-		}*/
 	}
 
 	public static ChatNI getInstance(){
@@ -86,7 +78,6 @@ public class ChatNI {
 	public void sendBroadCast(Message msg){// � modifer car broadcast en dur <"!>
 		for(InterfaceAddress index : addressList){
 			if (index.getBroadcast() != null){
-				System.out.println(msg.getContent());
 				this.sendMessage(msg , index.getBroadcast());
 			}
 		}

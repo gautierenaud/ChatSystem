@@ -3,13 +3,14 @@ package gui;
 import main.*;
 import java.util.*;
 
+import javax.swing.JFileChooser;
+
 // generate an output presentation based on the model
 
 public class GUIView {
 
 	private static GUIView instance;
 	private ChatGUI controller;
-	private ChatMediator mediator;
 	private HashMap<String, ViewChatBox> chatBox;
 	
 	private GUIView(ChatGUI chatGUI) {
@@ -72,11 +73,31 @@ public class GUIView {
 	public void updateUserList(){
 		// the userList window is opened
 		if (userList != null){
-			userList.updateList(ChatUserList.getInstance().getUserList());
+			userList.updateList();
 		}
 	}
 	
-	public void setMediator(ChatMediator mediator){
-		this.mediator = mediator;
+	public void messageReceivedNotification(String id){
+		// test if the chatbox window is opened
+		if (userList != null){
+			if (!isChatOpen(id)){
+				ChatUserList.getInstance().getUser(id).incrementUnreadCount();
+				userList.updateList();
+			}
+		}
+			
+		// if not, add count to unread message and update UserList
+	}
+	
+	public synchronized void fileRequestQuery(String title, String destinationID){
+		// maybe test if an user windows is opened
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle(title);
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int result = fileChooser.showOpenDialog(fileChooser);
+		if (result == JFileChooser.APPROVE_OPTION)
+			ChatGUI.getInstance().fileRequestAnswer(true, fileChooser.getSelectedFile().getPath(), destinationID);
+		else
+			ChatGUI.getInstance().fileRequestAnswer(false, "", destinationID);
 	}
 }

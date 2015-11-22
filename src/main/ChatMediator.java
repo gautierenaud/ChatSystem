@@ -53,6 +53,10 @@ public class ChatMediator {
 		gui.loggedOut();
 	}
 	
+	public void exit(){
+		controller.exit();
+	}
+	
 	public void sendBroadCast(Message msg){
 		network.sendBroadCast(msg);
 	}
@@ -93,7 +97,18 @@ public class ChatMediator {
 		return network.getLocalAddresses();
 	}
 	
+//Rajout TomTom******************************************************************************************
+	
 	public void fileReceived(File recFile){
 		controller.receiveFile(recFile);
+	}
+//*******************************************************************************************************
+	public void fileRequestQuery(String title, String sourceID){
+		gui.fileRequestQuery(title, sourceID);
+	}
+	
+	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){
+		controller.fileRequestAnswer(ans, filePath, destinationID);
+
 	}
 }

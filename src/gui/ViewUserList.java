@@ -36,12 +36,12 @@ public class ViewUserList extends JFrame implements ActionListener{
 			@Override
 			public void windowClosing(WindowEvent e){
 				// do action on disconnect (send bye)
-				System.out.println("good bye");
+				ChatGUI.getInstance().exit();
 				e.getWindow().dispose();
 			}
 		});
 
-		updateList(ChatUserList.getInstance().getUserList());
+		updateList();
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{10, 112, 10, 0};
 		gridBagLayout.rowHeights = new int[]{10, 21, 5, 29, 25, 10, 0};
@@ -64,17 +64,17 @@ public class ViewUserList extends JFrame implements ActionListener{
 			
 			@Override
 			public void removeUpdate(DocumentEvent e) {
-				updateList(ChatUserList.getInstance().searchUserList(searchArea.getText()));
+				updateList();
 			}
 			
 			@Override
 			public void insertUpdate(DocumentEvent e) {
-				updateList(ChatUserList.getInstance().searchUserList(searchArea.getText()));
+				updateList();
 			}
 			
 			@Override
 			public void changedUpdate(DocumentEvent e) {
-				updateList(ChatUserList.getInstance().searchUserList(searchArea.getText()));
+				updateList();
 			}
 		});
 		
@@ -102,10 +102,15 @@ public class ViewUserList extends JFrame implements ActionListener{
 	}
 	
 	// updates the content of the list panel
-	public void updateList(Vector<ChatUserInfo> userList){
+	public void updateList(){
+		
+		Vector<ChatUserInfo> userList = new Vector<>(); 
+		userList = ChatUserList.getInstance().searchUserList(searchArea.getText());
 		
 		// clear the panel before putting items inside
 		listPanel.removeAll();
+		
+		listPanel.setLayout(new FlowLayout());
 		
 		for (final ChatUserInfo user : userList) {
 			JPanel userPanel = new JPanel();
@@ -113,6 +118,7 @@ public class ViewUserList extends JFrame implements ActionListener{
 			JTextArea nameArea = new JTextArea(user.getUsername());
 			nameArea.setColumns(15);
 			nameArea.setEditable(false);
+			
 			nameArea.addMouseListener(new MouseListener() {
 				
 				@Override
@@ -144,10 +150,23 @@ public class ViewUserList extends JFrame implements ActionListener{
 					// TODO Auto-generated method stub
 					ChatGUI.getInstance().openChatbox(user);
 				}
-			});			
+			});
 			userPanel.add(nameArea);
 			
 			listPanel.add(userPanel);
+			
+			// add message notification
+			if (user.getUnreadCount() != 0){
+				JPanel unreadPanel = new JPanel();
+				JTextArea unreadArea;
+				if (user.getUnreadCount() < 10)
+					unreadArea = new JTextArea(Integer.toString(user.getUnreadCount()));
+				else
+					unreadArea = new JTextArea("+9");
+				unreadArea.setEditable(false);
+				unreadPanel.add(unreadArea);
+				listPanel.add(unreadPanel);
+			}
 		}
 		listPanel.revalidate();
 		listPanel.repaint();
