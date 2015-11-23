@@ -15,6 +15,7 @@ public class TCPReceiver extends Thread{
 		this.connectedSocket = this.listeningServer.accept();
 		this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
 		this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
+		this.start();
 	}
 	
 	public BufferedInputStream getReader(){
@@ -34,6 +35,7 @@ public class TCPReceiver extends Thread{
 			while(Sreader.available()!= 0 )
 				fos.write(Sreader.read());
 			fos.close();
+			this.connectedSocket.close();
 			FileNI.getInstance().addReceivedBuffer(recFile);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -42,10 +44,11 @@ public class TCPReceiver extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	}
 	 public void run(){
-		 while(true){
+		
 			 receivedFile();
-		 }
+		 
 	 }
 }

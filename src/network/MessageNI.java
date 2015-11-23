@@ -29,7 +29,7 @@ public class MessageNI extends Thread {
 		// initialising the sockets
 		udpSender = new UDPSender();
 		udpReceiver = new UDPReceiver();
-		//udpReceiver.start();
+		
 		
 	}
 	
