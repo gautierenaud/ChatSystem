@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import java.util.Stack;
 
-public class FileNI {
+public class FileNI extends Thread{
 
 	public static FileNI instance; 
 	 
@@ -17,6 +17,7 @@ public class FileNI {
 		this.tcpReceiver = new TCPReceiver(2043);// port arbitraire � discuter ! 
 		this.tcpSender = new TCPSender( 2043); 
 		this.fileToSendBuffer = new Stack<FileAddr>(); 
+		this.start();
 	}
 	
 	public static FileNI getInstance() throws IOException{
@@ -63,6 +64,12 @@ public class FileNI {
 			recFile.getPath();
 			
 			
+		}
+	}
+	public void run(){
+		while(true){
+			this.checkSendFile();
+			this.checkReceivedFile();
 		}
 	}
 }

@@ -18,7 +18,7 @@ public class ChatFileRequestList {
 	}
 	
 	// HashMap for storing user's information
-		private HashMap<String, ChatFileRequest> fileRequestList;
+		/*private HashMap<String, ChatFileRequest> fileRequestList;
 
 		public void init(){
 			fileRequestList = new HashMap<>();
@@ -96,5 +96,5 @@ public class ChatFileRequestList {
 			}else
 				return null;
 		}
-	
+	*/
 }

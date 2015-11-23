@@ -9,6 +9,7 @@ public class TCPReceiver extends Thread{
 	private Socket connectedSocket;
 	private BufferedInputStream Sreader; 
 	private BufferedOutputStream Swriter;
+	private String filePath ;
 
 	public TCPReceiver(int port) throws IOException{
 		this.listeningServer = new ServerSocket(port); 
@@ -28,7 +29,7 @@ public class TCPReceiver extends Thread{
 	
 	public void receivedFile(){
 		
-		File recFile = new File("tmp");
+		File recFile = new File(this.filePath);
 		
 		try {
 			FileOutputStream fos = new FileOutputStream(recFile);
