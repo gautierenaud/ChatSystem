@@ -102,7 +102,12 @@ public class ChatGUI {
 		view.fileRequestQuery(title, destinationID);
 	}
 	
-	public void sendFile(boolean answer, File[] fileList, String destinationID){
-		mediator.sendFile(answer, fileList, destinationID);
+	public void sendFile(File[] fileList, String destinationID){
+		mediator.sendFile(fileList, destinationID);
+	}
+	
+	public void clearAll(){
+		view.clearAll();
+		model.clearAll();
 	}
 }

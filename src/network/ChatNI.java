@@ -87,5 +87,9 @@ public class ChatNI {
 	public void messageReceived(Message msg , InetAddress addr){
 		ChatMediator.getInstance().messageReceived(msg, addr); 
 	}
+	
+	public void clearAll(){
+		
+	}
 }
  

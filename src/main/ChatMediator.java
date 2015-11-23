@@ -49,8 +49,9 @@ public class ChatMediator {
 		controller.logOut();
 	}
 	
-	public void loggedOut(){
-		gui.loggedOut();
+	public void clearAll(){
+		gui.clearAll();
+		network.clearAll();
 	}
 	
 	public void exit(){
@@ -105,7 +106,7 @@ public class ChatMediator {
 		gui.fileRequestQuery(title, sourceID);
 	}
 	
-	public void sendFile(boolean ans, File[] fileList, String destinationID){
-		controller.sendFile(ans, fileList, destinationID);
+	public void sendFile(File[] fileList, String destinationID){
+		controller.sendFile(fileList, destinationID);
 	}
 }
