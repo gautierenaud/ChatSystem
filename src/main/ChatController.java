@@ -45,50 +45,53 @@ public class ChatController {
 	public String getUserName(){
 		return userName;
 	}
-	//TODO : à completer, avec Renaud pour gestion creation de folder ect...
+	//TODO : ï¿½ completer, avec Renaud pour gestion creation de folder ect...
 	public void receiveFile(File recFile){
 		
 	}
 	
 	public void receiveMessage(Message message, InetAddress address){
 		
-		String userID = message.getSender() + "@" + address.toString();
-		
-		// if this application is not the source
-		if (!mediator.getLocalAddresses().contains(address)){
-			userList.addInstance(message.getSender(), address);
-			mediator.userListUpdated();
-		}
-		
-		switch (message.getType()){
-			case BYE:
-				userList.removeInstance(userID);
+		if (userName != null){
+			
+			String userID = message.getSender() + "@" + address.toString();
+			
+			// if this application is not the source
+			if (!mediator.getLocalAddresses().contains(address)){
+				userList.addInstance(message.getSender(), address);
 				mediator.userListUpdated();
-				break;
-			case FILE_ACCEPT:
-				break;
-			case FILE_REFUSE:
-				break;
-			case FILE_REQUEST:
-				String title = message.getSender();
-				if (message.getContent() != ""){
-					title += message.getContent();
-				}
-				mediator.fileRequestQuery(title, userID);
-				break;
-			case HELLO:
-				if (!mediator.getLocalAddresses().contains(address) && (userName != null))
-					mediator.sendMessage(new Message(MsgType.HELLO_REPLY, userName, userName), userList.getAddress(userID));
-				break;
-			case HELLO_REPLY:
-				
-				break;
-			case TEXT_MESSAGE:
-				// give the message to the GUIModel
-				mediator.updateMessage(message, userID);
-				break;
-			default:
-				break;
+			}
+			
+			switch (message.getType()){
+				case BYE:
+					userList.removeInstance(userID);
+					mediator.userListUpdated();
+					break;
+				case FILE_ACCEPT:
+					break;
+				case FILE_REFUSE:
+					break;
+				case FILE_REQUEST:
+					String title = message.getSender();
+					if (message.getContent() != ""){
+						title += message.getContent();
+					}
+					mediator.fileRequestQuery(title, userID);
+					break;
+				case HELLO:
+					if (!mediator.getLocalAddresses().contains(address) && (userName != null))
+						mediator.sendMessage(new Message(MsgType.HELLO_REPLY, userName, userName), userList.getAddress(userID));
+					break;
+				case HELLO_REPLY:
+					
+					break;
+				case TEXT_MESSAGE:
+					// give the message to the GUIModel
+					mediator.updateMessage(message, userID);
+					break;
+				default:
+					break;
+			}
 		}
 	}
 	
@@ -113,12 +116,11 @@ public class ChatController {
 
 		userList.init();
 		mediator.log();
-		userList.eraseUserList();
 	}
 	
 	public void exit(){
 		mediator.sendBroadCast(new Message(MsgType.BYE, "Salutations!", userName));
-		userName = "";
+		userName = null;
 	}
 	
 	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){
