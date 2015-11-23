@@ -110,10 +110,11 @@ public class ViewUserList extends JFrame implements ActionListener{
 		// clear the panel before putting items inside
 		listPanel.removeAll();
 		
-		listPanel.setLayout(new FlowLayout());
+		//listPanel.setLayout(new FlowLayout());
 		
 		for (final ChatUserInfo user : userList) {
 			JPanel userPanel = new JPanel();
+			
 			
 			JTextArea nameArea = new JTextArea(user.getUsername());
 			nameArea.setColumns(15);
@@ -153,7 +154,6 @@ public class ViewUserList extends JFrame implements ActionListener{
 			});
 			userPanel.add(nameArea);
 			
-			listPanel.add(userPanel);
 			
 			// add message notification
 			if (user.getUnreadCount() != 0){
@@ -165,8 +165,10 @@ public class ViewUserList extends JFrame implements ActionListener{
 					unreadArea = new JTextArea("+9");
 				unreadArea.setEditable(false);
 				unreadPanel.add(unreadArea);
-				listPanel.add(unreadPanel);
+				userPanel.add(unreadArea);
 			}
+
+			listPanel.add(userPanel);
 		}
 		listPanel.revalidate();
 		listPanel.repaint();
