@@ -12,15 +12,13 @@ public class ChatFileRequestList {
 	}
 
 	public static ChatFileRequestList getInstance() {
-		if (instance == null){
+		if (instance == null)
 			instance = new ChatFileRequestList();
 		return instance;
 	}
 	
-	// HashMap for storing user's information
-
-		/*private HashMap<String, ChatFileRequest> fileRequestList;
-
+	
+	
 	// the key will be the concatenation of the userID and the fileName
 	private HashMap<String, ChatFileRequestInfo> fileRequestList;
 
@@ -71,8 +69,8 @@ public class ChatFileRequestList {
 				return fileRequestList.get(key).getFile();
 			}
 		}
-<<<<<<< HEAD
-	*/
+
+	
 
 		return null;
 	}
