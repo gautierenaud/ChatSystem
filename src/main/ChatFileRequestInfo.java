@@ -4,11 +4,11 @@ import java.io.*;
 
 public class ChatFileRequestInfo {
 
-	private String destinationID;
+	private ChatUserInfo userInfo;
 	private File fileToSend;
 	
-	public ChatFileRequestInfo(File file, String destinationID){
-		this.destinationID = destinationID;
+	public ChatFileRequestInfo(File file, ChatUserInfo info){
+		this.userInfo = info;
 		this.fileToSend = file;
 	}
 	
@@ -16,7 +16,7 @@ public class ChatFileRequestInfo {
 		return fileToSend;
 	}
 	
-	public String getDestination(){
-		return destinationID;
+	public ChatUserInfo getDestination(){
+		return userInfo;
 	}
 }

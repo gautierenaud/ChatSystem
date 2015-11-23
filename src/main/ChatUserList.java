@@ -8,6 +8,7 @@ public class ChatUserList {
 	private static ChatUserList instance;
 
 	private ChatUserList() {
+		init();
 	}
 
 	public static ChatUserList getInstance() {

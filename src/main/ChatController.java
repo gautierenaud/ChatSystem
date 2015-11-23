@@ -7,10 +7,6 @@ import java.io.File;
 import common.*;
 import common.Message.MsgType;
 import gui.*;
-/*
- * Ajouter un filtre sur les hello, filtrer son propre nom 
- * completer switch case
- */
 
 public class ChatController {
 
@@ -28,14 +24,15 @@ public class ChatController {
 	private static ChatMediator mediator;
 	private String userName;
 	private ChatUserList userList;
+	private ChatFileRequestList requestList;
 	
 	// Instantiate all the different classes
 	public void initAll(){
 		userList = ChatUserList.getInstance();
+		requestList = ChatFileRequestList.getInstance();
 		
 		mediator = ChatMediator.getInstance();
 
-		userList.init();
 		mediator.log();
 	}
 	
@@ -69,6 +66,7 @@ public class ChatController {
 					mediator.userListUpdated();
 					break;
 				case FILE_ACCEPT:
+					
 					break;
 				case FILE_REFUSE:
 					break;
@@ -106,16 +104,17 @@ public class ChatController {
 	public void logged(String name){
 		setUserName(name);
 		// send Hello from NI
-		mediator.sendBroadCast(new Message(Message.MsgType.HELLO, "Hello Everyone!", name));
+		mediator.sendBroadCast(new Message(MsgType.HELLO, "Hello Everyone!", name));
 		mediator.openUserList();
 	}
 	
 	public void logOut(){
 		// send Good bye
 		exit();
-		mediator.loggedOut();
+		mediator.clearAll();
 
 		userList.init();
+		requestList.init();
 		mediator.log();
 	}
 	
@@ -132,11 +131,14 @@ public class ChatController {
 			mediator.sendMessage(new Message(MsgType.FILE_REFUSE, "file refused"), userList.getAddress(destinationID));
 	}
 	
-	public void sendFile(boolean answer, File[] fileList, String destinationID){
-		if (answer && (fileList != null)){
-			InetAddress destinationIP = userList.getAddress(destinationID);
+	public void sendFile(File[] fileList, String destinationID){
+		// will send a request message only if 
+		if (fileList != null){
+			ChatUserInfo info = userList.getUser(destinationID);
 			for (File file : fileList){
-				mediator.sendMessage(new Message(MsgType.FILE_REQUEST, file.getName(), destinationID), destinationIP);
+				mediator.sendMessage(new Message(MsgType.FILE_REQUEST, file.getName(), destinationID), info.getAddress());
+
+				requestList.addInstance(file, info);
 			}
 		}
 	}

@@ -13,12 +13,6 @@ public class GUIModel {
 	
 	private GUIModel(ChatGUI controller){
 		this.controller = controller;
-		
-		// add junk data for test
-		/*
-		this.AddMessage("rgautier@" + InetAddress.getLoopbackAddress().toString(), new MessageStruct("rgautier", "HelloWorld"));
-		this.AddMessage("rgautier@" + InetAddress.getLoopbackAddress().toString(), new MessageStruct("autre", "Hello rgautier"));
-		*/
 	}
 
 	public static GUIModel getInstance() {
@@ -68,5 +62,9 @@ public class GUIModel {
 		if (GUIView.getInstance().isChatOpen(opponentID)){
 			GUIView.getInstance().getChatBox(opponentID).appendMessage(message);
 		}
+	}
+	
+	public void clearAll(){
+		conversationList.clear();
 	}
 }

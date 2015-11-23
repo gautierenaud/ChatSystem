@@ -102,7 +102,15 @@ public class GUIView {
 			ChatGUI.getInstance().sendFile(false, "", destinationID);*/
 	}
 	
-	public void sendFile(boolean answer, File[] fileList, String destinationID){
-		controller.sendFile(answer, fileList, destinationID);
+	public void sendFile(File[] fileList, String destinationID){
+		controller.sendFile(fileList, destinationID);
+	}
+	
+	public void clearAll(){
+		userList.dispose();
+		for (ViewChatBox box : chatBox.values()){
+			box.closeBox();
+		}
+		chatBox.clear();
 	}
 }
