@@ -1,6 +1,7 @@
 package gui;
 
 import main.*;
+import java.io.*;
 import java.util.*;
 
 import javax.swing.JFileChooser;
@@ -95,9 +96,13 @@ public class GUIView {
 		fileChooser.setDialogTitle(title);
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		int result = fileChooser.showOpenDialog(fileChooser);
-		if (result == JFileChooser.APPROVE_OPTION)
-			ChatGUI.getInstance().fileRequestAnswer(true, fileChooser.getSelectedFile().getPath(), destinationID);
+	/*	if (result == JFileChooser.APPROVE_OPTION)
+			ChatGUI.getInstance().sendFile(true, fileChooser.getSelectedFile().getPath(), destinationID);
 		else
-			ChatGUI.getInstance().fileRequestAnswer(false, "", destinationID);
+			ChatGUI.getInstance().sendFile(false, "", destinationID);*/
+	}
+	
+	public void sendFile(boolean answer, File[] fileList, String destinationID){
+		controller.sendFile(answer, fileList, destinationID);
 	}
 }

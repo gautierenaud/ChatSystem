@@ -1,6 +1,9 @@
 package gui;
 
 import main.*;
+
+import java.io.*;
+
 import common.*;
 
 /*
@@ -99,7 +102,7 @@ public class ChatGUI {
 		view.fileRequestQuery(title, destinationID);
 	}
 	
-	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){
-		mediator.fileRequestAnswer(ans, filePath, destinationID);
+	public void sendFile(boolean answer, File[] fileList, String destinationID){
+		mediator.sendFile(answer, fileList, destinationID);
 	}
 }
