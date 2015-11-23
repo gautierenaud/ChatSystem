@@ -27,5 +27,4 @@ public class TCPSender {
 	public void setAddress(InetAddress address){
 		this.distIP = address; 
 	}
-	}
-
+}

@@ -97,18 +97,15 @@ public class ChatMediator {
 		return network.getLocalAddresses();
 	}
 	
-//Rajout TomTom******************************************************************************************
-	
 	public void fileReceived(File recFile){
 		controller.receiveFile(recFile);
 	}
-//*******************************************************************************************************
+	
 	public void fileRequestQuery(String title, String sourceID){
 		gui.fileRequestQuery(title, sourceID);
 	}
 	
-	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){
-		controller.fileRequestAnswer(ans, filePath, destinationID);
-
+	public void sendFile(boolean ans, File[] fileList, String destinationID){
+		controller.sendFile(ans, fileList, destinationID);
 	}
 }

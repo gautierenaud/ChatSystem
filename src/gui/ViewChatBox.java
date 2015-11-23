@@ -147,8 +147,10 @@ public class ViewChatBox implements ActionListener {
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 			int result = fileChooser.showOpenDialog(fileChooser);
 			if (result == JFileChooser.APPROVE_OPTION){
-				System.out.println(fileChooser.getSelectedFile().getName());
-			}
+				//System.out.println(fileChooser.getSelectedFile().getName());
+				controller.sendFile(true, fileChooser.getSelectedFiles(), id);
+			}else
+				controller.sendFile(false, null, id);
 		}
 	}
 }

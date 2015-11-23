@@ -1,6 +1,7 @@
 package main;
 
 import java.net.*;
+import java.nio.file.attribute.UserPrincipalLookupService;
 import java.io.File;
 
 import common.*;
@@ -129,5 +130,14 @@ public class ChatController {
 			// open TCP port, should we put the port number in the content of the message?
 		}else
 			mediator.sendMessage(new Message(MsgType.FILE_REFUSE, "file refused"), userList.getAddress(destinationID));
+	}
+	
+	public void sendFile(boolean answer, File[] fileList, String destinationID){
+		if (answer && (fileList != null)){
+			InetAddress destinationIP = userList.getAddress(destinationID);
+			for (File file : fileList){
+				mediator.sendMessage(new Message(MsgType.FILE_REQUEST, file.getName(), destinationID), destinationIP);
+			}
+		}
 	}
 }
