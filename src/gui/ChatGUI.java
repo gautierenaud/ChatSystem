@@ -98,8 +98,8 @@ public class ChatGUI {
 		view.messageReceivedNotification(id);
 	}
 	
-	public void fileRequestQuery(String title, String destinationID){
-		view.fileRequestQuery(title, destinationID);
+	public String fileRequestQuery(String title, String destinationID){
+		return view.fileRequestQuery(title, destinationID);
 	}
 	
 	public void sendFile(File[] fileList, String destinationID){

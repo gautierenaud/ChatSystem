@@ -111,7 +111,7 @@ public class ChatController {
 	public void logOut(){
 		exit();
 
-		// open log box
+		// reopen log box	
 		mediator.log();
 	}
 	

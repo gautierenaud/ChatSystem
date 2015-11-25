@@ -38,6 +38,7 @@ public class GUIView {
 	}
 	
 	public void closeLoginWindow(){
+		login.dispose();
 		login = null;
 	}
 	
@@ -90,16 +91,17 @@ public class GUIView {
 		// if not, add count to unread message and update UserList
 	}
 	
-	public synchronized void fileRequestQuery(String title, String destinationID){
+	public synchronized String fileRequestQuery(String title, String destinationID){
 		// maybe test if an user windows is opened
 		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setDialogTitle(title);
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		fileChooser.setMultiSelectionEnabled(false);
 		int result = fileChooser.showOpenDialog(fileChooser);
-	/*	if (result == JFileChooser.APPROVE_OPTION)
-			ChatGUI.getInstance().sendFile(true, fileChooser.getSelectedFile().getPath(), destinationID);
+		if (result == JFileChooser.APPROVE_OPTION)
+			return fileChooser.getSelectedFile().getPath();
 		else
-			ChatGUI.getInstance().sendFile(false, "", destinationID);*/
+			return "";
 	}
 	
 	public void sendFile(File[] fileList, String destinationID){
@@ -107,10 +109,13 @@ public class GUIView {
 	}
 	
 	public void clearAll(){
-		userList.dispose();
+		// close all the opened chatboxes
 		for (ViewChatBox box : chatBox.values()){
 			box.closeBox();
 		}
 		chatBox.clear();
+
+		// close the UserList
+		userList.dispose();
 	}
 }

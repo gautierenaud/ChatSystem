@@ -21,6 +21,7 @@ import javax.swing.event.*;
 public class ViewUserList extends JFrame implements ActionListener{
 	
 	public ViewUserList() {
+		getContentPane().setBackground(new Color(0, 128, 128));
 		initComponents();
 	}
 	
