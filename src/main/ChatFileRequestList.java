@@ -1,6 +1,5 @@
 package main;
 
-import java.net.InetAddress;
 import java.util.HashMap;
 import java.io.File;
 
@@ -9,6 +8,7 @@ public class ChatFileRequestList {
 	private static ChatFileRequestList instance;
 
 	private ChatFileRequestList() {
+		fileRequestList = new HashMap<>();
 	}
 
 	public static ChatFileRequestList getInstance() {
@@ -17,62 +17,39 @@ public class ChatFileRequestList {
 		return instance;
 	}
 	
-	
-	
 	// the key will be the concatenation of the userID and the fileName
 	private HashMap<String, ChatFileRequestInfo> fileRequestList;
-
-
-	public void init(){
-		eraseRequestList();
-		fileRequestList = new HashMap<>();
-	}
 	
 	public void eraseRequestList(){
-		fileRequestList = null;
+		fileRequestList.clear();
 	}
 	
 	public ChatFileRequestInfo getUser(String key){
-		if (fileRequestList != null)
-			return fileRequestList.get(key);
-		else
-			return null;
+		return fileRequestList.get(key);
 	}
 	
 	// look for the element
 	public boolean isInside(String key){
-		if (fileRequestList != null)
-			return fileRequestList.containsKey(key);
-		else
-			return false;
+		return fileRequestList.containsKey(key);
 	}
 	
 	// add an instance
 	public synchronized void addInstance(File file, ChatUserInfo info){
-		if (fileRequestList != null){
-			String tmpKey = info.getUserID() + file.getName();
-			if (!fileRequestList.containsKey(tmpKey)){
-				fileRequestList.put(tmpKey, new ChatFileRequestInfo(file, info));
-			}
+		String tmpKey = info.getUserID() + file.getName();
+		if (!fileRequestList.containsKey(tmpKey)){
+			fileRequestList.put(tmpKey, new ChatFileRequestInfo(file, info));
 		}
 	}
 	
 	// remove an instance
 	public void removeInstance(String key){
-		if (fileRequestList != null)
-			fileRequestList.remove(key);
+		fileRequestList.remove(key);
 	}
 	
-	public File getAddress(String key){
-		if (fileRequestList != null){
-			if (fileRequestList.containsKey(key)){
-				return fileRequestList.get(key).getFile();
-			}
-		}
-
-	
-
-		return null;
+	public File getFile(String key){
+		if (fileRequestList.containsKey(key))
+			return fileRequestList.get(key).getFile();
+		else
+			return null;
 	}
-
 }

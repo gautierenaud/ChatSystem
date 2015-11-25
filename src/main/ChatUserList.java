@@ -8,7 +8,7 @@ public class ChatUserList {
 	private static ChatUserList instance;
 
 	private ChatUserList() {
-		init();
+		userList = new HashMap<>();
 	}
 
 	public static ChatUserList getInstance() {
@@ -19,81 +19,59 @@ public class ChatUserList {
 	
 	// HashMap for storing user's information
 	private HashMap<String, ChatUserInfo> userList;
-
-	public void init(){
-		userList = new HashMap<>();
-	}
 	
 	public void eraseUserList(){
-		userList = null;
+		userList.clear();
 	}
 	
 	public ChatUserInfo getUser(String userID){
-		if (userList != null)
-			return userList.get(userID);
-		else
-			return null;
+		return userList.get(userID);
 	}
 	
 	// look for the element
 	public boolean isInside(String userID){
-		if (userList != null)
-			return userList.containsKey(userID);
-		else
-			return false;
+		return userList.containsKey(userID);
 	}
 	
 	// add an instance
 	public synchronized void addInstance(String username, InetAddress address){
-		if (userList != null){
-			String tmpID = username + "@" + address.toString();
-			if (!userList.containsKey(tmpID)){
-				userList.put(tmpID, new ChatUserInfo(username, address));
-			}
-		}
+		String tmpID = username + "@" + address.toString();
+		if (!userList.containsKey(tmpID))
+			userList.put(tmpID, new ChatUserInfo(username, address));
 	}
 	
 	// remove an instance
 	public void removeInstance(String userID){
-		if (userList != null)
-			userList.remove(userID);
+		userList.remove(userID);
 	}
 	
 	public InetAddress getAddress(String userID){
-		if (userList != null){
-			if (userList.containsKey(userID)){
-				return userList.get(userID).getAddress();
-			}
-		}
-		return null;
+		if (userList.containsKey(userID))
+			return userList.get(userID).getAddress();
+		else
+			return null;
 	}
 	
 	// return a list of the users
 	public Vector<ChatUserInfo> getUserList(){
-		if (userList != null){
-			Vector<ChatUserInfo> result = new Vector<>();
-			for (ChatUserInfo user : userList.values() ){
-				result.addElement(user);
-			}
-			return result;
-		}else
-			return null;
+		Vector<ChatUserInfo> result = new Vector<>();
+		for (ChatUserInfo user : userList.values() ){
+			result.addElement(user);
+		}
+		return result;
 	}
 	
 	// return a list of users, containing the input string
 	public Vector<ChatUserInfo> searchUserList(String input){
-		if (userList != null){
-			if (input == "")
-				return getUserList();
-			else{
-				Vector<ChatUserInfo> result = new Vector<>();
-				for (ChatUserInfo user : userList.values() ){
-					if (user.getUsername().contains(input))
-						result.addElement(user);
-				}
-				return result;
+		if (input == "") // return the default list if nothing inside the search box
+			return getUserList();
+		else{
+			Vector<ChatUserInfo> result = new Vector<>();
+			for (ChatUserInfo user : userList.values() ){
+				if (user.getUsername().contains(input))
+					result.addElement(user);
 			}
-		}else
-			return null;
+			return result;
+		}
 	}
 }

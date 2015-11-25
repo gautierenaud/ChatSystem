@@ -109,18 +109,23 @@ public class ChatController {
 	}
 	
 	public void logOut(){
-		// send Good bye
 		exit();
-		mediator.clearAll();
 
-		userList.init();
-		requestList.init();
+		// open log box
 		mediator.log();
 	}
 	
+	// send bye message and reinitialize all the lists
 	public void exit(){
 		mediator.sendBroadCast(new Message(MsgType.BYE, "Salutations!", userName));
 		userName = null;
+		clearAll();
+	}
+	
+	public void clearAll(){
+		userList.eraseUserList();
+		requestList.eraseRequestList();
+		mediator.clearAll();
 	}
 	
 	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){
