@@ -43,7 +43,7 @@ public class ChatController {
 	public String getUserName(){
 		return userName;
 	}
-	//TODO : � completer, avec Renaud pour gestion creation de folder ect...
+	//TODO : a completer, avec Renaud pour gestion creation de folder ect...
 	public void receiveFile(File recFile){
 		
 	}
@@ -66,16 +66,27 @@ public class ChatController {
 					mediator.userListUpdated();
 					break;
 				case FILE_ACCEPT:
-					
+					// écouter sur le port voulu
 					break;
 				case FILE_REFUSE:
+					// enlever le file correspondant de la liste
 					break;
 				case FILE_REQUEST:
 					String title = message.getSender();
 					if (message.getContent() != ""){
-						title += message.getContent();
+						title = message.getContent();
 					}
-					mediator.fileRequestQuery(title, userID);
+					String answer = mediator.fileRequestQuery(title, userID);
+					MsgType ansType;
+					if (answer != ""){
+						// open TCP listening port? send it messages?
+						
+						// send accept message
+						ansType = MsgType.FILE_ACCEPT;
+					}else
+						ansType = MsgType.FILE_REFUSE;
+					
+					mediator.sendMessage(new Message(ansType, message.getContent(), userName), userList.getAddress(userID));
 					break;
 				case HELLO:
 					if (!mediator.getLocalAddresses().contains(address) && (userName != null))

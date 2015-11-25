@@ -102,8 +102,8 @@ public class ChatMediator {
 		controller.receiveFile(recFile);
 	}
 	
-	public void fileRequestQuery(String title, String sourceID){
-		gui.fileRequestQuery(title, sourceID);
+	public String fileRequestQuery(String title, String sourceID){
+		return gui.fileRequestQuery(title, sourceID);
 	}
 	
 	public void sendFile(File[] fileList, String destinationID){
