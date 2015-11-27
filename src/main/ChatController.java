@@ -70,9 +70,10 @@ public class ChatController {
 					break;
 				case FILE_REQUEST:
 					String title = message.getSender();
-					if (message.getContent() != ""){
-						title = message.getContent();
+					if (message.getContent() != ""){ // set the name if the file as the title
+						title = message.getContent() + " : " + message.getFileSize();
 					}
+					
 					String answer = mediator.fileRequestQuery(title, userID);
 					MsgType ansType;
 					if (answer != ""){
@@ -165,7 +166,7 @@ public class ChatController {
 		if (fileList != null){
 			ChatUserInfo info = userList.getUser(destinationID);
 			for (File file : fileList){
-				mediator.sendMessage(new Message(MsgType.FILE_REQUEST, file.getName(), destinationID), info.getAddress());
+				mediator.sendMessage(new Message(MsgType.FILE_REQUEST, file.getName(), userName, file.length()), info.getAddress());
 				System.out.println(file.getName());
 				requestList.addInstance(file, info);
 			}
