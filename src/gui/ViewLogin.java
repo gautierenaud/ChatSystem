@@ -28,6 +28,7 @@ public class ViewLogin extends JFrame implements ActionListener{
 		label = new JLabel("Username: ");
 		// a new text field with 30 columns
 		text = new JTextField(30);
+		text.addActionListener(this);
 		// a new button identified as OK
 		button = new JButton("Login");
 		button.addActionListener(this);
@@ -52,6 +53,11 @@ public class ViewLogin extends JFrame implements ActionListener{
 			this.setVisible(false);
 			this.dispose();
 		}
-		
+		if ((e.getSource() == text) && (text.getText().length() != 0)){
+			ChatGUI.getInstance().userLogged(text.getText());
+			// close the login windows
+			this.setVisible(false);
+			this.dispose();
+		}
 	}
 }
