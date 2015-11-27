@@ -73,6 +73,7 @@ public class ViewChatBox implements ActionListener {
 		displayAllMessages();
 		
 		sendText = new JTextField();
+		sendText.addActionListener(this);
 		GridBagConstraints gbc_sendText = new GridBagConstraints();
 		gbc_sendText.insets = new Insets(0, 0, 5, 5);
 		gbc_sendText.fill = GridBagConstraints.HORIZONTAL;
@@ -149,6 +150,10 @@ public class ViewChatBox implements ActionListener {
 			int result = fileChooser.showOpenDialog(fileChooser);
 			if (result == JFileChooser.APPROVE_OPTION)
 				controller.sendFile(fileChooser.getSelectedFiles(), id);
+		}else if((e.getSource() == sendText) && (sendText.getText().length() != 0)){
+			// send Message
+			controller.sendMessage(sendText.getText(), id);
+			sendText.setText("");
 		}
 	}
 	

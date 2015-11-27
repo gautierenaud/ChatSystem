@@ -52,8 +52,7 @@ public class ViewLogin extends JFrame implements ActionListener{
 			// close the login windows
 			this.setVisible(false);
 			this.dispose();
-		}
-		if ((e.getSource() == text) && (text.getText().length() != 0)){
+		}else if ((e.getSource() == text) && (text.getText().length() != 0)){
 			ChatGUI.getInstance().userLogged(text.getText());
 			// close the login windows
 			this.setVisible(false);
