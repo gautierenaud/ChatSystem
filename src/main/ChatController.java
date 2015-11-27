@@ -62,6 +62,9 @@ public class ChatController {
 			
 			switch (message.getType()){
 				case BYE:
+					// efface les messages de l'utilisateur
+					mediator.clearMessages(userID);
+					
 					userList.removeInstance(userID);
 					mediator.userListUpdated();
 					break;

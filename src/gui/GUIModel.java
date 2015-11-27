@@ -64,6 +64,10 @@ public class GUIModel {
 		}
 	}
 	
+	public void clearMessages(String opponentID){
+		conversationList.remove(opponentID);
+	}
+	
 	public void clearAll(){
 		conversationList.clear();
 	}

@@ -86,6 +86,10 @@ public class ChatMediator {
 		controller.receiveMessage(msg, addr);
 	}
 	
+	public void clearMessages(String opponentID){
+		gui.clearMessages(opponentID);
+	}
+	
 	public void updateMessage(Message msg, String id){
 		gui.updateMessage(msg, id);
 	}

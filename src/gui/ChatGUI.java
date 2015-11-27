@@ -98,6 +98,10 @@ public class ChatGUI {
 		view.messageReceivedNotification(id);
 	}
 	
+	public void clearMessages(String opponentID){
+		model.clearMessages(opponentID);
+	}
+	
 	public String fileRequestQuery(String title, String destinationID){
 		return view.fileRequestQuery(title, destinationID);
 	}
