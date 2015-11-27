@@ -71,7 +71,7 @@ public class ChatController {
 				case FILE_REQUEST:
 					String title = message.getSender();
 					if (message.getContent() != ""){ // set the name if the file as the title
-						title = message.getContent() + " : " + message.getFileSize();
+						title = message.getContent() + " : " + message.getFileSize() + " bytes";
 					}
 					
 					String answer = mediator.fileRequestQuery(title, userID);
