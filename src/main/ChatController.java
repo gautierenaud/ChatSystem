@@ -53,13 +53,7 @@ public class ChatController {
 		if (userName != null){
 			
 			String userID = message.getSender() + "@" + address.toString();
-			
-			// if this application is not the source
-			if (!mediator.getLocalAddresses().contains(address)){
-				userList.addInstance(message.getSender(), address);
-				mediator.userListUpdated();
-			}
-			
+		
 			switch (message.getType()){
 				case BYE:
 					// efface les messages de l'utilisateur
@@ -92,13 +86,29 @@ public class ChatController {
 					mediator.sendMessage(new Message(ansType, message.getContent(), userName), userList.getAddress(userID));
 					break;
 				case HELLO:
+					// if this application is not the source, add the user
+					if (!mediator.getLocalAddresses().contains(address)){
+						userList.addInstance(message.getSender(), address);
+						mediator.userListUpdated();
+					}
+					
 					if (!mediator.getLocalAddresses().contains(address) && (userName != null))
 						mediator.sendMessage(new Message(MsgType.HELLO_REPLY, userName, userName), userList.getAddress(userID));
 					break;
 				case HELLO_REPLY:
-					
+					// if this application is not the source, add the user
+					if (!mediator.getLocalAddresses().contains(address)){
+						userList.addInstance(message.getSender(), address);
+						mediator.userListUpdated();
+					}
 					break;
 				case TEXT_MESSAGE:
+					// if this application is not the source, add the user
+					if (!mediator.getLocalAddresses().contains(address)){
+						userList.addInstance(message.getSender(), address);
+						mediator.userListUpdated();
+					}
+					
 					// give the message to the GUIModel
 					mediator.updateMessage(message, userID);
 					break;
@@ -156,7 +166,7 @@ public class ChatController {
 			ChatUserInfo info = userList.getUser(destinationID);
 			for (File file : fileList){
 				mediator.sendMessage(new Message(MsgType.FILE_REQUEST, file.getName(), destinationID), info.getAddress());
-
+				System.out.println(file.getName());
 				requestList.addInstance(file, info);
 			}
 		}
