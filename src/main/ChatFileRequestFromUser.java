@@ -3,18 +3,10 @@ package main;
 import java.util.HashMap;
 import java.io.File;
 
-public class ChatFileRequestList {
+public class ChatFileRequestFromUser {
 	
-	private static ChatFileRequestList instance;
-
-	private ChatFileRequestList() {
+	public ChatFileRequestFromUser() {
 		fileRequestList = new HashMap<>();
-	}
-
-	public static ChatFileRequestList getInstance() {
-		if (instance == null)
-			instance = new ChatFileRequestList();
-		return instance;
 	}
 	
 	// the key will be the concatenation of the userID and the fileName
