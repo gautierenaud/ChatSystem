@@ -67,10 +67,16 @@ public class ChatController {
 					mediator.userListUpdated();
 					break;
 				case FILE_ACCEPT:
-					// écouter sur le port voulu
+					// écouter sur le port voulu, puis y envoyer la sauce!
+					String key = userID + message.getContent();
+					File tmpFile = requestFromUser.getFile(key);
+					ChatUserInfo tmpInfo = requestFromUser.getUserInfo(key);
+					// TODO: initier le transfer de messages via TCP
 					break;
 				case FILE_REFUSE:
 					// enlever le file correspondant de la liste
+					requestFromUser.removeInstance(userID + message.getContent());
+					// notifier l'utilisateur?
 					break;
 				case FILE_REQUEST:
 					requestFromOther.addRequest(message.getContent(), message.getFileSize(), userID);
@@ -140,14 +146,15 @@ public class ChatController {
 	public void clearAll(){
 		userList.eraseUserList();
 		requestFromUser.eraseRequestList();
+		requestFromOther.clearAll();
 		
 		mediator.clearAll();
 	}
 	
 	public void fileRequestAnswer(boolean answer, String path, String fileName, String destinationID){
 		if (answer){
+			// TODO: ouvrir le port TCP et télécharger le fichier au path correspondant (path + fileName)
 			mediator.sendMessage(new Message(MsgType.FILE_ACCEPT, fileName, userName), userList.getAddress(destinationID));
-			// open TCP port, should we put the port number in the content of the message?
 		}else
 			mediator.sendMessage(new Message(MsgType.FILE_REFUSE, fileName, userName), userList.getAddress(destinationID));
 	}
@@ -157,9 +164,8 @@ public class ChatController {
 		if (fileList != null){
 			ChatUserInfo info = userList.getUser(destinationID);
 			for (File file : fileList){
-				mediator.sendMessage(new Message(MsgType.FILE_REQUEST, file.getName(), userName, file.length()), info.getAddress());
-				System.out.println(file.getName());
 				requestFromUser.addInstance(file, info);
+				mediator.sendMessage(new Message(MsgType.FILE_REQUEST, file.getName(), userName, file.length()), info.getAddress());
 			}
 		}
 	}
