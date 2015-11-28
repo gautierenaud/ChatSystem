@@ -104,7 +104,6 @@ public class ChatController {
 						userList.addInstance(message.getSender(), address);
 						mediator.userListUpdated();
 					}
-					System.out.println("received HELLO_REPLY");
 					break;
 				case TEXT_MESSAGE:
 					// if this application is not the source, add the user

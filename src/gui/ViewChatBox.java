@@ -98,6 +98,9 @@ public class ViewChatBox implements ActionListener {
 		gbc_fileButton.gridy = 2;
 		frame.getContentPane().add(fileButton, gbc_fileButton);
 		frame.setVisible(true);
+		
+		// set the focus to the sendText field by default
+		sendText.requestFocus();
 	}
 	
 	private SimpleAttributeSet right = new SimpleAttributeSet();
