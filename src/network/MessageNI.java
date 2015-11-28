@@ -32,11 +32,11 @@ public class MessageNI extends Thread {
 
 	}
 	
-	public void addPacketBuff(DatagramPacket packet){
+	public synchronized void addPacketBuff(DatagramPacket packet){
 		receivePacketStack.push(packet);
 	}
 
-	public void addMsgBuff(MessAddress msg){
+	public synchronized void addMsgBuff(MessAddress msg){
 		sendMsgStack.push(msg);
 	}
 	
