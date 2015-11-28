@@ -91,17 +91,17 @@ public class GUIView {
 		// if not, add count to unread message and update UserList
 	}
 	
-	public synchronized String fileRequestQuery(String title, String destinationID){
+	public synchronized void fileRequestQuery(String fileName, float fileSize, String destinationID){
 		// maybe test if an user windows is opened
 		JFileChooser fileChooser = new JFileChooser();
-		fileChooser.setDialogTitle(title);
+		fileChooser.setDialogTitle(fileName + ": " + fileSize + " bytes");
 		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		fileChooser.setMultiSelectionEnabled(false);
 		int result = fileChooser.showOpenDialog(fileChooser);
 		if (result == JFileChooser.APPROVE_OPTION)
-			return fileChooser.getSelectedFile().getPath();
+			controller.fileRequestAnswer(true, fileChooser.getSelectedFile().getPath(), fileName, destinationID);
 		else
-			return "";
+			controller.fileRequestAnswer(false, "", fileName, destinationID);
 	}
 	
 	public void sendFile(File[] fileList, String destinationID){

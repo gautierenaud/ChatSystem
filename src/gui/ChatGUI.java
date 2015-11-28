@@ -102,8 +102,12 @@ public class ChatGUI {
 		model.clearMessages(opponentID);
 	}
 	
-	public String fileRequestQuery(String title, String destinationID){
-		return view.fileRequestQuery(title, destinationID);
+	public void fileRequestQuery(String fileName, float fileSize, String destinationID){
+		view.fileRequestQuery(fileName, fileSize, destinationID);
+	}
+	
+	public void fileRequestAnswer(boolean answer, String path, String fileName, String destinationID){
+		mediator.fileRequestAnswer(answer, path, fileName, destinationID);
 	}
 	
 	public void sendFile(File[] fileList, String destinationID){

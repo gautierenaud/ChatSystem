@@ -24,12 +24,14 @@ public class ChatController {
 	private static ChatMediator mediator;
 	private String userName;
 	private ChatUserList userList;
-	private ChatFileRequestList requestList;
+	private ChatFileRequestFromUser requestFromUser;
+	private ChatFileRequestFromOther requestFromOther;
 	
 	// Instantiate all the different classes
 	public void initAll(ChatMediator mediator){
 		userList = ChatUserList.getInstance();
-		requestList = ChatFileRequestList.getInstance();
+		requestFromUser = new ChatFileRequestFromUser();
+		requestFromOther = new ChatFileRequestFromOther();
 		
 		this.mediator = mediator;
 	}
@@ -71,22 +73,7 @@ public class ChatController {
 					// enlever le file correspondant de la liste
 					break;
 				case FILE_REQUEST:
-					String title = message.getSender();
-					if (message.getContent() != ""){ // set the name if the file as the title
-						title = message.getContent() + " : " + message.getFileSize() + " bytes";
-					}
-					
-					String answer = mediator.fileRequestQuery(title, userID);
-					MsgType ansType;
-					if (answer != ""){
-						// open TCP listening port? send it messages?
-						
-						// send accept message
-						ansType = MsgType.FILE_ACCEPT;
-					}else
-						ansType = MsgType.FILE_REFUSE;
-					
-					mediator.sendMessage(new Message(ansType, message.getContent(), userName), userList.getAddress(userID));
+					requestFromOther.addRequest(message.getContent(), message.getFileSize(), userID);
 					break;
 				case HELLO:
 					// if this application is not the source, add the user
@@ -104,6 +91,7 @@ public class ChatController {
 						userList.addInstance(message.getSender(), address);
 						mediator.userListUpdated();
 					}
+					System.out.println("hello");
 					break;
 				case TEXT_MESSAGE:
 					// if this application is not the source, add the user
@@ -151,16 +139,17 @@ public class ChatController {
 	
 	public void clearAll(){
 		userList.eraseUserList();
-		requestList.eraseRequestList();
+		requestFromUser.eraseRequestList();
+		
 		mediator.clearAll();
 	}
 	
-	public void fileRequestAnswer(boolean ans, String filePath, String destinationID){
-		if (ans){
-			mediator.sendMessage(new Message(MsgType.FILE_ACCEPT, "file accepted"), userList.getAddress(destinationID));
+	public void fileRequestAnswer(boolean answer, String path, String fileName, String destinationID){
+		if (answer){
+			mediator.sendMessage(new Message(MsgType.FILE_ACCEPT, fileName, userName), userList.getAddress(destinationID));
 			// open TCP port, should we put the port number in the content of the message?
 		}else
-			mediator.sendMessage(new Message(MsgType.FILE_REFUSE, "file refused"), userList.getAddress(destinationID));
+			mediator.sendMessage(new Message(MsgType.FILE_REFUSE, fileName, userName), userList.getAddress(destinationID));
 	}
 	
 	public void sendFile(File[] fileList, String destinationID){
@@ -170,7 +159,7 @@ public class ChatController {
 			for (File file : fileList){
 				mediator.sendMessage(new Message(MsgType.FILE_REQUEST, file.getName(), userName, file.length()), info.getAddress());
 				System.out.println(file.getName());
-				requestList.addInstance(file, info);
+				requestFromUser.addInstance(file, info);
 			}
 		}
 	}
