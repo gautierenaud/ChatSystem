@@ -11,25 +11,26 @@ import network.*;
 
 public class ChatMediator {
 
-	private static ChatGUI gui;
-	private static ChatController controller;
-	private static ChatNI network;
-	
 	private static ChatMediator instance;
 
 	private ChatMediator(){
-		
-		gui = ChatGUI.getInstance();
-		controller = ChatController.getInstance();
-		network = ChatNI.getInstance();
 	}
 
 	public static ChatMediator getInstance(){
 		if (instance == null){
 			instance = new ChatMediator();
-			gui.setMediator(instance);
 		}
 		return instance;
+	}
+
+	// initialize all the fields
+	private static ChatGUI gui;
+	private static ChatController controller;
+	private static ChatNI network;
+	public void initAll(ChatController controller, ChatNI network, ChatGUI gui){
+		this.controller = controller;
+		this.network = network;
+		this.gui = gui;
 	}
 	
 	// methods to communicate between each class

@@ -33,7 +33,7 @@ public class ChatGUI {
 		model = GUIModel.getInstance(this);
 	}
 	
-	public void setMediator(ChatMediator mediator){
+	public void initAll(ChatMediator mediator){
 		this.mediator = mediator;
 	}
 	

@@ -42,6 +42,12 @@ public class ChatNI {
 			instance = new ChatNI();
 		return instance;
 	}
+	
+	private ChatMediator mediator;
+	public void initAll(ChatMediator mediator){
+		this.mediator = mediator;
+	}
+	
 	//*********************************SENDING METHODS**************************************************************
 	
 	//this method pack a Message and an IP into a bigger object, and push it into the sending buffer of MessageNI
@@ -54,7 +60,7 @@ public class ChatNI {
 	}
 	
 	public void fileReceived(File recFile){
-		ChatMediator.getInstance().fileReceived(recFile);
+		mediator.fileReceived(recFile);
 	}
 	
 	public ArrayList<InetAddress> getLocalAddresses(){
@@ -85,7 +91,7 @@ public class ChatNI {
 	
 	//methode qui recupere un message arrive
 	public void messageReceived(Message msg , InetAddress addr){
-		ChatMediator.getInstance().messageReceived(msg, addr); 
+		mediator.messageReceived(msg, addr); 
 	}
 	
 	public void clearAll(){

@@ -27,12 +27,14 @@ public class ChatController {
 	private ChatFileRequestList requestList;
 	
 	// Instantiate all the different classes
-	public void initAll(){
+	public void initAll(ChatMediator mediator){
 		userList = ChatUserList.getInstance();
 		requestList = ChatFileRequestList.getInstance();
 		
-		mediator = ChatMediator.getInstance();
-
+		this.mediator = mediator;
+	}
+	
+	public void start(){
 		mediator.log();
 	}
 	
@@ -102,6 +104,7 @@ public class ChatController {
 						userList.addInstance(message.getSender(), address);
 						mediator.userListUpdated();
 					}
+					System.out.println("received HELLO_REPLY");
 					break;
 				case TEXT_MESSAGE:
 					// if this application is not the source, add the user
