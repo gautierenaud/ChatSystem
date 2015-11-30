@@ -13,9 +13,6 @@ public class TCPReceiver extends Thread{
 
 	public TCPReceiver(int port) throws IOException{
 		this.listeningServer = new ServerSocket(port); 
-		this.connectedSocket = this.listeningServer.accept();
-		this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
-		this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
 		this.start();
 	}
 	
@@ -26,12 +23,16 @@ public class TCPReceiver extends Thread{
 	public BufferedOutputStream getWriter(){
 		return this.Swriter; 
 	}
-	
+	//crée un non listening socket spécifique et le referme une fois la connexion terminé
 	public void receivedFile(){
 		
 		File recFile = new File(this.filePath);
 		
 		try {
+			this.connectedSocket = this.listeningServer.accept();
+			this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
+			this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
+			
 			FileOutputStream fos = new FileOutputStream(recFile);
 			while(Sreader.available()!= 0 )
 				fos.write(Sreader.read());
@@ -50,6 +51,6 @@ public class TCPReceiver extends Thread{
 	 public void run(){
 		
 			 receivedFile();
-		 
+			  
 	 }
 }

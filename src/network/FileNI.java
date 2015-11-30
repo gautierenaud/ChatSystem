@@ -14,8 +14,8 @@ public class FileNI extends Thread{
 	 
 	
 	private FileNI() throws IOException{
-		this.tcpReceiver = new TCPReceiver(2043);// port arbitraire � discuter ! 
-		this.tcpSender = new TCPSender( 2043); 
+		this.tcpReceiver = new TCPReceiver(2042);// port arbitraire � discuter ! 
+		this.tcpSender = new TCPSender( 2042); 
 		this.fileToSendBuffer = new Stack<FileAddr>(); 
 		this.start();
 	}
