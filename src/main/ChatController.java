@@ -72,6 +72,9 @@ public class ChatController {
 					File tmpFile = requestFromUser.getFile(key);
 					ChatUserInfo tmpInfo = requestFromUser.getUserInfo(key);
 					// TODO: initier le transfer de messages via TCP
+					
+					// enlever la request de la liste
+					requestFromUser.removeInstance(key);
 					break;
 				case FILE_REFUSE:
 					// enlever le file correspondant de la liste
