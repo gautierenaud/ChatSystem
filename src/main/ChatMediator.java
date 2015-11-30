@@ -102,6 +102,12 @@ public class ChatMediator {
 	public ArrayList<InetAddress> getLocalAddresses(){
 		return network.getLocalAddresses();
 	}
+	public void sendFile(File fileToSend ,InetAddress addr){
+		network.sendFile(fileToSend,addr);
+	}
+	public boolean prepareToReceive(String fileName, String path){
+		return network.prepareToReceive(fileName,path);
+	}
 	
 	public void fileReceived(File recFile){
 		controller.receiveFile(recFile);

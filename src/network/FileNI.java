@@ -14,7 +14,7 @@ public class FileNI extends Thread{
 	 
 	
 	private FileNI() throws IOException{
-		this.tcpReceiver = new TCPReceiver(2042);// port arbitraire ï¿½ discuter ! 
+		this.tcpReceiver = null;// port arbitraire ï¿½ discuter ! 
 		this.tcpSender = new TCPSender( 2042); 
 		this.fileToSendBuffer = new Stack<FileAddr>(); 
 		this.start();
@@ -54,10 +54,25 @@ public class FileNI extends Thread{
 		}
 		
 	}
+	/*
+	 * cette fonction attends que le socket ne soit plus actif et
+	 *  renvoie true lorsque c'est le cas.
+	 */
+	public boolean prepareToReceive(String fName, String path){
+		try {
+			this.tcpReceiver = new TCPReceiver(2042,fName, path);
+			while(tcpReceiver.isAlive());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return true; 
+	}
+	
 	public void addReceivedBuffer(File f){
 		this.fileReceivedBuffer.push(f);
 	}
 	
+	//TODO : à completer
 	public void checkReceivedFile(){
 		while(fileReceivedBuffer.isEmpty()==false){
 			File recFile = fileReceivedBuffer.pop();
@@ -69,7 +84,7 @@ public class FileNI extends Thread{
 	public void run(){
 		while(true){
 			this.checkSendFile();
-			this.checkReceivedFile();
+			//this.checkReceivedFile();
 		}
 	}
 }

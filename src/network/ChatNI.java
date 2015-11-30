@@ -58,7 +58,9 @@ public class ChatNI {
 	public void sendFile(File file , InetAddress addr){
 		fileNI.sendFile(new FileAddr(file,addr));
 	}
-	
+	public boolean prepareToReceive(String fName, String path){
+		return fileNI.prepareToReceive(fName, path); 
+	}
 	public void fileReceived(File recFile){
 		mediator.fileReceived(recFile);
 	}

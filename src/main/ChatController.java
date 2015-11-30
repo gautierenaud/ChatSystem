@@ -72,7 +72,7 @@ public class ChatController {
 					File tmpFile = requestFromUser.getFile(key);
 					ChatUserInfo tmpInfo = requestFromUser.getUserInfo(key);
 					// TODO: initier le transfer de messages via TCP
-					
+					mediator.sendFile(tmpFile, tmpInfo.getAddress());
 					// enlever la request de la liste
 					requestFromUser.removeInstance(key);
 					break;
@@ -157,6 +157,7 @@ public class ChatController {
 	public void fileRequestAnswer(boolean answer, String path, String fileName, String destinationID){
 		if (answer){
 			// TODO: ouvrir le port TCP et télécharger le fichier au path correspondant (path + fileName)
+			mediator.prepareToReceive(fileName, path);
 			mediator.sendMessage(new Message(MsgType.FILE_ACCEPT, fileName, userName), userList.getAddress(destinationID));
 		}else
 			mediator.sendMessage(new Message(MsgType.FILE_REFUSE, fileName, userName), userList.getAddress(destinationID));
