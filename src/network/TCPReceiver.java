@@ -10,9 +10,14 @@ public class TCPReceiver extends Thread{
 	private BufferedInputStream Sreader; 
 	private BufferedOutputStream Swriter;
 	private String filePath ;
-
-	public TCPReceiver(int port) throws IOException{
+	private String fileName; 
+	public TCPReceiver(int port , String fName, String path) throws IOException{
+		this.filePath = path; 
+		this.fileName = fName;
 		this.listeningServer = new ServerSocket(port); 
+		this.connectedSocket = this.listeningServer.accept();
+		this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
+		this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
 		this.start();
 	}
 	
@@ -26,13 +31,9 @@ public class TCPReceiver extends Thread{
 	//crée un non listening socket spécifique et le referme une fois la connexion terminé
 	public void receivedFile(){
 		
-		File recFile = new File(this.filePath);
+		File recFile = new File("downloads/"+fileName);
 		
-		try {
-			this.connectedSocket = this.listeningServer.accept();
-			this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
-			this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
-			
+		try {	
 			FileOutputStream fos = new FileOutputStream(recFile);
 			while(Sreader.available()!= 0 )
 				fos.write(Sreader.read());
@@ -51,6 +52,6 @@ public class TCPReceiver extends Thread{
 	 public void run(){
 		
 			 receivedFile();
-			  
+			 
 	 }
 }
