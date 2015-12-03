@@ -32,14 +32,21 @@ public class TCPReceiver extends Thread{
 	public void receivedFile(){
 		
 		File recFile = new File("downloads/"+fileName);
-		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		int r= 0; 
 		try {	
 			FileOutputStream fos = new FileOutputStream(recFile);
-			while(Sreader.available()!= 0 )
-				fos.write(Sreader.read());
+			while(r != -1 ){
+				r = Sreader.read();
+				baos.write(r);
+			}
+			baos.writeTo(fos);
 			fos.close();
+			baos.flush();
+			baos.close();
+			
 			this.connectedSocket.close();
-			FileNI.getInstance().addReceivedBuffer(recFile);
+			System.out.println("file received");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

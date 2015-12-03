@@ -26,6 +26,12 @@ public class ChatNI {
 
 	private ChatNI(){
 		this.messNI = MessageNI.getInstance();
+		try {
+			this.fileNI = FileNI.getInstance();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		messNI.start();
 		try {
 			this.networkInterfaces = NetworkInterface.getNetworkInterfaces();

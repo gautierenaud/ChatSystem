@@ -8,10 +8,10 @@ public class TCPSender {
 	private Socket clientSocket;
 	private BufferedInputStream Sreader; 
 	private BufferedOutputStream Swriter;
-	private InetAddress distIP;
 	
-	public TCPSender( int port) throws IOException{
-		this.clientSocket = new Socket(this.distIP, port);
+	
+	public TCPSender( int port, InetAddress addr) throws IOException{
+		this.clientSocket = new Socket(addr, port);
 		this.Sreader=new BufferedInputStream(this.clientSocket.getInputStream());
 		this.Swriter=new BufferedOutputStream(this.clientSocket.getOutputStream());
 	}
@@ -24,7 +24,13 @@ public class TCPSender {
 		return this.Swriter; 
 	}
 	
-	public void setAddress(InetAddress address){
-		this.distIP = address; 
+	public void closeSocket(){
+		try {
+			this.clientSocket.close();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 	}
+	
 }
