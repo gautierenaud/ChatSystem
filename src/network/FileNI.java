@@ -1,10 +1,6 @@
 package network;
 
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Stack;
@@ -46,25 +42,6 @@ public class FileNI extends Thread{
 				
 				// Maybe send a notification to the user to told him that the transfer has failed
 			}
-			
-			/*
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			try {
-				TCPSender tcpSender = new TCPSender(2042,fileToSend.getAddress());
-				FileInputStream fis = new FileInputStream(fileToSend.getFile());
-				while(fis.available()!=0)
-					baos.write(fis.read());//this.tcpSender.getWriter().write(fis.read());
-				fis.close();
-				baos.writeTo(tcpSender.getWriter());
-				baos.flush();
-				baos.close();
-				tcpSender.closeSocket();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			*/
 		}
 	}
 	
@@ -74,13 +51,6 @@ public class FileNI extends Thread{
 	 */
 	public boolean prepareToReceive(String fName, String path, InetAddress addr){
 		listeningServer.addWaitingRequest(fName, path, addr);
-		/*
-		try {
-			TCPReceiver tcpReceiver = new TCPReceiver(2042,fName, path);
-			//while(tcpReceiver.isAlive());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
 		return true; 
 	}
 	
@@ -93,10 +63,9 @@ public class FileNI extends Thread{
 		while(fileReceivedBuffer.isEmpty()==false){
 			File recFile = fileReceivedBuffer.pop();
 			recFile.getPath();
-			
-			
 		}
 	}
+	
 	public void run(){
 		while(true){
 			this.checkSendFile();

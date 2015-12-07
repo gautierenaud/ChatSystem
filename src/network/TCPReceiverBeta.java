@@ -33,7 +33,6 @@ public class TCPReceiverBeta extends Thread{
 			this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
 			this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
 			File recFile = new File(filePath + "/" +fileName);
-			System.out.println(filePath+fileName);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			int r= 0; 
 			
