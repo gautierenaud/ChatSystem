@@ -15,9 +15,6 @@ public class TCPReceiver extends Thread{
 		this.filePath = path; 
 		this.fileName = fName;
 		this.listeningServer = new ServerSocket(port); 
-		this.connectedSocket = this.listeningServer.accept();
-		this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
-		this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
 		this.start();
 	}
 	
@@ -30,11 +27,14 @@ public class TCPReceiver extends Thread{
 	}
 	//crée un non listening socket spécifique et le referme une fois la connexion terminé
 	public void receivedFile(){
-		
+		try {
+		this.connectedSocket = this.listeningServer.accept();
+		this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
+		this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
 		File recFile = new File("downloads/"+fileName);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		int r= 0; 
-		try {	
+			
 			FileOutputStream fos = new FileOutputStream(recFile);
 			while(r != -1 ){
 				r = Sreader.read();
