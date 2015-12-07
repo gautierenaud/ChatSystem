@@ -85,6 +85,7 @@ public class ChatGUI {
 		mediator.exit();
 	}
 	
+	// will control if the message is empty or not
 	public void sendMessage(String msg, String opponentID){
 		String userName = mediator.getUserName();
 		MessageStruct message = new MessageStruct(userName, msg);

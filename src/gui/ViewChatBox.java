@@ -5,6 +5,8 @@ import main.*;
 import javax.swing.*;
 import javax.swing.text.*;
 
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -143,9 +145,9 @@ public class ViewChatBox implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == sendButton){
-			// send Message
-			controller.sendMessage(sendText.getText(), id);
-			sendText.setText("");
+			sendMessage();
+		}else if((e.getSource() == sendText)){
+			sendMessage();
 		}else if (e.getSource() == fileButton){
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
@@ -153,9 +155,16 @@ public class ViewChatBox implements ActionListener {
 			int result = fileChooser.showOpenDialog(fileChooser);
 			if (result == JFileChooser.APPROVE_OPTION)
 				controller.sendFile(fileChooser.getSelectedFiles(), id);
-		}else if((e.getSource() == sendText) && (sendText.getText().length() != 0)){
-			// send Message
+		}
+	}
+	
+	public void sendMessage(){
+		if (sendText.getText().length() > 0){
+			
+			//send the message
 			controller.sendMessage(sendText.getText(), id);
+			
+			// erase the text in the textSend area
 			sendText.setText("");
 		}
 	}
