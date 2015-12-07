@@ -54,7 +54,7 @@ public class ChatController {
 	
 	public void receiveMessage(Message message, InetAddress address){
 		
-		if (userName != null){
+		if ((userName != null) && (message.getSender() != null)){
 			
 			String userID = message.getSender() + "@" + address.toString();
 		
@@ -66,47 +66,37 @@ public class ChatController {
 					userList.removeInstance(userID);
 					mediator.userListUpdated();
 					break;
+					
 				case FILE_ACCEPT:
 					// écouter sur le port voulu, puis y envoyer la sauce!
 					String key = userID + message.getContent();
 					File tmpFile = requestFromUser.getFile(key);
 					ChatUserInfo tmpInfo = requestFromUser.getUserInfo(key);
-					// TODO: initier le transfer de messages via TCP
 					mediator.sendFile(tmpFile, tmpInfo.getAddress());
 					// enlever la request de la liste
 					requestFromUser.removeInstance(key);
 					break;
+					
 				case FILE_REFUSE:
 					// enlever le file correspondant de la liste
 					requestFromUser.removeInstance(userID + message.getContent());
-					// notifier l'utilisateur?
 					break;
+					
 				case FILE_REQUEST:
 					requestFromOther.addRequest(message.getContent(), message.getFileSize(), userID);
 					break;
+					
 				case HELLO:
-					// if this application is not the source, add the user
-					if (!mediator.getLocalAddresses().contains(address)){
-						userList.addInstance(message.getSender(), address);
-						mediator.userListUpdated();
-					}
+					addNewUser(message, address);
 					
 					if (!mediator.getLocalAddresses().contains(address) && (userName != null))
 						mediator.sendMessage(new Message(MsgType.HELLO_REPLY, userName, userName), userList.getAddress(userID));
 					break;
 				case HELLO_REPLY:
-					// if this application is not the source, add the user
-					if (!mediator.getLocalAddresses().contains(address)){
-						userList.addInstance(message.getSender(), address);
-						mediator.userListUpdated();
-					}
+					addNewUser(message, address);
 					break;
 				case TEXT_MESSAGE:
-					// if this application is not the source, add the user
-					if (!mediator.getLocalAddresses().contains(address)){
-						userList.addInstance(message.getSender(), address);
-						mediator.userListUpdated();
-					}
+					addNewUser(message, address);
 					
 					// give the message to the GUIModel
 					if (message.getContent().length() > 0)
@@ -115,6 +105,15 @@ public class ChatController {
 				default:
 					break;
 			}
+		}
+	}
+	
+	// add user to the list if it is not already inside 
+	private void addNewUser(Message message, InetAddress address){
+		// if this application is not the source, add the user
+		if (!mediator.getLocalAddresses().contains(address)){
+			userList.addInstance(message.getSender(), address);
+			mediator.userListUpdated();
 		}
 	}
 	
