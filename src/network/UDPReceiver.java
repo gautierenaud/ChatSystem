@@ -24,7 +24,12 @@ public class UDPReceiver extends Thread{
 		try {
 			this.receiver.receive(packet);
 			MessageNI.getInstance().addPacketBuff(packet);
+			// sleep a bit to avoid packets to overlap
+			this.sleep(1);
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
