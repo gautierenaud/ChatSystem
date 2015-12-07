@@ -38,7 +38,16 @@ public class FileNI extends Thread{
 	
 	public void checkSendFile(){
 		while(fileToSendBuffer.isEmpty()== false){
-			FileAddr fileToSend = this.fileToSendBuffer.pop(); 
+			FileAddr fileToSend = this.fileToSendBuffer.pop();
+			try {
+				TCPSender tcpSender = new TCPSender(2042, fileToSend.getAddress(), fileToSend);
+			} catch (IOException e) {
+				e.printStackTrace();
+				
+				// Maybe send a notification to the user to told him that the transfer has failed
+			}
+			
+			/*
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			try {
 				TCPSender tcpSender = new TCPSender(2042,fileToSend.getAddress());
@@ -55,9 +64,10 @@ public class FileNI extends Thread{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			*/
 		}
-		
 	}
+	
 	/*
 	 * cette fonction attends que le socket ne soit plus actif et
 	 *  renvoie true lorsque c'est le cas.

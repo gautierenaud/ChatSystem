@@ -3,25 +3,42 @@ package network;
 import java.io.*;
 import java.net.*;
 
-public class TCPSender {
+public class TCPSender extends Thread{
 	
-	private Socket clientSocket;
-	private BufferedInputStream Sreader; 
-	private BufferedOutputStream Swriter;
+	private Socket clientSocket; 
+	private BufferedOutputStream sWriter;
+	private FileAddr fileToSend;
+	private ByteArrayOutputStream baos;
 	
-	
-	public TCPSender( int port, InetAddress addr) throws IOException{
+	public TCPSender( int port, InetAddress addr, FileAddr fileToSend) throws IOException{
 		this.clientSocket = new Socket(addr, port);
-		this.Sreader=new BufferedInputStream(this.clientSocket.getInputStream());
-		this.Swriter=new BufferedOutputStream(this.clientSocket.getOutputStream());
+		this.sWriter=new BufferedOutputStream(this.clientSocket.getOutputStream());
+		this.fileToSend = fileToSend;
+		
+		baos = new ByteArrayOutputStream();
+		
+		this.start();
+	}
+	
+	public void run(){
+		try{
+			FileInputStream fis = new FileInputStream(fileToSend.getFile());
+			while(fis.available()!=0)
+				baos.write(fis.read());
+			fis.close();
+			baos.writeTo(sWriter);
+			baos.flush();
+			baos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+
+			this.closeSocket();
+		}
 	}
 
-	public BufferedInputStream getReader(){
-		return this.Sreader; 
-	}
-	
 	public BufferedOutputStream getWriter(){
-		return this.Swriter; 
+		return this.sWriter; 
 	}
 	
 	public void closeSocket(){
@@ -32,5 +49,4 @@ public class TCPSender {
 			e.printStackTrace();
 		}
 	}
-	
 }
