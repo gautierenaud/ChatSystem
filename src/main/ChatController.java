@@ -68,13 +68,16 @@ public class ChatController {
 					break;
 					
 				case FILE_ACCEPT:
-					// écouter sur le port voulu, puis y envoyer la sauce!
+					// on test si on nous envoie pas n'importe quoi
 					String key = userID + message.getContent();
-					File tmpFile = requestFromUser.getFile(key);
-					ChatUserInfo tmpInfo = requestFromUser.getUserInfo(key);
-					mediator.sendFile(tmpFile, tmpInfo.getAddress());
-					// enlever la request de la liste
-					requestFromUser.removeInstance(key);
+					if (requestFromUser.containsRequest(key)){
+						// écouter sur le port voulu, puis y envoyer la sauce!
+						File tmpFile = requestFromUser.getFile(key);
+						ChatUserInfo tmpInfo = requestFromUser.getUserInfo(key);
+						mediator.sendFile(tmpFile, tmpInfo.getAddress());
+						// enlever la request de la liste
+						requestFromUser.removeInstance(key);
+					}
 					break;
 					
 				case FILE_REFUSE:

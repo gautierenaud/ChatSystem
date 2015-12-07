@@ -74,4 +74,8 @@ public class ChatFileRequestFromUser {
 	public ChatFileRequestInfo getRequestInfo(String key){
 		return fileRequestList.get(key);
 	}
+	
+	public boolean containsRequest(String key){
+		return fileRequestList.containsKey(key);
+	}
 }

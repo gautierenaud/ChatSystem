@@ -23,21 +23,4 @@ public class UDPSender {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * @param args
-	 */
-	/*public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		UDPSender sender = new UDPSender();
-		UDPReceiver receiver = new UDPReceiver();
-		Message msg = new Message(Message.MsgType.HELLO, "Hello les fillettes!");
-		try {
-			sender.sendMsg(msg, InetAddress.getByName("10.1.255.255"));
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
-
 }
