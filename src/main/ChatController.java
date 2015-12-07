@@ -155,10 +155,8 @@ public class ChatController {
 	
 	public void fileRequestAnswer(boolean answer, String path, String fileName, String destinationID){
 		if (answer){
-			// TODO: ouvrir le port TCP et télécharger le fichier au path correspondant (path + fileName)
-			
-			mediator.sendMessage(new Message(MsgType.FILE_ACCEPT, fileName, userName), userList.getAddress(destinationID));
 			mediator.prepareToReceive(fileName, path, userList.getAddress(destinationID));
+			mediator.sendMessage(new Message(MsgType.FILE_ACCEPT, fileName, userName), userList.getAddress(destinationID));
 		}else
 			mediator.sendMessage(new Message(MsgType.FILE_REFUSE, fileName, userName), userList.getAddress(destinationID));
 	}

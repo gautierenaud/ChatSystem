@@ -63,13 +63,14 @@ public class FileNI extends Thread{
 	 *  renvoie true lorsque c'est le cas.
 	 */
 	public boolean prepareToReceive(String fName, String path, InetAddress addr){
+		listeningServer.addWaitingRequest(fName, path, addr);
+		/*
 		try {
-			listeningServer.addWaitingRequest(fName, path, addr);
 			TCPReceiver tcpReceiver = new TCPReceiver(2042,fName, path);
 			//while(tcpReceiver.isAlive());
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		return true; 
 	}
 	

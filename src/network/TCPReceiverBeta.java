@@ -15,7 +15,7 @@ public class TCPReceiverBeta extends Thread{
 	public TCPReceiverBeta(Socket connectedSocket, String fName, String path) throws IOException{
 		this.filePath = path; 
 		this.fileName = fName;
-		this.listeningServer = new ServerSocket(port); 
+		this.connectedSocket = connectedSocket;
 		this.start();
 	}
 	
@@ -30,7 +30,6 @@ public class TCPReceiverBeta extends Thread{
 	//cr�e un non listening socket sp�cifique et le referme une fois la connexion termin�
 	public void receivedFile(){
 		try {
-			this.connectedSocket = this.listeningServer.accept();
 			this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
 			this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
 			File recFile = new File(filePath + "/" +fileName);
