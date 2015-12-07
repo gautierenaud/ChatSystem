@@ -100,7 +100,6 @@ public class ChatController {
 						userList.addInstance(message.getSender(), address);
 						mediator.userListUpdated();
 					}
-					System.out.println("hello");
 					break;
 				case TEXT_MESSAGE:
 					// if this application is not the source, add the user
@@ -110,7 +109,8 @@ public class ChatController {
 					}
 					
 					// give the message to the GUIModel
-					mediator.updateMessage(message, userID);
+					if (message.getContent().length() > 0)
+						mediator.updateMessage(message, userID);
 					break;
 				default:
 					break;
