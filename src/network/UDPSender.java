@@ -16,7 +16,7 @@ public class UDPSender {
 		}
 	}
 	
-	public void send(DatagramPacket packet){
+	public synchronized void send(DatagramPacket packet){
 		try {
 			senderSocket.send(packet);
 		} catch (IOException e) {
