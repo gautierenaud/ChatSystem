@@ -25,15 +25,16 @@ public class TCPReceiver extends Thread{
 	public BufferedOutputStream getWriter(){
 		return this.Swriter; 
 	}
-	//crée un non listening socket spécifique et le referme une fois la connexion terminé
+	//crï¿½e un non listening socket spï¿½cifique et le referme une fois la connexion terminï¿½
 	public void receivedFile(){
 		try {
-		this.connectedSocket = this.listeningServer.accept();
-		this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
-		this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
-		File recFile = new File("downloads/"+fileName);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		int r= 0; 
+			this.connectedSocket = this.listeningServer.accept();
+			this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
+			this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
+			File recFile = new File(filePath + "/" +fileName);
+			System.out.println(filePath+fileName);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			int r= 0; 
 			
 			FileOutputStream fos = new FileOutputStream(recFile);
 			while(r != -1 ){
