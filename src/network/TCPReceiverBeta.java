@@ -3,7 +3,7 @@ package network;
 import java.io.*;
 import java.net.*;
 
-public class TCPReceiver extends Thread{
+public class TCPReceiverBeta extends Thread{
 	
 	private ServerSocket listeningServer; 
 	private Socket connectedSocket;
@@ -12,7 +12,7 @@ public class TCPReceiver extends Thread{
 	private String filePath ;
 	private String fileName;
 	
-	public TCPReceiver(int port , String fName, String path) throws IOException{
+	public TCPReceiverBeta(Socket connectedSocket, String fName, String path) throws IOException{
 		this.filePath = path; 
 		this.fileName = fName;
 		this.listeningServer = new ServerSocket(port); 

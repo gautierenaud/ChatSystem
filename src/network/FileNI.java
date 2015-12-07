@@ -6,16 +6,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.util.Stack;
 
 public class FileNI extends Thread{
 
+	private TCPServer listeningServer;
+	
 	public static FileNI instance; 
-	 
 	
 	private FileNI() throws IOException{ 
 		this.fileToSendBuffer = new Stack<FileAddr>(); 
 		this.start();
+		
+		// start the listening server
+		listeningServer = new TCPServer();
 	}
 	
 	public static FileNI getInstance() throws IOException{
@@ -26,8 +31,6 @@ public class FileNI extends Thread{
 	  
 	private Stack<FileAddr> fileToSendBuffer; 
 	private Stack<File> fileReceivedBuffer;
-	
-	
 	
 	public void sendFile(FileAddr F){
 		this.fileToSendBuffer.push(F);
@@ -48,10 +51,8 @@ public class FileNI extends Thread{
 				baos.close();
 				tcpSender.closeSocket();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -61,8 +62,9 @@ public class FileNI extends Thread{
 	 * cette fonction attends que le socket ne soit plus actif et
 	 *  renvoie true lorsque c'est le cas.
 	 */
-	public boolean prepareToReceive(String fName, String path){
+	public boolean prepareToReceive(String fName, String path, InetAddress addr){
 		try {
+			listeningServer.addWaitingRequest(fName, path, addr);
 			TCPReceiver tcpReceiver = new TCPReceiver(2042,fName, path);
 			//while(tcpReceiver.isAlive());
 		} catch (IOException e) {
@@ -75,7 +77,7 @@ public class FileNI extends Thread{
 		this.fileReceivedBuffer.push(f);
 	}
 	
-	//TODO : à completer
+	//TODO : ï¿½ completer
 	public void checkReceivedFile(){
 		while(fileReceivedBuffer.isEmpty()==false){
 			File recFile = fileReceivedBuffer.pop();

@@ -105,8 +105,8 @@ public class ChatMediator {
 	public void sendFile(File fileToSend ,InetAddress addr){
 		network.sendFile(fileToSend,addr);
 	}
-	public boolean prepareToReceive(String fileName, String path){
-		return network.prepareToReceive(fileName,path);
+	public boolean prepareToReceive(String fileName, String path, InetAddress addr){
+		return network.prepareToReceive(fileName, path, addr);
 	}
 	
 	public void fileReceived(File recFile){
