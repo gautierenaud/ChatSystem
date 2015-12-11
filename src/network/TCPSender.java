@@ -12,7 +12,7 @@ public class TCPSender extends Thread{
 	
 	public TCPSender( int port, InetAddress addr, FileAddr fileToSend) throws IOException{
 		this.clientSocket = new Socket(addr, port);
-		this.sWriter=new BufferedOutputStream(this.clientSocket.getOutputStream());
+		this.sWriter = new BufferedOutputStream(this.clientSocket.getOutputStream());
 		this.fileToSend = fileToSend;
 		
 		baos = new ByteArrayOutputStream();
@@ -27,6 +27,7 @@ public class TCPSender extends Thread{
 				baos.write(fis.read());
 			fis.close();
 			baos.writeTo(sWriter);
+			sWriter.flush();
 			baos.flush();
 			baos.close();
 		} catch (IOException e) {
