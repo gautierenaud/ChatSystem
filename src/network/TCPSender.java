@@ -22,7 +22,7 @@ public class TCPSender extends Thread{
 	
 	public void run(){
 
-		byte[] tmp = new byte[4000];
+		byte[] tmp = new byte[10000];
 		int read;
 		try{
 			FileInputStream fis = new FileInputStream(fileToSend.getFile());

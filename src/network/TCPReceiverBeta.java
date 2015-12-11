@@ -29,7 +29,7 @@ public class TCPReceiverBeta extends Thread{
 	
 	//cr�e un non listening socket sp�cifique et le referme une fois la connexion termin�
 	public void receivedFile(){
-		byte[] tmp = new byte[4000]; 
+		byte[] tmp = new byte[10000]; 
 		try {
 			this.Sreader=new BufferedInputStream(this.connectedSocket.getInputStream());
 			this.Swriter=new BufferedOutputStream(this.connectedSocket.getOutputStream());
@@ -41,9 +41,9 @@ public class TCPReceiverBeta extends Thread{
 			    r = Sreader.read(tmp);
 			    System.out.println("j'ai recu :"+r);
 			while(r != -1 ){
-				baos.write(tmp);
+				baos.write(tmp, 0, r);
 				r = Sreader.read(tmp);
-				 System.out.println("j'ai recu :"+r);
+				System.out.println("j'ai recu :"+r);
 			}
 			baos.writeTo(fos);
 			fos.close();
