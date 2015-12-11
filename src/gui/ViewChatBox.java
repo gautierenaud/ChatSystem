@@ -67,6 +67,7 @@ public class ViewChatBox implements ActionListener {
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 1;
+		scrollPane.setAutoscrolls(true);
 		frame.getContentPane().add(scrollPane, gbc_scrollPane);
 		
 		messageArea = new JTextPane();
