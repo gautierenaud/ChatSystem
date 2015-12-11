@@ -96,6 +96,7 @@ public class MessageNI extends Thread {
 	public void sendMessage(MessAddress msgAddr){
 		udpSender.send(turnMesstoPacket(msgAddr));
 	}
+	
 	@Override
 	public void run(){
 		while (true){
