@@ -21,15 +21,24 @@ public class TCPSender extends Thread{
 	}
 	
 	public void run(){
+
+		byte[] tmp = new byte[4000];
+		int read;
 		try{
 			FileInputStream fis = new FileInputStream(fileToSend.getFile());
-			while(fis.available()!=0)
-				baos.write(fis.read());
+
+			read = fis.read(tmp);
+			while(read != -1){
+				baos.write(tmp, 0, read);
+				read = fis.read(tmp);
+				System.out.println(read);
+			}
 			fis.close();
 			baos.writeTo(sWriter);
 			sWriter.flush();
 			baos.flush();
 			baos.close();
+			System.out.println("fileSent");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally{
