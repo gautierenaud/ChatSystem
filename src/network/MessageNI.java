@@ -16,15 +16,15 @@ public class MessageNI extends Thread {
 		return instance;
 	}
 
-	//private SynchronizedStack<MessAddress> sendMsgStack;
-	//private Stack<DatagramPacket> receivePacketStack; 
+	private Stack<MessAddress> sendMsgStack;
+	private Stack<DatagramPacket> receivePacketStack; 
 	private UDPSender udpSender;
 	private UDPReceiver udpReceiver;
 
 	
 	private MessageNI(){
-		//sendMsgStack = new SynchronizedStack<MessAddress>();// messages � envoyer
-		//receivePacketStack = new Stack<DatagramPacket>();// packet recus
+		sendMsgStack = new Stack<MessAddress>();// messages � envoyer
+		receivePacketStack = new Stack<DatagramPacket>();// packet recus
 		
 		// initialising the sockets
 		udpSender = new UDPSender();
@@ -33,13 +33,11 @@ public class MessageNI extends Thread {
 	}
 	
 	public void addPacketBuff(DatagramPacket packet){
-		//receivePacketStack.push(packet);
-		PacketStack.getInstance().push(packet);
+		receivePacketStack.push(packet);
 	}
 
 	public void addMsgBuff(MessAddress msg){
-		//sendMsgStack.push(msg);
-		MessageStack.getInstance().push(msg);
+		sendMsgStack.push(msg);
 	}
 	
 	public MessAddress turnPacketToMessage(DatagramPacket packet){
@@ -61,15 +59,8 @@ public class MessageNI extends Thread {
 	}
 	
 	public void checkReceive(){
-		/*
 		while(!receivePacketStack.isEmpty()){
 			DatagramPacket packet = receivePacketStack.pop();
-			MessAddress msgaddr = turnPacketToMessage(packet);
-			System.out.println("received: " + msgaddr.getMessage().toString());
-			ChatNI.getInstance().messageReceived(msgaddr.getMessage(), msgaddr.getAddress());
-		}*/
-		while(!PacketStack.getInstance().isEmpty()){
-			DatagramPacket packet = PacketStack.getInstance().pop();
 			MessAddress msgaddr = turnPacketToMessage(packet);
 			System.out.println("received: " + msgaddr.getMessage().toString());
 			ChatNI.getInstance().messageReceived(msgaddr.getMessage(), msgaddr.getAddress());
@@ -77,14 +68,8 @@ public class MessageNI extends Thread {
 	}
 	
 	public void checkSend(){
-		/*
 		while(!sendMsgStack.isEmpty()){
 			MessAddress tmp = sendMsgStack.pop();
-			this.sendMessage(tmp);
-			System.out.println("sent: " + tmp.getMessage().toString());
-		}*/
-		while(!MessageStack.getInstance().isEmpty()){
-			MessAddress tmp = MessageStack.getInstance().pop();
 			this.sendMessage(tmp);
 			System.out.println("sent: " + tmp.getMessage().toString());
 		}
