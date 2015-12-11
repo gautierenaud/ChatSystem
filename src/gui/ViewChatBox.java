@@ -34,6 +34,7 @@ public class ViewChatBox implements ActionListener {
 	private JButton fileButton;
 	private JFrame frame;
 	private JTextField sendText;
+	private JScrollPane scrollPane;
 	
 	private void initialize(ChatUserInfo info) {
 		
@@ -60,14 +61,13 @@ public class ViewChatBox implements ActionListener {
 		gridBagLayout.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		frame.getContentPane().setLayout(gridBagLayout);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridwidth = 3;
 		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 1;
-		scrollPane.setAutoscrolls(true);
 		frame.getContentPane().add(scrollPane, gbc_scrollPane);
 		
 		messageArea = new JTextPane();
@@ -128,8 +128,9 @@ public class ViewChatBox implements ActionListener {
 		try
 		{
 		    int length = doc.getLength();
-		    doc.insertString(doc.getLength(), "\n" + message.getMessage(), null);
+		    doc.insertString(doc.getLength(),   message.getMessage()+"\n", null);
 		    doc.setParagraphAttributes(length+1, 1, tmp, false);
+			scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMaximum());
 		}
 		catch(Exception e) { System.out.println(e);}
 	}
