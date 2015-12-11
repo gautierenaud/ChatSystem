@@ -37,9 +37,10 @@ public class TCPReceiverBeta extends Thread{
 			int r= 0; 
 			
 			FileOutputStream fos = new FileOutputStream(recFile);
+			r = Sreader.read();
 			while(r != -1 ){
-				r = Sreader.read();
 				baos.write(r);
+				r = Sreader.read();
 			}
 			baos.writeTo(fos);
 			fos.close();
