@@ -75,7 +75,7 @@ public class ChatMediator {
 		gui.openUserList();
 	}
 	
-	public void userListUpdated(){
+	public synchronized void userListUpdated(){
 		gui.userListUpdated();
 	}
 	

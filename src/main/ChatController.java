@@ -114,7 +114,7 @@ public class ChatController {
 	// add user to the list if it is not already inside 
 	private void addNewUser(Message message, InetAddress address){
 		// if this application is not the source, add the user
-		if (!mediator.getLocalAddresses().contains(address)){
+		if (!mediator.getLocalAddresses().contains(address) && message.getSender() != ""){
 			userList.addInstance(message.getSender(), address);
 			mediator.userListUpdated();
 		}
