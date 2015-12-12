@@ -67,9 +67,6 @@ public class ChatNI {
 	public boolean prepareToReceive(String fName, String path, InetAddress addr){
 		return fileNI.prepareToReceive(fName, path, addr); 
 	}
-	public void fileReceived(File recFile){
-		mediator.fileReceived(recFile);
-	}
 	
 	public ArrayList<InetAddress> getLocalAddresses(){
 		ArrayList<InetAddress> result = new ArrayList() ; 

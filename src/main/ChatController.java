@@ -21,7 +21,7 @@ public class ChatController {
 		return instance;
 	}
 	
-	private static ChatMediator mediator;
+	private ChatMediator mediator;
 	private String userName;
 	private ChatUserList userList;
 	private ChatFileRequestFromUser requestFromUser;
@@ -46,10 +46,6 @@ public class ChatController {
 	
 	public String getUserName(){
 		return userName;
-	}
-	//TODO : a completer, avec Renaud pour gestion creation de folder ect...
-	public void receiveFile(File recFile){
-		
 	}
 	
 	public void receiveMessage(Message message, InetAddress address){

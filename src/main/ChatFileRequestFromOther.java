@@ -44,15 +44,27 @@ public class ChatFileRequestFromOther extends Thread{
 	@Override
 	public void run(){
 		while (true){
-			if (!requestStack.isEmpty()){
-				FileRequest tmp = requestStack.pop();
-				ChatMediator.getInstance().fileRequestQuery(tmp.getFileName(), tmp.getFileSize(), tmp.getSourceID());
+			synchronized (this) {
+				try {
+					wait();
+
+					if (!requestStack.isEmpty()){
+						FileRequest tmp = requestStack.pop();
+						ChatMediator.getInstance().fileRequestQuery(tmp.getFileName(), tmp.getFileSize(), tmp.getSourceID());
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
 	
 	public void addRequest(String fileName, float fileSize, String sourceID){
 		requestStack.add(new FileRequest(fileName, fileSize, sourceID));
+		synchronized (this) {
+			notify();
+		}
 	}
 	
 	public void clearAll(){

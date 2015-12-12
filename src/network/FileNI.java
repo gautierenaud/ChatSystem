@@ -30,9 +30,12 @@ public class FileNI extends Thread{
 	
 	public void sendFile(FileAddr F){
 		this.fileToSendBuffer.push(F);
+		synchronized (this) {
+			notify();
+		}
 	}
 	
-	public void checkSendFile(){
+	public synchronized void checkSendFile(){		
 		while(fileToSendBuffer.isEmpty()== false){
 			FileAddr fileToSend = this.fileToSendBuffer.pop();
 			try {
@@ -58,7 +61,6 @@ public class FileNI extends Thread{
 		this.fileReceivedBuffer.push(f);
 	}
 	
-	//TODO : � completer
 	public void checkReceivedFile(){
 		while(fileReceivedBuffer.isEmpty()==false){
 			File recFile = fileReceivedBuffer.pop();
@@ -67,9 +69,15 @@ public class FileNI extends Thread{
 	}
 	
 	public void run(){
-		while(true){
-			this.checkSendFile();
-			//this.checkReceivedFile();
+		while (true){
+			synchronized (this) {
+				try {
+					wait();
+					this.checkSendFile();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 }

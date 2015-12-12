@@ -29,15 +29,22 @@ public class MessageNI extends Thread {
 		// initialising the sockets
 		udpSender = new UDPSender();
 		udpReceiver = new UDPReceiver();
-
 	}
 	
 	public void addPacketBuff(DatagramPacket packet){
 		receivePacketStack.push(packet);
+		notifyChanges();
 	}
 
 	public void addMsgBuff(MessAddress msg){
 		sendMsgStack.push(msg);
+		notifyChanges();
+	}
+	
+	private void notifyChanges(){
+		synchronized (this) {
+			notify();
+		}
 	}
 	
 	public MessAddress turnPacketToMessage(DatagramPacket packet){
@@ -100,8 +107,16 @@ public class MessageNI extends Thread {
 	@Override
 	public void run(){
 		while (true){
-			this.checkReceive();
-			this.checkSend();
+			synchronized (this) {
+				try{
+					wait();
+					this.checkReceive();
+					this.checkSend();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	

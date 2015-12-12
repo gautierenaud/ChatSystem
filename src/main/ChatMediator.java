@@ -109,10 +109,6 @@ public class ChatMediator {
 		return network.prepareToReceive(fileName, path, addr);
 	}
 	
-	public void fileReceived(File recFile){
-		controller.receiveFile(recFile);
-	}
-	
 	public void fileRequestQuery(String fileName, float fileSize, String sourceID){
 		gui.fileRequestQuery(fileName, fileSize, sourceID);
 	}
